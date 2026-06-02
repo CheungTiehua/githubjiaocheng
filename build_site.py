@@ -153,9 +153,11 @@ def main():
         shutil.rmtree(SITE)
     SITE.mkdir()
 
-    # 复制 CSS
+    # 复制 CSS / JS
     shutil.copy(TEMPLATE / "style.css", SITE / "style.css")
-    print("  ✓ style.css")
+    shutil.copy(TEMPLATE / "chatbox.css", SITE / "chatbox.css")
+    shutil.copy(TEMPLATE / "chatbox.js", SITE / "chatbox.js")
+    print("  ✓ style.css + chatbox")
 
     # 复制截图目录
     if ASSETS.exists():
