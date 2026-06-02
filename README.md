@@ -8,9 +8,9 @@
 
 ## 快速开始
 
-打开 `site/index.html` 即可浏览完整网站。
+打开 `docs/index.html` 即可浏览完整网站。
 
-或在线访问：[cheungtiehua.github.io/wangzhan](https://cheungtiehua.github.io/wangzhan)（需启用 GitHub Pages）
+或在线访问：[cheungtiehua.github.io/wangzhan](https://cheungtiehua.github.io/wangzhan)
 
 ## 课程结构
 

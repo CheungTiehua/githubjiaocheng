@@ -16,7 +16,7 @@ LESSONS = ROOT / "lessons"
 ASSETS = ROOT / "assets"
 REFERENCE = ROOT / "reference"
 TEMPLATE = ROOT / "template"
-SITE = ROOT / "site"
+SITE = ROOT / "docs"
 
 # ── 课程元信息 ──
 LESSON_META = [
