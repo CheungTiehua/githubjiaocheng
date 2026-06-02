@@ -1,8 +1,8 @@
-/* Chatbox — 左下角悬浮 */
+/* Chatbox — 右下角悬浮 */
 .chatbox-container {
   position: fixed;
   bottom: 20px;
-  left: 280px;
+  right: 20px;
   z-index: 999;
   font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
 }
@@ -29,7 +29,7 @@
   display: none;
   position: absolute;
   bottom: 62px;
-  left: 0;
+  right: 0;
   width: 380px;
   height: 520px;
   background: var(--bg-primary);
@@ -166,6 +166,6 @@
 .chatbox-send:disabled { opacity: 0.5; cursor: default; }
 
 @media (max-width: 768px) {
-  .chatbox-container { left: auto; right: 12px; }
-  .chatbox-window { width: calc(100vw - 24px); left: auto; right: 0; }
+  .chatbox-container { right: 12px; }
+  .chatbox-window { width: calc(100vw - 24px); right: 0; }
 }
