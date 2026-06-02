@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>场景: 团队协作日常 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>场景教程：团队协作日常</h1>
+<blockquote>
+<p>适用人群：在团队中用 GitHub 协作的人
+前置：完成第四、六、七、八、九课
+预计时间：20 分钟（阅读时间）</p>
+</blockquote>
+<hr />
+<h2>场景描述</h2>
+<p>你和 5 个同事一起开发一个项目。仓库是你们公司的私有仓库。每个人的日常工作是：领 Issue → 创建分支 → 改代码 → 提 PR → 同事 Review → 合并。</p>
+<hr />
+<h2>完整流程（6 步，每天循环）</h2>
+<h3>第 1 步：领取任务</h3>
+<ol>
+<li>打开项目仓库 → Issues 标签</li>
+<li>看 Assignee 是空的 Issue（没人领的）</li>
+<li>点进去 → 右侧 Assignees → 选自己</li>
+<li>开始干活</li>
+</ol>
+<blockquote>
+<p>有些团队用 Projects 做看板，流程一样：把卡片从 Todo 拖到 In Progress。</p>
+</blockquote>
+<h3>第 2 步：创建分支</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main<span class="w">            </span><span class="c1"># 确保是最新的</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feat/my-feature<span class="w"> </span><span class="c1"># 建新分支</span>
+</code></pre></div>
+
+<p><strong>分支命名建议：</strong>
+- <code>feat/</code> + 功能描述：<code>feat/dark-mode</code>
+- <code>fix/</code> + Bug 描述：<code>fix/login-redirect</code>
+- <code>chore/</code> + 杂项：<code>chore/update-deps</code></p>
+<h3>第 3 步：改代码 + 提交</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 改代码...</span>
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add dark mode toggle to header&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/my-feature
+</code></pre></div>
+
+<p><strong>Commit message 格式（团队约定）：</strong></p>
+<div class="codehilite"><pre><span></span><code>类型: 简短描述
+
+详细的解释（如果需要）
+</code></pre></div>
+
+<p>常见类型：<code>feat</code>（新功能）、<code>fix</code>（修 Bug）、<code>docs</code>（文档）、<code>refactor</code>（重构）、<code>test</code>（测试）、<code>chore</code>（杂项）</p>
+<h3>第 4 步：创建 PR</h3>
+<ol>
+<li>Push 后 GitHub 自动弹出黄色提示条</li>
+<li>点 <strong>Compare &amp; pull request</strong></li>
+<li>确认 Base = <code>main</code>，Compare = 你的分支</li>
+<li>填写 PR：
+   ```markdown
+   ## 做了什么
+   在导航栏右上角添加了深色模式切换按钮</li>
+</ol>
+<p>## 截图
+   | 浅色 | 深色 |
+   |------|------|
+   | (截图) | (截图) |</p>
+<p>## 怎么测试
+   1. 点击导航栏右侧的月亮/太阳图标
+   2. 页面应在浅色和深色之间切换
+   3. 刷新后应保持选择
+   <code>``
+5. 右侧 Reviewers → 选要 Review 的同事
+6. Labels → 加</code>feat`
+7. 点 <strong>Create pull request</strong></p>
+<h3>第 5 步：Code Review + 迭代</h3>
+<ol>
+<li>等待同事 Review</li>
+<li>如果 CI 失败 → 点 Checks 看日志 → 修代码 → Push</li>
+<li>如果同事提了修改意见：</li>
+<li>逐条回复或修改</li>
+<li>改完 push → Re-request review</li>
+<li>如果同事给了 Approve（且 CI 通过）→ 准备合并</li>
+</ol>
+<h3>第 6 步：合并 + 清理</h3>
+<ol>
+<li>确认 CI 通过了（绿勾 ✅）</li>
+<li>确认有足够的 Approve（按团队规则）</li>
+<li>点 <strong>Squash and merge</strong>（推荐，保持历史干净）</li>
+<li>合并后 GitHub 提示是否删除分支 → 点 Delete branch</li>
+<li>本地切回 main 并拉取最新：
+   <code>bash
+   git checkout main
+   git pull origin main
+   git branch -d feat/my-feature  # 删除本地分支</code></li>
+</ol>
+<hr />
+<h2>日常习惯清单</h2>
+<h3>每天开始工作前</h3>
+<ul>
+<li><code>git checkout main &amp;&amp; git pull origin main</code></li>
+</ul>
+<h3>创建 PR 时</h3>
+<ul>
+<li>确认 PR 只包含相关改动（没有混入无关文件）</li>
+<li>确认 CI 通过后再找同事 Review</li>
+<li>确认 PR 正文写清楚了"做了什么"和"怎么测试"</li>
+</ul>
+<h3>Review 别人代码时</h3>
+<ul>
+<li>对事不对人</li>
+<li>区分"必须改"和"建议改"</li>
+<li>具体问题用 Suggested change 功能</li>
+</ul>
+<h3>合并后</h3>
+<ul>
+<li>删除分支（保持仓库整洁）</li>
+<li>如果关联了 Issue，确认 Issue 已自动关闭</li>
+</ul>
+<hr />
+<h2>团队配置建议</h2>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>路径</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分支保护</td>
+<td>Settings → Branches → main</td>
+<td>PR + 至少 1 Approve + CI 通过</td>
+</tr>
+<tr>
+<td>PR 模板</td>
+<td><code>.github/PULL_REQUEST_TEMPLATE.md</code></td>
+<td>要求写 Summary + Screenshots</td>
+</tr>
+<tr>
+<td>CODEOWNERS</td>
+<td><code>.github/CODEOWNERS</code></td>
+<td>核心目录指定 Owner</td>
+</tr>
+<tr>
+<td>Issue 模板</td>
+<td><code>.github/ISSUE_TEMPLATE/</code></td>
+<td>Bug Report + Feature Request</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>团队用语对照（中英）</h2>
+<table>
+<thead>
+<tr>
+<th>日常工作用语</th>
+<th>GitHub 对应操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"我领了这个任务"</td>
+<td>Issue → Assignees → 选自己</td>
+</tr>
+<tr>
+<td>"代码写好了，帮我看看"</td>
+<td>创建 PR → Reviewers → 选同事</td>
+</tr>
+<tr>
+<td>"这里改一下"</td>
+<td>Review → 行评论 → Request changes</td>
+</tr>
+<tr>
+<td>"没问题，合并吧"</td>
+<td>Review → Approve</td>
+</tr>
+<tr>
+<td>"合并吧"</td>
+<td>Merge pull request</td>
+</tr>
+<tr>
+<td>"删掉这个分支"</td>
+<td>PR 合并后点 Delete branch</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

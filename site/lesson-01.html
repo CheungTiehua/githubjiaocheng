@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第一课：注册与基础设置 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="active">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第01课 · 25min · 19 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第一课：注册与基础设置</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：无 | P0 词条：19 个 | 覆盖 UI 元素：22 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 独立注册 GitHub 账号并完成邮箱验证<br />
+- 理解 Dashboard（仪表盘）每个区域的作用<br />
+- 完成个人资料设置（头像、Bio、Location）<br />
+- 找到并理解 SSH Key 和 Personal Access Token 的作用<br />
+- 切换暗色主题</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：课程封面图 + 标题</p>
+<p><img alt="01-homepage-annotated" src="assets/01/01-homepage-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"GitHub 是全球最大的代码托管平台，几乎所有开源项目都在上面。但它的界面全是英文的，这对很多中国工程师来说特别头疼。</p>
+<p>这门课不讲 Git 命令，不讲编程，只讲一个事——GitHub 网页上每一个按钮都是干什么的。鼠标指到哪，我讲到哪。</p>
+<p>今天第一节课，我们从零开始：注册一个 GitHub 账号，搞清楚每个设置是什么意思。"</p>
+<hr />
+<h2>1. 首页导读（3 min）</h2>
+<p><strong>画面</strong>：打开 github.com，鼠标依次指向每个元素</p>
+<p><img alt="02-signup-annotated" src="assets/01/02-signup-annotated.png" /></p>
+<h3>1.1 导航栏（顶部黑条）</h3>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>英文</th>
+<th>中文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左上角</td>
+<td>GitHub logo</td>
+<td>—</td>
+<td>点了就回到首页</td>
+</tr>
+<tr>
+<td>搜索框</td>
+<td>Search or jump to...</td>
+<td>搜索或跳转</td>
+<td>可以搜仓库、搜代码、搜 Issue</td>
+</tr>
+<tr>
+<td>导航</td>
+<td>Product / Solutions / Open Source / Enterprise / Pricing</td>
+<td>产品/解决方案/开源/企业版/定价</td>
+<td>官方介绍页，新手不用管</td>
+</tr>
+<tr>
+<td>右上</td>
+<td>Sign in</td>
+<td>登录</td>
+<td>已有账号点这里</td>
+</tr>
+<tr>
+<td>右上</td>
+<td>Sign up</td>
+<td>注册</td>
+<td>没有账号点这里</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 首页主体</h3>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大标题</td>
+<td>GitHub 的宣传语，不用看</td>
+</tr>
+<tr>
+<td>输入框</td>
+<td>Email address → 填邮箱直接开始注册</td>
+</tr>
+<tr>
+<td>下方</td>
+<td>一些 GitHub 的宣传内容，新手不用管</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. 注册流程（5 min）</h2>
+<p><strong>画面</strong>：点击 Sign up，进入注册页</p>
+<h3>2.1 注册表单</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>英文</th>
+<th>含义</th>
+<th>填写建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Email</td>
+<td>Enter your email</td>
+<td>输入邮箱</td>
+<td>用 QQ/163/Gmail 都行，后面要验证</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Create a password</td>
+<td>创建密码</td>
+<td>至少 8 位，含数字和字母</td>
+</tr>
+<tr>
+<td>Username</td>
+<td>Enter a username</td>
+<td>用户名</td>
+<td>全站唯一，建议用拼音或英文名，不然后面不好改</td>
+</tr>
+<tr>
+<td>营销勾选</td>
+<td>Would you like to receive...</td>
+<td>要不要收营销邮件</td>
+<td>建议取消勾选，不需要</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 验证你是人类</h3>
+<p><strong>画面</strong>：验证码（Puzzle / CAPTCHA）</p>
+<p><strong>旁白</strong>：<br />
+"这里会出现一个人机验证。按提示做就行，有时候会让你选图片里的'公交车'、'红绿灯'，这个是 GitHub 用来防止机器人批量注册的。"</p>
+<h3>2.3 邮箱验证</h3>
+<p><strong>画面</strong>：提示 "Verify your email address"</p>
+<p><strong>旁白</strong>：<br />
+"注册完成后，GitHub 会给你邮箱发一封验证邮件，标题通常叫 'Please verify your email address'。</p>
+<p>打开邮箱 → 找到这封邮件 → 点里面的蓝色大按钮 'Verify email address'。</p>
+<p>验证完会自动跳回 GitHub，你的账号就可以用了。"</p>
+<hr />
+<h2>3. 首次登录 — Dashboard 讲解（5 min）</h2>
+<p><strong>画面</strong>：登录后的仪表盘</p>
+<h3>3.1 Dashboard 布局</h3>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧</td>
+<td>仓库列表</td>
+<td>列出你参与/收藏的仓库</td>
+</tr>
+<tr>
+<td>左侧搜索框</td>
+<td>Find a repository...</td>
+<td>搜索你的仓库</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>Latest changes</td>
+<td>你关注的人/仓库最近干了什么</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>Explore repositories</td>
+<td>推荐一些你可能感兴趣的仓库</td>
+</tr>
+<tr>
+<td>左下</td>
+<td>贡献图（绿色格子）</td>
+<td>你这一年的提交频率</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 右上角菜单（重要！）</h3>
+<p><strong>逐个点击讲解：</strong></p>
+<table>
+<thead>
+<tr>
+<th>图标</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔔 铃铛</td>
+<td>Notifications</td>
+<td>通知中心，有人 @你、Issue 有新回复都在这里</td>
+</tr>
+<tr>
+<td>➕ 加号</td>
+<td>Create new...</td>
+<td>新建仓库、Import 仓库、新建 Organization 等</td>
+</tr>
+<tr>
+<td>👤 头像</td>
+<td>个人菜单</td>
+<td>展开后是最常用的入口</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 头像菜单详解</h3>
+<p><strong>点击头像展开下拉菜单：</strong></p>
+<table>
+<thead>
+<tr>
+<th>菜单项</th>
+<th>中文含义</th>
+<th>点进去干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signed in as [username]</td>
+<td>当前登录用户</td>
+<td>点一下回到 Dashboard</td>
+</tr>
+<tr>
+<td>Set status</td>
+<td>设置状态</td>
+<td>像 QQ 状态一样，显示 "忙碌" "休假"</td>
+</tr>
+<tr>
+<td>Your profile</td>
+<td>你的个人主页</td>
+<td>别人看到的你的主页</td>
+</tr>
+<tr>
+<td>Your repositories</td>
+<td>你的仓库列表</td>
+<td>你创建和 Fork 的仓库</td>
+</tr>
+<tr>
+<td>Your projects</td>
+<td>你的项目看板</td>
+<td>Project 管理</td>
+</tr>
+<tr>
+<td>Your stars</td>
+<td>你收藏的仓库</td>
+<td>点过 Star 的仓库</td>
+</tr>
+<tr>
+<td>Your gists</td>
+<td>你的代码片段</td>
+<td>分享小块代码用的</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>设置</td>
+<td>个人设置入口</td>
+</tr>
+<tr>
+<td>Sign out</td>
+<td>退出登录</td>
+<td>退出当前账号</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Settings 逐个讲解（8 min）</h2>
+<p><strong>画面</strong>：点击 Settings，左侧导航栏逐个讲解</p>
+<h3>4.1 Public profile（公开个人资料）</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>显示名称</td>
+<td>填中文名或英文名，会显示在个人主页</td>
+</tr>
+<tr>
+<td>Public email</td>
+<td>公开邮箱</td>
+<td>选一个邮箱显示在主页，也可以选"不显示"</td>
+</tr>
+<tr>
+<td>Bio</td>
+<td>个人简介</td>
+<td>一句话介绍自己，比如 "Java 后端 / 开源爱好者"</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>个人网站</td>
+<td>博客、LinkedIn 等</td>
+</tr>
+<tr>
+<td>Company</td>
+<td>公司</td>
+<td>填了就显示在个人页</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>位置</td>
+<td>比如 "Beijing, China"</td>
+</tr>
+<tr>
+<td><strong>Update profile 按钮</strong></td>
+<td><strong>更新资料</strong></td>
+<td><strong>每次改完必须点这个，否则不会保存</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Account（账号设置）</h3>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change password</td>
+<td>改密码（需要先输入旧密码）</td>
+</tr>
+<tr>
+<td>Change username</td>
+<td>改用户名（慎重！改完旧链接全失效）</td>
+</tr>
+<tr>
+<td>Delete account</td>
+<td>删除账号（不可逆，有确认步骤）</td>
+</tr>
+</tbody>
+</table>
+<h3>4.3 Appearance（外观）</h3>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theme</td>
+<td>主题：Light（白）/ Dark（黑）/ System（跟随系统）</td>
+</tr>
+<tr>
+<td>Emoji skin tone</td>
+<td>emoji 肤色</td>
+</tr>
+<tr>
+<td>Tab size</td>
+<td>Tab 缩进宽度</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 Notifications（通知）</h3>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Watching</td>
+<td>你 Watch 了仓库的动态通知方式</td>
+</tr>
+<tr>
+<td>Email notification</td>
+<td>是否发邮件通知</td>
+</tr>
+<tr>
+<td>Subscriptions</td>
+<td>你订阅了哪些 Issue/PR</td>
+</tr>
+</tbody>
+</table>
+<h3>4.5 SSH and GPG keys（SSH 密钥）</h3>
+<p><strong>重点讲，因为命令行用 GitHub 必须配。</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSH Key</td>
+<td>一种免密码推送代码的方式。在你电脑上生成一对"钥匙"，公钥放到 GitHub，私钥留在电脑。</td>
+</tr>
+<tr>
+<td>怎么生成</td>
+<td><code>ssh-keygen -t ed25519 -C "你的邮箱"</code></td>
+</tr>
+<tr>
+<td>公钥在哪</td>
+<td><code>cat ~/.ssh/id_ed25519.pub</code> 然后把输出的内容粘贴到 GitHub</td>
+</tr>
+<tr>
+<td>New SSH Key 按钮</td>
+<td>添加公钥</td>
+</tr>
+</tbody>
+</table>
+<h3>4.6 Developer settings（开发者设置）</h3>
+<p><strong>重点讲 Personal Access Token。</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personal Access Token (Classic)</td>
+<td>个人访问令牌。2021 年后 GitHub 不能用密码推送代码了，必须用 Token。</td>
+</tr>
+<tr>
+<td>Fine-grained token</td>
+<td>新版 Token，可以精确控制权限范围</td>
+</tr>
+<tr>
+<td>生成步骤</td>
+<td>Generate new token → 选权限 → 设置过期时间 → 复制保存（只显示一次！）</td>
+</tr>
+<tr>
+<td>OAuth Apps</td>
+<td>你用 GitHub 登录 VS Code、Postman 等工具时授权过的应用</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 课后作业（1 min）</h2>
+<ol>
+<li>注册 GitHub 账号并完成邮箱验证</li>
+<li>上传头像，填写 Bio 和 Location</li>
+<li>把主题切成 Dark mode</li>
+<li>找到 SSH and GPG keys 页面（先不配，下节课讲）</li>
+<li>在 Dashboard 随便点一点，看看每个区域</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sign up</td>
+<td>注册</td>
+<td>首页右上角</td>
+</tr>
+<tr>
+<td>Sign in</td>
+<td>登录</td>
+<td>首页右上角</td>
+</tr>
+<tr>
+<td>Username</td>
+<td>用户名</td>
+<td>注册表单</td>
+</tr>
+<tr>
+<td>Verify email</td>
+<td>验证邮箱</td>
+<td>邮箱验证邮件</td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td>仪表盘/控制台</td>
+<td>登录后首页</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>通知</td>
+<td>右上角铃铛</td>
+</tr>
+<tr>
+<td>Repository（Repo）</td>
+<td>仓库</td>
+<td>存放代码的地方</td>
+</tr>
+<tr>
+<td>Star</td>
+<td>收藏/点赞</td>
+<td>仓库页右上角</td>
+</tr>
+<tr>
+<td>Fork</td>
+<td>复刻</td>
+<td>把别人的仓库复制一份到自己名下</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>设置</td>
+<td>头像菜单</td>
+</tr>
+<tr>
+<td>Profile</td>
+<td>个人资料</td>
+<td>Settings 子页面</td>
+</tr>
+<tr>
+<td>SSH Key</td>
+<td>SSH 密钥</td>
+<td>免密推送代码</td>
+</tr>
+<tr>
+<td>Personal Access Token</td>
+<td>个人访问令牌</td>
+<td>替代密码推送代码</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <a class="next" href="lesson-02.html">第02课 读代码（上）— 仓库主页</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

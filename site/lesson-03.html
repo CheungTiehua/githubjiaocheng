@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三课：读代码（下）— 文件查看与历史追溯 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="active">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第03课 · 25min · 17 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第三课：读代码（下）— 文件查看与历史追溯</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第二课 | P0 词条：17 个 | 覆盖 UI 元素：18 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 点进文件后，看懂文件查看页的所有按钮<br />
+- 用 Blame 功能找出每一行代码是谁写的<br />
+- 查看提交历史（Commit History），理解每次改了什么<br />
+- 切换分支查看不同版本的代码<br />
+- 在 GitHub 中搜索代码</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：从一个仓库主页开始</p>
+<p><img alt="04-releases-annotated" src="assets/03/04-releases-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"上节课我们学了仓库主页怎么看。但真正看代码的时候，你得点进文件。点进去之后，页面又变了——新按钮、新功能。</p>
+<p>今天我们就学：文件详情页、怎么查修改历史、怎么在不同分支间切换、以及 GitHub 的搜索功能。"</p>
+<hr />
+<h2>1. 文件查看页（6 min）</h2>
+<p><strong>画面</strong>：点进一个文件（推荐 <code>.py</code> 或 <code>.ts</code> 文件，代码高亮好看）</p>
+<p><img alt="01-file-view" src="assets/03/01-file-view.png" /></p>
+<h3>1.1 顶部信息栏</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧</td>
+<td>仓库名/文件名</td>
+<td>当前文件路径</td>
+</tr>
+<tr>
+<td>右侧按钮</td>
+<td>Raw</td>
+<td>原始代码，去掉高亮和行号的纯文本</td>
+</tr>
+<tr>
+<td>右侧按钮</td>
+<td>Blame</td>
+<td>逐行追溯，看每行代码谁写的（下节详讲）</td>
+</tr>
+<tr>
+<td>右侧按钮</td>
+<td>铅笔图标 Edit</td>
+<td>编辑文件（需要写权限）</td>
+</tr>
+<tr>
+<td>右侧按钮</td>
+<td>垃圾桶 Delete</td>
+<td>删除文件（需要写权限）</td>
+</tr>
+<tr>
+<td>右侧按钮</td>
+<td>...</td>
+<td>更多操作（Copy path, View blame prior to change 等）</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 代码显示区</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>行号</td>
+<td>左侧数字，点击会高亮并更新 URL（可以分享指定行）</td>
+</tr>
+<tr>
+<td>代码高亮</td>
+<td>不同关键字显示不同颜色</td>
+</tr>
+<tr>
+<td>换行/不换行</td>
+<td>长代码行是否自动换行，右上角可切换</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<p><img alt="02-blame-view" src="assets/03/02-blame-view.png" /></p>
+<blockquote>
+<p>【录屏】点进文件 → 鼠标指到 Raw 按钮 → "Raw 就是原始源码，去掉了高亮和行号，方便复制"<br />
+点击某一行号 → URL 变化 → "你看地址栏多了 #L42，现在可以直接把这一行分享给别人"<br />
+按住 Shift 再点下面一行 → "选中的行范围高亮了，URL 变成了 #L42-L50"</p>
+</blockquote>
+<h3>1.3 行号交互（细节）</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单击行号</td>
+<td>选中一行，URL 加 #L42</td>
+</tr>
+<tr>
+<td>Shift + 单击行号</td>
+<td>选中一个范围，#L42-L50</td>
+</tr>
+<tr>
+<td>点击行号旁 ...</td>
+<td>弹出菜单：Copy permalink（复制永久链接）/ View git blame / 等</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Blame — 逐行追溯（6 min）</h2>
+<p><strong>画面</strong>：点击 Blame 按钮</p>
+<p><img alt="03-commits-list" src="assets/03/03-commits-list.png" /></p>
+<p><strong>旁白</strong>：<br />
+"Blame 是 GitHub 上最有用的功能之一。点一下，每一行代码左边会出现谁写的、什么时候写的。"<br />
+"'Blame' 英文原意是 '责备'，但在 Git 里就是 '谁写了这行' 的意思。"</p>
+<h3>2.1 Blame 视图解读</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧头像</td>
+<td>—</td>
+<td>写这行代码的人的头像</td>
+</tr>
+<tr>
+<td>左侧名字</td>
+<td>用户名</td>
+<td>谁写的</td>
+</tr>
+<tr>
+<td>左侧 Hash</td>
+<td>一串数字字母</td>
+<td>Commit SHA（提交编号），点击可看这次提交的完整改动</td>
+</tr>
+<tr>
+<td>左侧时间</td>
+<td>"3 years ago"</td>
+<td>什么时候写的</td>
+</tr>
+<tr>
+<td>左侧边框颜色</td>
+<td>不同颜色</td>
+<td>同一批提交用同一颜色，方便区分块</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Blame 中的交互</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点击 Commit SHA</td>
+<td>跳到那次提交的详情页，看这次到底改了什么</td>
+</tr>
+<tr>
+<td>点击头像/名字</td>
+<td>跳转到作者的个人主页</td>
+</tr>
+<tr>
+<td>点击行号左边的小箭头</td>
+<td>展开这次提交的更多信息</td>
+</tr>
+<tr>
+<td>View blame prior to this change</td>
+<td>看这一行在这次修改之前是什么样的</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】点击 Blame → 页面变化 → 鼠标指到左侧各种信息 → 点击一个 Commit SHA → 跳到 Commit 详情页 → "你看，这就是那次提交改的所有文件"</p>
+</blockquote>
+<hr />
+<h2>3. 提交历史（6 min）</h2>
+<p><strong>画面</strong>：回到仓库主页，点击文件列表上方的 "XX commits" 链接</p>
+<h3>3.1 进入 Commits 页面</h3>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仓库主页文件列表上方</td>
+<td>有个"🕐 N commits"链接，点进去</td>
+</tr>
+<tr>
+<td>单个文件顶部</td>
+<td>History 按钮，只看这个文件的提交历史</td>
+</tr>
+<tr>
+<td>直接 URL</td>
+<td><code>github.com/owner/repo/commits/main</code></td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 Commit 列表解读</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧头像</td>
+<td>—</td>
+<td>提交者头像</td>
+</tr>
+<tr>
+<td>第一行</td>
+<td>Commit message 标题</td>
+<td>这次提交做了什么</td>
+</tr>
+<tr>
+<td>第二行</td>
+<td>用户名 committed 时间</td>
+<td>谁在什么时候提交的</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>Commit SHA（短编号）</td>
+<td>点进去看这次提交的详细 diff</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>复制图标</td>
+<td>复制完整的 commit SHA</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>&lt;&gt; 图标</td>
+<td>浏览这次提交时的代码快照</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 单个 Commit 详情页</h3>
+<p><strong>画面</strong>：点击一个 commit SHA 进入</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部</td>
+<td>Commit message（完整版，标题+正文）</td>
+</tr>
+<tr>
+<td>上方</td>
+<td>头像 + 用户名，commit 时间</td>
+</tr>
+<tr>
+<td>右侧</td>
+<td>Commit SHA 完整版 + "Verified" 标签</td>
+</tr>
+<tr>
+<td>中间</td>
+<td>改动了哪些文件</td>
+</tr>
+<tr>
+<td>每个文件</td>
+<td>绿色背景=添加的行，红色背景=删除的行</td>
+</tr>
+<tr>
+<td>文件上方</td>
+<td>绿色数字（+N）= 增加了 N 行；红色数字（-N）= 删除了 N 行</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>绿色（+）= 新增代码，红色（-）= 删除代码，这是 Git 的通用规则，记住。</strong></p>
+</blockquote>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】点进 Commits → 往下翻看几条 → 点一个 Commit → 看 diff → "绿色是新增的代码，红色是删除的代码"</p>
+</blockquote>
+<hr />
+<h2>4. 切换分支和标签（3 min）</h2>
+<p><strong>画面</strong>：回到仓库主页，鼠标指向分支选择器</p>
+<h3>4.1 切换分支</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点击分支下拉框</td>
+<td>展开所有分支列表</td>
+</tr>
+<tr>
+<td>搜索框</td>
+<td>Find or create branch... 快速定位分支</td>
+</tr>
+<tr>
+<td>分支列表</td>
+<td>Active branches（活跃分支）/ Your branches（你的分支）</td>
+</tr>
+<tr>
+<td>点击一个分支名</td>
+<td>文件列表切换到该分支的内容</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Tags（标签）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tag 是什么</td>
+<td>给某个时间点的代码打的一个标签，通常对应发布版本</td>
+</tr>
+<tr>
+<td>和 Branch 的区别</td>
+<td>Branch 是活的（不断有新提交），Tag 是死的（固定在某一次提交）</td>
+</tr>
+<tr>
+<td>查看 Tags</td>
+<td>分支下拉框内切换到 Tags 标签</td>
+</tr>
+<tr>
+<td>常见的 Tag 命名</td>
+<td><code>v1.0.0</code>、<code>v2.3.1</code> 表示版本号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】点击分支下拉 → 切换到 Tags 标签 → 点击一个版本号 → "你看文件列表变了，现在看到的是这个版本发布时的代码"</p>
+</blockquote>
+<hr />
+<h2>5. Releases（发布版本）（2 min）</h2>
+<p><strong>画面</strong>：点击右侧面板的 Releases 或者 URL 加 <code>/releases</code></p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最新 Release</td>
+<td>通常显示在右侧面板最上面</td>
+</tr>
+<tr>
+<td>版本号</td>
+<td>如 v1.5.0</td>
+</tr>
+<tr>
+<td>发布日期</td>
+<td>什么时候发布的</td>
+</tr>
+<tr>
+<td>点击进入</td>
+<td>能看到 Release Notes（更新说明）和下载文件</td>
+</tr>
+<tr>
+<td>Assets（下载文件）</td>
+<td>源码的 zip / tar.gz 包，有时还有编译好的可执行文件</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>有什么用</strong>：下载别人的项目时，别直接下最新代码（可能是开发的半成品），去 Releases 里下正式发布的稳定版本。</p>
+</blockquote>
+<hr />
+<h2>6. GitHub 搜索（2 min）</h2>
+<p><strong>画面</strong>：演示三种搜索</p>
+<h3>6.1 仓库内搜索</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在仓库页按 <code>/</code> 或 <code>s</code></td>
+<td>打开搜索框</td>
+</tr>
+<tr>
+<td>输入关键词</td>
+<td>搜索当前仓库的代码和文件名</td>
+</tr>
+<tr>
+<td>按 <code>.</code></td>
+<td>打开 VS Code 网页版在线编辑器（不要被吓到）</td>
+</tr>
+</tbody>
+</table>
+<h3>6.2 全站搜索（顶部黑条搜索框）</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>结果类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接输入</td>
+<td>先搜仓库名，再提供"搜代码/Issue/Commits 等"的链接</td>
+</tr>
+<tr>
+<td><code>language:python fastapi</code></td>
+<td>搜 Python 语言、关键词 fastapi</td>
+</tr>
+<tr>
+<td>搜索结果过滤</td>
+<td>左侧可以按 Language / Stars / 更新时间等过滤</td>
+</tr>
+</tbody>
+</table>
+<h3>6.3 常用搜索语法速查</h3>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keyword in:name</code></td>
+<td>仓库名包含 keyword</td>
+<td><code>react in:name</code></td>
+</tr>
+<tr>
+<td><code>keyword in:readme</code></td>
+<td>README 包含 keyword</td>
+<td><code>machine learning in:readme</code></td>
+</tr>
+<tr>
+<td><code>language:xxx</code></td>
+<td>限定编程语言</td>
+<td><code>language:python</code></td>
+</tr>
+<tr>
+<td><code>stars:&gt;1000</code></td>
+<td>Star 数大于 1000</td>
+<td><code>fastapi stars:&gt;10000</code></td>
+</tr>
+<tr>
+<td><code>user:xxx</code></td>
+<td>某个用户的仓库</td>
+<td><code>user:tiangolo</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>打开任意仓库，点进一个文件 → 点 Blame → 找到最早写的那行代码（使劲往下翻）</li>
+<li>在同一个文件里，点 History，看这个文件的前 5 次修改记录</li>
+<li>切换分支到非 main 分支，看看文件列表有什么不同（小心别乱改）</li>
+<li>在 GitHub 搜索框里搜 <code>language:typescript stars:&gt;50000</code>，看返回了哪些仓库</li>
+<li>找一个有 Release 的仓库，进入 Releases 页面，看看有哪些版本</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw</td>
+<td>原始代码</td>
+<td>文件查看页顶部</td>
+</tr>
+<tr>
+<td>Blame</td>
+<td>逐行追溯</td>
+<td>文件查看页顶部</td>
+</tr>
+<tr>
+<td>History</td>
+<td>历史记录</td>
+<td>文件查看页顶部 / 仓库页</td>
+</tr>
+<tr>
+<td>Commit</td>
+<td>提交</td>
+<td>整个 Git 系统的核心概念</td>
+</tr>
+<tr>
+<td>SHA</td>
+<td>提交编号</td>
+<td>Commit 旁边那串数字字母</td>
+</tr>
+<tr>
+<td>Commit message</td>
+<td>提交信息</td>
+<td>描述这次提交做了什么</td>
+</tr>
+<tr>
+<td>Diff</td>
+<td>差异/对比</td>
+<td>绿色红色显示的改动内容</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td>分支</td>
+<td>左手边下拉框</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td>标签</td>
+<td>分支下拉框内 Tags 标签</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>发布版本</td>
+<td>右侧面板</td>
+</tr>
+<tr>
+<td>Release Notes</td>
+<td>版本说明</td>
+<td>Release 页面</td>
+</tr>
+<tr>
+<td>Assets</td>
+<td>下载文件</td>
+<td>Release 页面底部的附件</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>搜索</td>
+<td>顶部黑条搜索框</td>
+</tr>
+<tr>
+<td>Verified</td>
+<td>已验证</td>
+<td>Commit 详情页</td>
+</tr>
+<tr>
+<td>+N -N</td>
+<td>新增N行/删除N行</td>
+<td>Commit diff 中</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-02.html">第02课 读代码（上）— 仓库主页</a>
+    
+    
+    <a class="next" href="lesson-04.html">第04课 Issue（上）— 创建与管理</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

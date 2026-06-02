@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第六课：Pull Request（一）— Fork 与 Clone — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="active">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第06课 · 30min · 16 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第六课：Pull Request（一）— Fork 与 Clone</h1>
+<blockquote>
+<p>时长：30 分钟 | 前置：第二课 | P0 词条：16 个 | 覆盖 UI 元素：14 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 理解 Fork 的真正含义和完整工作流<br />
+- 区分 Upstream（上游仓库）和 Origin（你的 Fork）<br />
+- 使用 HTTPS 和 SSH 两种方式 Clone 仓库<br />
+- 理解为什么不能直接往别人仓库 Push 代码</p>
+<hr />
+<h2>0. 开场（2 min）</h2>
+<p><strong>画面</strong>：打开一个知名开源项目（如 ant-design）</p>
+<p><img alt="02-code-ssh-annotated" src="assets/06/02-code-ssh-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"前面的课，我们都在'看'和'讨论'。但从这节课开始，我们要真正'动手'了。</p>
+<p>GitHub 上最核心的工作流是：看到一个开源项目 → 想贡献代码 → 怎么把代码交上去？</p>
+<p>答案就是三步：Fork → Clone → PR。</p>
+<p>今天讲前两步。这两步你可能已经'做'过，但你未必真正'理解'。理解错了后面全错。"</p>
+<hr />
+<h2>1. 理解 GitHub 的权限模型（3 min）</h2>
+<p><strong>画面</strong>：画图说明（可以用白板或简单的示意图）</p>
+<p><img alt="01-fork-btn" src="assets/06/01-fork-btn.png" /></p>
+<h3>1.1 GitHub 的代码归属</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>谁拥有仓库</td>
+<td>创建仓库的那个人或组织</td>
+</tr>
+<tr>
+<td>谁能 Push 代码</td>
+<td>只有被明确授权的人（Collaborator）</td>
+</tr>
+<tr>
+<td>陌生人能 Push 吗</td>
+<td>不能。你不是 Collaborator 就不能 Push</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键理解</strong>：你在别人的仓库里没有写权限。你不能直接改他们的代码。Fork 就是解决这个问题的。</p>
+</blockquote>
+<h3>1.2 Fork 的比喻</h3>
+<p>"Fork 就像你看到了一个开源项目，你说'这个好，我想在上面加点功能'。<br />
+你不能直接在人家家里改东西，所以你把这个项目复制一份，搬到你自己家里。<br />
+在自己家里随便改。改完了，你再拿着你的改动去敲门：'这是我加的功能，要不要？'<br />
+这个过程就是：Fork（复制到你家）→ 修改 → PR（敲门）。"</p>
+<hr />
+<h2>2. Fork 操作详解（6 min）</h2>
+<p><strong>画面</strong>：在目标仓库点击 Fork 按钮</p>
+<h3>2.1 Fork 操作步骤</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>打开目标仓库</td>
+<td>比如 github.com/ant-design/ant-design</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点击右上角 Fork 按钮</td>
+<td>Fork 按钮在 Star 按钮右边</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Fork 窗口弹出</td>
+<td>确认 Fork 信息</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Owner 选你自己</td>
+<td>你的用户名</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Repository name</td>
+<td>默认和原仓库同名（不用改）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Description</td>
+<td>默认和原仓库一样（不用改）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Copy the main branch only</td>
+<td>默认勾选（只复制 main 分支，就够了）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点 Create fork</td>
+<td>开始复制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】在 ant-design 点 Fork → 选自己的账号 → Create fork → 等待几秒 → 自动跳转到 <code>github.com/你的用户名/ant-design</code></p>
+</blockquote>
+<h3>2.2 Fork 之后发生了什么</h3>
+<table>
+<thead>
+<tr>
+<th>发生了什么</th>
+<th>在哪里看</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>你的 GitHub 上多了一个同名仓库</td>
+<td><code>github.com/你的用户名/ant-design</code></td>
+</tr>
+<tr>
+<td>这个仓库是你的，你有完整控制权</td>
+<td>你可以随便改、随便删（不影响原仓库）</td>
+</tr>
+<tr>
+<td>原仓库不受任何影响</td>
+<td>github.com/ant-design/ant-design 一切照旧</td>
+</tr>
+<tr>
+<td>你的 Fork 自动标记来源</td>
+<td>你的 Fork 页左上角显示 "forked from ant-design/ant-design"</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Fork 之后的页面</h3>
+<p><strong>画面</strong>：Fork 后的仓库页面</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左上角</td>
+<td>仓库名格式 <code>你的用户名/ant-design</code></td>
+</tr>
+<tr>
+<td>下面小字</td>
+<td>"forked from ant-design/ant-design" — 表明来源</td>
+</tr>
+<tr>
+<td>中间提示条</td>
+<td>"This branch is up to date with ant-design:master" — 你的 Fork 和原仓库同步状态</td>
+</tr>
+<tr>
+<td>旁边按钮</td>
+<td>Fetch upstream — 拉取上游更新（保留话题，后面讲）</td>
+</tr>
+<tr>
+<td>Star / Fork / Watch 按钮</td>
+<td>现在这是你的仓库了，数字从零开始</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Upstream vs Origin（4 min）</h2>
+<p><strong>画面</strong>：示意图，用箭头表示两个仓库的关系</p>
+<h3>3.1 两个重要概念</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>英文</th>
+<th>指的是</th>
+<th>中文叫法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Origin</td>
+<td>origin</td>
+<td>你的 Fork</td>
+<td>远程源 / 自己的仓库</td>
+</tr>
+<tr>
+<td>Upstream</td>
+<td>upstream</td>
+<td>原始仓库</td>
+<td>上游仓库 / 原始仓库</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 为什么需要区分</h3>
+<p>"你现在有两份代码：<br />
+1. 原作者那份（Upstream）—— 你管不了，只能读<br />
+2. 你自己的那份（Origin）—— 你随便改</p>
+<p>工作流是这样的：<br />
+1. 从你的 Origin Clone 到本地<br />
+2. 在本地修改代码<br />
+3. Push 到你的 Origin<br />
+4. 从你的 Origin 向 Upstream 发起 PR</p>
+<p>那么问题来了：如果原仓库（Upstream）更新了，你的 Fork（Origin）不会自动更新。<br />
+你需要手动同步——这个在第八课讲。"</p>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】在 Fork 的仓库页，指向 "forked from" 链接 → 点击回到原始仓库 → "这是 Upstream" → 回到你的 Fork → "这是 Origin"</p>
+</blockquote>
+<hr />
+<h2>4. Clone 操作详解（8 min）</h2>
+<p><strong>画面</strong>：在你的 Fork 仓库页，点击绿色 Code 按钮</p>
+<h3>4.1 Clone 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clone</td>
+<td>把 GitHub 上的代码下载到你的电脑上</td>
+</tr>
+<tr>
+<td>和 Download ZIP 的区别</td>
+<td>Clone 会保留 Git 历史，Download ZIP 只下载当前快照</td>
+</tr>
+<tr>
+<td>和 Fork 的区别</td>
+<td>Fork 是在 GitHub 服务器上复制，Clone 是下载到本地</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Fork 是云端的，Clone 是本地的。Fork 之后才能 Clone 你自己的版本回来改。</strong></p>
+</blockquote>
+<h3>4.2 HTTPS 方式 Clone</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点 Code 按钮 → 选 HTTPS 标签</td>
+</tr>
+<tr>
+<td>2</td>
+<td>复制 URL：<code>https://github.com/你的用户名/仓库名.git</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>打开终端，cd 到你想要放代码的目录</td>
+</tr>
+<tr>
+<td>4</td>
+<td>输入 <code>git clone https://github.com/你的用户名/仓库名.git</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>等待下载完成</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不需要额外配置</td>
+<td>每次 Push 要输用户名和密码（Token）</td>
+</tr>
+</tbody>
+</table>
+<h3>4.3 SSH 方式 Clone（推荐）</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>确保已经配置了 SSH Key（第一课讲过）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点 Code 按钮 → 选 SSH 标签</td>
+</tr>
+<tr>
+<td>3</td>
+<td>复制 URL：<code>git@github.com:你的用户名/仓库名.git</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>终端输入 <code>git clone git@github.com:你的用户名/仓库名.git</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一次配置终身免密</td>
+<td>需要先配 SSH Key</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表：HTTPS vs SSH</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HTTPS</th>
+<th>SSH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置难度</td>
+<td>简单</td>
+<td>需要配 SSH Key</td>
+</tr>
+<tr>
+<td>每次 Push</td>
+<td>需要输 Token</td>
+<td>自动认证</td>
+</tr>
+<tr>
+<td>防火墙友好</td>
+<td>是（走 443 端口）</td>
+<td>有时被企业防火墙封</td>
+</tr>
+<tr>
+<td>推荐场景</td>
+<td>临时克隆、不常 Push</td>
+<td>日常开发</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 Clone 到你本地后</h3>
+<p><strong>画面</strong>：展示 Clone 后在本地 IDE（比如 VS Code）打开的代码</p>
+<table>
+<thead>
+<tr>
+<th>发生了什么事</th>
+<th>后续操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码下载到了你的电脑</td>
+<td>可以用 IDE 打开编辑</td>
+</tr>
+<tr>
+<td>Git 历史也下载了</td>
+<td>可以用 <code>git log</code> 看提交历史</td>
+</tr>
+<tr>
+<td>远程地址自动设为 Origin</td>
+<td><code>git remote -v</code> 可以看到指向你的 Fork</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 把 Fork 和 Clone 串起来 — 完整流程演示（5 min）</h2>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】全程无剪接</p>
+</blockquote>
+<ol>
+<li>在 ant-design 点击 Fork → 选自己 → Create fork</li>
+<li>Fork 完成 → 进入自己的 Fork 页面</li>
+<li>点 Code → 复制 SSH URL → 终端 <code>git clone git@github.com:...</code></li>
+<li>Clone 完成 → <code>cd ant-design</code> → <code>ls</code> 看文件列表</li>
+<li><code>git remote -v</code> → 解释 origin 指向自己的 Fork</li>
+<li>结束："现在代码在你电脑上了，可以随便改。下节课讲怎么把改动变成 PR。"</li>
+</ol>
+<hr />
+<h2>6. 常见误区（2 min）</h2>
+<table>
+<thead>
+<tr>
+<th>误区</th>
+<th>正确理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Fork 就是 Clone"</td>
+<td>Fork 是云端复制，Clone 是本地下载</td>
+</tr>
+<tr>
+<td>"Fork 之后原仓库更新我的也自动更新"</td>
+<td>不会自动更新，需要手动 Sync</td>
+</tr>
+<tr>
+<td>"Fork 了就一定要提 PR"</td>
+<td>不。Fork 只是复制了一份，你不改不提交都行</td>
+</tr>
+<tr>
+<td>"Clone 别人的仓库就能直接 Push"</td>
+<td>不能。你得是 Collaborator 或者 Clone 的是自己的仓库</td>
+</tr>
+<tr>
+<td>"Fork 要钱的"</td>
+<td>不要。Fork 多少个都免费</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>打开 ant-design（或任意你感兴趣的开源项目），Fork 一份到自己名下</li>
+<li>Clone 你 Fork 的仓库到本地（用 SSH 方式，如果还没配 SSH Key 就先用 HTTPS）</li>
+<li>在终端运行 <code>git remote -v</code>，截图确认 origin 指向你的 Fork</li>
+<li>在你本地随便修改一个文件（比如加一行注释），但<strong>不要 Push</strong>（下节课做）</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fork</td>
+<td>复刻 / 分叉</td>
+<td>仓库右上角按钮</td>
+</tr>
+<tr>
+<td>Create fork</td>
+<td>创建复刻</td>
+<td>Fork 弹出窗口按钮</td>
+</tr>
+<tr>
+<td>Forked from</td>
+<td>复刻自</td>
+<td>你的 Fork 页面左上</td>
+</tr>
+<tr>
+<td>Origin</td>
+<td>远程源（你的 Fork）</td>
+<td>git remote -v 输出</td>
+</tr>
+<tr>
+<td>Upstream</td>
+<td>上游仓库（原始仓库）</td>
+<td>git remote 概念</td>
+</tr>
+<tr>
+<td>Clone</td>
+<td>克隆 / 下载到本地</td>
+<td>Code 按钮 → HTTPS/SSH</td>
+</tr>
+<tr>
+<td>HTTPS URL</td>
+<td>HTTPS 地址</td>
+<td>Code 按钮下拉</td>
+</tr>
+<tr>
+<td>SSH URL</td>
+<td>SSH 地址</td>
+<td>Code 按钮下拉</td>
+</tr>
+<tr>
+<td>Download ZIP</td>
+<td>下载压缩包</td>
+<td>Code 按钮下拉底部</td>
+</tr>
+<tr>
+<td>git clone</td>
+<td>Git 克隆命令</td>
+<td>终端命令</td>
+</tr>
+<tr>
+<td>git remote</td>
+<td>Git 查看远程地址命令</td>
+<td>终端命令</td>
+</tr>
+<tr>
+<td>Fetch upstream</td>
+<td>拉取上游更新</td>
+<td>Fork 页面提示条</td>
+</tr>
+<tr>
+<td>Collaborator</td>
+<td>协作者</td>
+<td>有 Push 权限的人</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-05.html">第05课 Issue（下）— 高级功能</a>
+    
+    
+    <a class="next" href="lesson-07.html">第07课 PR：创建 Pull Request</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

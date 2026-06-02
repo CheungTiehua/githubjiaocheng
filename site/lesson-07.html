@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第七课：Pull Request（二）— 创建 PR — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="active">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第07课 · 25min · 14 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第七课：Pull Request（二）— 创建 PR</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第六课 | P0 词条：14 个 | 覆盖 UI 元素：18 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 从零开始创建一个 Pull Request<br />
+- 理解 Base Branch 和 Compare Branch 的区别<br />
+- 正确填写 PR 的标题和正文<br />
+- 选择 Reviewer、Assignee、Label<br />
+- 区分 Draft PR 和普通 PR</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：展示 Fork + Clone 后的本地代码（接上节课）</p>
+<p><img alt="01-compare" src="assets/07/01-compare.png" /></p>
+<p><strong>旁白</strong>：<br />
+"上节课我们把代码 Fork 到了自己名下，又 Clone 到了本地。现在该干活了。</p>
+<p>这节课的目标：在本地改代码 → Push 到自己的 Fork → 向原仓库发起 PR。</p>
+<p>这是整个 GitHub 工作流的核心环节。"</p>
+<hr />
+<h2>1. 准备：在本地做一次改动（4 min）</h2>
+<p><strong>画面</strong>：在本地 IDE 中做一个小改动</p>
+<h3>1.1 最小改动演示（为了教学）</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>打开项目里的一个文件（比如 README.md）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>在末尾加一行（或者修改一个文档中的错别字）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>保存文件</td>
+</tr>
+<tr>
+<td>4</td>
+<td>终端：<code>git add .</code> → <code>git commit -m "fix: 修复 README 错别字"</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>git push origin main</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>这里不讲 Git 命令的细节</strong>，因为这门课是 GitHub 界面课。如果你不熟悉 git add/commit/push，建议配合一门 Git 基础课学习。我们这里重点看 GitHub 上 Push 之后发生了什么。</p>
+</blockquote>
+<hr />
+<h2>2. Push 之后 GitHub 上的变化（3 min）</h2>
+<p><strong>画面</strong>：Push 后打开你的 Fork 仓库页面</p>
+<h3>2.1 黄色提示条（重要！）</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>中文含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>黄色提示条</td>
+<td>"This branch is 1 commit ahead of ant-design:main"</td>
+<td>你的 main 分支比原仓库领先 1 个提交</td>
+</tr>
+<tr>
+<td>旁边的按钮</td>
+<td>Compare &amp; pull request</td>
+<td>对比并发起拉取请求</td>
+</tr>
+<tr>
+<td>旁边的按钮</td>
+<td>Contribute</td>
+<td>贡献（点开有下拉菜单）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】Push 后刷新 Fork 页面 → 鼠标指向黄色提示条 → 逐字解释 → 点击 Compare &amp; pull request</p>
+</blockquote>
+<hr />
+<h2>3. PR 创建页面详解（10 min）</h2>
+<p><strong>画面</strong>：点击 Compare &amp; pull request 后进入的页面</p>
+<p><strong>旁白</strong>：<br />
+"这是整个 GitHub 上最重要的一个页面。我们来一寸一寸地看。"</p>
+<h3>3.1 页面顶部：分支选择</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部文字</td>
+<td>"Compare changes"</td>
+<td>对比改动</td>
+</tr>
+<tr>
+<td>左侧下拉</td>
+<td>base repository + base branch</td>
+<td>目标仓库和目标分支（PR 要合到哪）</td>
+</tr>
+<tr>
+<td>← 箭头</td>
+<td>←</td>
+<td>改动方向</td>
+</tr>
+<tr>
+<td>右侧下拉</td>
+<td>head repository + compare branch</td>
+<td>来源仓库和来源分支（改动从哪来）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>base = 你要合入的目标（通常是原仓库的 main）</strong><br />
+<strong>compare = 你改的代码所在的地方（通常是你 Fork 的 main 或某个分支）</strong></p>
+</blockquote>
+<h3>3.2 确认 Base 和 Compare</h3>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>正确设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base repository</td>
+<td>原始仓库（ant-design/ant-design）</td>
+</tr>
+<tr>
+<td>base branch</td>
+<td>main（或 master）</td>
+</tr>
+<tr>
+<td>head repository</td>
+<td>你的 Fork（你的用户名/ant-design）</td>
+</tr>
+<tr>
+<td>compare branch</td>
+<td>main（或你改了代码的那个分支）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>如果方向反了，PR 会是你想让原仓库的代码合并到你的仓库——这显然不对。</strong></p>
+</blockquote>
+<h3>3.3 "Able to merge" 绿色提示</h3>
+<table>
+<thead>
+<tr>
+<th>提示文字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Able to merge"（绿色）</td>
+<td>你的改动可以自动合并，没有冲突</td>
+</tr>
+<tr>
+<td>"Can't automatically merge"（红色）</td>
+<td>有冲突，需要先解决（下节课讲）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.4 PR 标题</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题输入框</td>
+<td>默认填了上一次 commit message</td>
+</tr>
+<tr>
+<td>需要改吗</td>
+<td>如果 commit message 写得清楚就不用改，否则写得更通俗易懂</td>
+</tr>
+<tr>
+<td>好标题示例</td>
+<td><code>修复 Select 组件在多选模式下 placeholder 不显示</code></td>
+</tr>
+<tr>
+<td>差标题示例</td>
+<td><code>fix</code>、<code>update</code>、<code>bug</code></td>
+</tr>
+</tbody>
+</table>
+<h3>3.5 PR 正文（Write 标签）</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Write 标签</td>
+<td>Markdown 编辑器（和 Issue 一样）</td>
+</tr>
+<tr>
+<td>Preview 标签</td>
+<td>预览渲染效果</td>
+</tr>
+<tr>
+<td>应该写什么</td>
+<td>参考下方 PR 模板格式</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一个好的 PR 正文应该包含：</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="gu">## 做了什么</span>
+修复了 Select 组件在多选模式下 placeholder 不显示的问题
+
+<span class="gu">## 原因</span>
+当 mode 设为 multiple 时，input 的 placeholder 被 value 数组覆盖
+
+<span class="gu">## 截图</span>
+（拖入 Before / After 对比截图）
+
+<span class="gu">## 关联 Issue</span>
+Fixes <span class="ni">#1234</span>
+</code></pre></div>
+
+<h3>3.6 PR 右侧配置项</h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>英文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reviewers</td>
+<td>Reviewers</td>
+<td>指定谁来审查你的代码</td>
+</tr>
+<tr>
+<td>Assignees</td>
+<td>Assignees</td>
+<td>谁负责这个 PR（通常不填或填自己）</td>
+</tr>
+<tr>
+<td>Labels</td>
+<td>Labels</td>
+<td>标签分类（和 Issue 一样）</td>
+</tr>
+<tr>
+<td>Projects</td>
+<td>Projects</td>
+<td>关联项目看板</td>
+</tr>
+<tr>
+<td>Milestone</td>
+<td>Milestone</td>
+<td>关联里程碑</td>
+</tr>
+<tr>
+<td>Development</td>
+<td>Development</td>
+<td>关联的 Issue（会自动关联）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. 提交 PR（2 min）</h2>
+<h3>4.1 三种提交按钮</h3>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>英文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绿色主按钮</td>
+<td>Create pull request</td>
+<td>创建正式 PR，Reviewer 会收到通知</td>
+</tr>
+<tr>
+<td>下拉箭头 →</td>
+<td>Create draft pull request</td>
+<td>创建草稿 PR（下节详讲）</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 点 Create pull request 之后</h3>
+<table>
+<thead>
+<tr>
+<th>发生了什么</th>
+<th>在哪里看</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR 创建成功</td>
+<td>跳转到新 PR 页面</td>
+</tr>
+<tr>
+<td>原仓库多了一个 PR</td>
+<td>原作者在 PR 列表里能看到</td>
+</tr>
+<tr>
+<td>Reviewer 收到通知</td>
+<td>如果有指定 Reviewer，对方通知铃铛有提醒</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】填写完整 PR → 点 Create pull request → 展示创建后的 PR 页面 → "这是 PR 的 Conversation 标签，下节课我们讲 PR 的完整生命周期"</p>
+</blockquote>
+<hr />
+<h2>5. Draft PR（草稿 PR）（3 min）</h2>
+<h3>5.1 什么是 Draft PR</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>标记为"还在开发中"的 PR</td>
+</tr>
+<tr>
+<td>和普通 PR 的区别</td>
+<td>Draft PR 不能被 Merge，Reviewer 不会收到强通知</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>1. 代码还没写完 2. 想提前展示方案 3. 需要讨论但还不能合并</td>
+</tr>
+<tr>
+<td>外观区别</td>
+<td>标题旁有灰色 "Draft" 标签，Merge 按钮不可用</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 Draft PR 怎么操作</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建时</td>
+<td>Create pull request 下拉 → Create draft pull request</td>
+</tr>
+<tr>
+<td>转正</td>
+<td>在 PR 页点 "Ready for review" → Reviewer 才会收到正式通知</td>
+</tr>
+<tr>
+<td>退回 Draft</td>
+<td>已经转正的 PR 也可以退回到 Draft 状态</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>最佳实践</strong>：代码写到 70% 开 Draft PR → 收到早期反馈 → 写完后转 Ready for review。</p>
+</blockquote>
+<hr />
+<h2>6. PR Template（PR 模板）（2 min）</h2>
+<h3>6.1 和 Issue Template 原理一样</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件位置</td>
+<td><code>.github/PULL_REQUEST_TEMPLATE.md</code> 或 <code>.github/PULL_REQUEST_TEMPLATE/</code> 目录</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>每次创建 PR 时自动填入模板内容</td>
+</tr>
+<tr>
+<td>示例</td>
+<td>让贡献者必须填写"做了什么/为什么/怎么测试"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例模板：</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="gu">## Summary</span>
+&lt;!-- 用一两句话描述这个 PR 做了什么 --&gt;
+
+<span class="gu">## Motivation</span>
+&lt;!-- 为什么要做这个改动？关联哪个 Issue？ --&gt;
+
+<span class="gu">## Screenshots</span>
+&lt;!-- 如果改了 UI，请附上前后对比截图 --&gt;
+
+<span class="gu">## Checklist</span>
+<span class="k">- [ ]</span> 代码通过测试
+<span class="k">- [ ]</span> 更新了文档
+<span class="k">- [ ]</span> 关联了相关 Issue
+</code></pre></div>
+
+<hr />
+<h2>7. 常见误区（2 min）</h2>
+<table>
+<thead>
+<tr>
+<th>误区</th>
+<th>正确</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"PR 必须是给开源项目用的"</td>
+<td>PR 也可以在同一仓库的不同分支之间用（团队内最常见）</td>
+</tr>
+<tr>
+<td>"Base 选错了可以改"</td>
+<td>创建后不能改 base 仓库和分支，只能关掉重建</td>
+</tr>
+<tr>
+<td>"PR 标题就是 commit message"</td>
+<td>标题可以改，而且应该比 commit message 更通俗</td>
+</tr>
+<tr>
+<td>"提交了 PR 就不能再 Push 了"</td>
+<td>可以继续 Push，PR 自动更新</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>基于上节课 Fork 的仓库，在本地做一个修改 → Push → 创建 PR</li>
+<li>写完整的 PR 正文：包含 "做了什么"、"原因"、"截图"（如果涉及界面）</li>
+<li>创建第二个 PR，用 Draft PR 模式 → 看一眼 Draft 标签 → 转 Ready for review</li>
+<li>在你自己仓库里创建 <code>.github/PULL_REQUEST_TEMPLATE.md</code>，下次创建 PR 看效果</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pull Request (PR)</td>
+<td>拉取请求</td>
+<td>顶部标签栏</td>
+</tr>
+<tr>
+<td>Compare &amp; pull request</td>
+<td>对比并发起 PR</td>
+<td>Push 后黄色提示条</td>
+</tr>
+<tr>
+<td>Base branch</td>
+<td>目标分支</td>
+<td>PR 创建页面顶部左侧</td>
+</tr>
+<tr>
+<td>Compare branch</td>
+<td>来源分支</td>
+<td>PR 创建页面顶部右侧</td>
+</tr>
+<tr>
+<td>Head repository</td>
+<td>来源仓库</td>
+<td>PR 分支选择右侧</td>
+</tr>
+<tr>
+<td>Able to merge</td>
+<td>可以合并</td>
+<td>分支选择下方的绿色/红色提示</td>
+</tr>
+<tr>
+<td>Reviewer</td>
+<td>审查者</td>
+<td>PR 右侧配置</td>
+</tr>
+<tr>
+<td>Create pull request</td>
+<td>创建 PR</td>
+<td>绿色提交按钮</td>
+</tr>
+<tr>
+<td>Draft pull request</td>
+<td>草稿 PR</td>
+<td>提交按钮下拉菜单</td>
+</tr>
+<tr>
+<td>Ready for review</td>
+<td>准备好审查</td>
+<td>Draft → 正式 PR 的按钮</td>
+</tr>
+<tr>
+<td>PR Template</td>
+<td>PR 模板</td>
+<td>.github/PULL_REQUEST_TEMPLATE.md</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-06.html">第06课 PR：Fork 与 Clone</a>
+    
+    
+    <a class="next" href="lesson-08.html">第08课 PR：生命周期与合并</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

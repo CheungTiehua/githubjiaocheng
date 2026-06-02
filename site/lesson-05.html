@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第五课：Issue（下）— 高级功能 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="active">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第05课 · 25min · 12 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第五课：Issue（下）— 高级功能</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第四课 | P0 词条：12 个 | 覆盖 UI 元素：14 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 创建和使用 Issue Template（Issue 模板）<br />
+- 理解 Pin、Lock、Transfer、Convert 等高级操作<br />
+- 用 <code>#引用</code> 和 PR 关联技巧高效组织 Issue<br />
+- 理解 Subscribe（订阅）的作用<br />
+- 用关键词在 PR 中自动关闭 Issue</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：Issue 列表页</p>
+<p><img alt="01-template-choose" src="assets/05/01-template-choose.png" /></p>
+<p><strong>旁白</strong>：<br />
+"上节课我们学了怎么创建和回复 Issue。但这只是基础。真正的开源项目，Issue 管理还有一堆高级功能：模板、置顶、锁定、转移到别的仓库……</p>
+<p>今天把这些剩下的都讲完。"</p>
+<hr />
+<h2>1. Issue Template（Issue 模板）（6 min）</h2>
+<p><strong>画面</strong>：先展示一个有模板的仓库（如 ant-design），点 New issue</p>
+<p><img alt="02-labels-page" src="assets/05/02-labels-page.png" /></p>
+<p><strong>旁白</strong>：<br />
+"很多大项目，你点 New issue 不会直接给你空白页，而是让你选一个问题类型。这叫 Issue Template——Issue 模板。"</p>
+<h3>1.1 什么是 Issue Template</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>预定义的 Issue 格式，帮提交者把信息写完整</td>
+</tr>
+<tr>
+<td>好处</td>
+<td>避免"有个 Bug"这种无意义 Issue</td>
+</tr>
+<tr>
+<td>常见分类</td>
+<td>Bug Report（Bug 报告）/ Feature Request（功能请求）/ 自定义</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 用户视角：使用模板</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>画面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 点 New issue</td>
+<td>出现模板选择页面</td>
+</tr>
+<tr>
+<td>2. 点击 Bug Report 旁的 Get started</td>
+<td>进入预填格式的编辑页</td>
+</tr>
+<tr>
+<td>3. 按模板提示填</td>
+<td>每个区域都有标记告诉你该填什么</td>
+</tr>
+<tr>
+<td>4. 填完提交</td>
+<td>和普通 Issue 一样</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 维护者视角：创建模板</h3>
+<blockquote>
+<p>注意：以下操作需要有仓库写权限。</p>
+</blockquote>
+<p><strong>模板文件位置</strong>：<code>.github/ISSUE_TEMPLATE/</code> 目录下</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在仓库里创建 <code>.github/ISSUE_TEMPLATE/bug_report.md</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>写模板内容（Markdown 格式 + YAML 元数据）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>提交后，点 New issue 就能看到</td>
+</tr>
+</tbody>
+</table>
+<p><strong>模板文件结构示例</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bug Report</span>
+<span class="nt">about</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a report to help us improve</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;[Bug]</span><span class="nv"> </span><span class="s">&quot;</span>
+<span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bug</span>
+<span class="nt">assignees</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="nn">---</span>
+
+<span class="err">*</span><span class="nv">*Describe</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the bug**</span>
+<span class="l l-Scalar l-Scalar-Plain">A clear and concise description of what the bug is.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">**To Reproduce**</span>
+<span class="l l-Scalar l-Scalar-Plain">Steps to reproduce the behavior</span><span class="p p-Indicator">:</span>
+<span class="l l-Scalar l-Scalar-Plain">1. Go to &#39;...&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">2. Click on &#39;....&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">3. See error</span>
+
+<span class="err">*</span><span class="nv">*Expected</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">behavior**</span>
+<span class="l l-Scalar l-Scalar-Plain">What you expected to happen.</span>
+
+<span class="err">*</span><span class="nv">*Screenshots</span><span class="err">**</span>
+<span class="l l-Scalar l-Scalar-Plain">If applicable, add screenshots.</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>中文版本</strong>完全可以自己做——把英文部分换成中文就行。</p>
+</blockquote>
+<p><strong>操作演示</strong>：</p>
+<p><img alt="03-milestones" src="assets/05/03-milestones.png" /></p>
+<blockquote>
+<p>【录屏】在 .github/ISSUE_TEMPLATE 目录创建 bug_report.md → 提交 → 回到 Issues → 点 New issue → 展示模板效果</p>
+</blockquote>
+<hr />
+<h2>2. Issue 高级操作（4 min）</h2>
+<p><strong>画面</strong>：打开一个 Issue，鼠标指向 ... 菜单</p>
+<h3>2.1 Pin issue（置顶）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用</td>
+<td>把 Issue 固定在 Issue 列表最上面</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>重要公告、FAQ、贡献指南等</td>
+</tr>
+<tr>
+<td>能 Pin 几个</td>
+<td>最多 Pin 3 个</td>
+</tr>
+<tr>
+<td>怎么取消</td>
+<td>点 Unpin issue</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Lock conversation（锁定讨论）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用</td>
+<td>禁止所有人再评论（包括仓库管理员）</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>讨论跑题、吵架、或已过时不想再被顶上来</td>
+</tr>
+<tr>
+<td>能解锁吗</td>
+<td>可以，管理员可以 Unlock</td>
+</tr>
+<tr>
+<td>锁定后还能看吗</td>
+<td>能看，只是不能评论</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Transfer issue（转移 Issue）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用</td>
+<td>把这个 Issue 移动到另一个仓库</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>Issue 提错仓库了</td>
+</tr>
+<tr>
+<td>转移后编号会变吗</td>
+<td>会在目标仓库获得新编号</td>
+</tr>
+<tr>
+<td>旧链接怎么办</td>
+<td>旧链接自动重定向到新位置</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 Convert to discussion（转为讨论）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用</td>
+<td>把 Issue 转成 Discussion（论坛形式的讨论）</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>发现这个不是 Bug 也不是功能请求，而是开放性讨论</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Subscribe（订阅）（2 min）</h2>
+<p><strong>画面</strong>：Issue 页面右侧面板</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>订阅这个 Issue 的通知</td>
+</tr>
+<tr>
+<td>Subscribe 按钮</td>
+<td>订阅后你会收到这个 Issue 有新评论时的通知</td>
+</tr>
+<tr>
+<td>Unsubscribe</td>
+<td>取消订阅</td>
+</tr>
+<tr>
+<td>自动订阅规则</td>
+<td>你创建的 Issue、你评论过的 Issue 自动订阅</td>
+</tr>
+<tr>
+<td>在哪里管理所有订阅</td>
+<td>Settings → Notifications → Subscriptions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Issue 和 PR 的关联技巧（5 min）</h2>
+<h3>4.1 #引用：在 Issue 中关联 PR</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在 PR 正文写 <code>Fixes #123</code></td>
+<td>PR 合并后，自动关闭第 123 号 Issue</td>
+</tr>
+<tr>
+<td>在 Issue 评论区粘贴 PR 链接</td>
+<td>GitHub 自动展开 PR 信息卡片</td>
+</tr>
+<tr>
+<td>在 Issue 右侧 Development 区域</td>
+<td>手动关联 PR</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 自动关闭 Issue 的关键词</h3>
+<blockquote>
+<p>在 PR 描述里用这些关键词 + Issue 编号，PR 合并后 Issue 自动关闭。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Close</code> / <code>Closes</code> / <code>Closed</code></td>
+<td><code>Closes #123</code></td>
+</tr>
+<tr>
+<td><code>Fix</code> / <code>Fixes</code> / <code>Fixed</code></td>
+<td><code>Fixes #456</code></td>
+</tr>
+<tr>
+<td><code>Resolve</code> / <code>Resolves</code> / <code>Resolved</code></td>
+<td><code>Resolves #789</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>：关键词 + 编号必须在 PR 正文里，不是标题。而且 PR 必须是合并到默认分支（通常是 main）才生效。</p>
+</blockquote>
+<h3>4.3 Development 关联</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Issue 页面右侧 Development 区域</td>
+<td>显示关联了哪些 PR</td>
+</tr>
+<tr>
+<td>点击齿轮 ⚙</td>
+<td>手动搜索并关联已有 PR / 创建新分支</td>
+</tr>
+<tr>
+<td>PR 合并后</td>
+<td>Issue 自动关闭（如果用了 Fixes 关键词或 Development 关联）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】开一个 Issue → 创建关联 PR 时写 "Fixes #123" → 合并 PR → 回到 Issue 页 → "你看，Issue 自动关闭了，还显示了 'Closed as completed'"</p>
+</blockquote>
+<hr />
+<h2>5. Issue 列表批量操作（2 min）</h2>
+<p><strong>画面</strong>：Issue 列表页</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>勾选 Issue 左侧复选框</td>
+<td>选中一个或多个</td>
+</tr>
+<tr>
+<td>上方出现批量操作条</td>
+<td>Assign / Label / Milestone / Mark as 等</td>
+</tr>
+<tr>
+<td>Mark as</td>
+<td>批量标记为 Open/Closed</td>
+</tr>
+<tr>
+<td>搜索过滤后全选</td>
+<td>可以批量关闭所有过滤出来的 Issue</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. 最佳实践总结（2 min）</h2>
+<ol>
+<li><strong>写 Bug Report 时</strong>：附上环境信息（浏览器、系统版本、截图）</li>
+<li><strong>写 Feature Request 时</strong>：说清楚"现在是什么样"和"希望变成什么样"</li>
+<li><strong>提交前搜索</strong>：看看有没有人已经提过，避免重复（Duplicate）</li>
+<li><strong>及时 Close</strong>：解决了的 Issue 及时关掉，保持列表干净</li>
+<li><strong>善用 Label</strong>：不加标签的 Issue 就像没有分类的邮件，久了会乱</li>
+<li><strong>每个仓库最多 Pin 3 个 Issue</strong>：把最重要的信息放那里（贡献指南、Roadmap、FAQ）</li>
+</ol>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>在你自己创建的仓库里，创建 <code>.github/ISSUE_TEMPLATE/</code> 目录，做一个 Bug Report 模板</li>
+<li>测试自动关闭：创建 Issue #1 → 创建测试 PR → 写 <code>Fixes #1</code> → 合并 PR → 验证 Issue 被自动关闭</li>
+<li>在 Issue 里用 <code>@</code> 提及你自己的另一个账号（或让朋友注册一个）</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Issue Template</td>
+<td>Issue 模板</td>
+<td>New issue 时选择</td>
+</tr>
+<tr>
+<td>Bug Report</td>
+<td>Bug 报告</td>
+<td>模板类型</td>
+</tr>
+<tr>
+<td>Feature Request</td>
+<td>功能请求</td>
+<td>模板类型</td>
+</tr>
+<tr>
+<td>Pin</td>
+<td>置顶</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Lock conversation</td>
+<td>锁定讨论</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Transfer issue</td>
+<td>转移 Issue</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Convert to discussion</td>
+<td>转为讨论</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Subscribe</td>
+<td>订阅通知</td>
+<td>Issue 右侧面板</td>
+</tr>
+<tr>
+<td>Fixes / Closes / Resolves</td>
+<td>修复/关闭/解决（自动关闭关键词）</td>
+<td>PR 正文</td>
+</tr>
+<tr>
+<td>Development</td>
+<td>开发关联</td>
+<td>Issue 右侧面板</td>
+</tr>
+<tr>
+<td>Roadmap</td>
+<td>路线图</td>
+<td>不涉及但常见</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-04.html">第04课 Issue（上）— 创建与管理</a>
+    
+    
+    <a class="next" href="lesson-06.html">第06课 PR：Fork 与 Clone</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

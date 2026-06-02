@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>术语中英对照表 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>GitHub 术语中英对照表</h1>
+<blockquote>
+<p>收录本课程涉及的所有英文术语。按字母排序，可通过 Ctrl+F 搜索。
+最后更新：2026-06-02</p>
+</blockquote>
+<hr />
+<h2>使用说明</h2>
+<ul>
+<li><strong>英文</strong>：GitHub 界面上显示的原词</li>
+<li><strong>中文</strong>：本课程采用的统一译法（非官方翻译，为了好记）</li>
+<li><strong>出现位置</strong>：在哪个页面/功能中常见</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2FA (Two-factor authentication)</td>
+<td>双因素认证</td>
+<td>Settings → Password and authentication</td>
+</tr>
+<tr>
+<td>Able to merge</td>
+<td>可以合并</td>
+<td>PR 创建页面</td>
+</tr>
+<tr>
+<td>Actions</td>
+<td>自动化 / Actions</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Admin</td>
+<td>管理员（权限级别）</td>
+<td>协作人员权限</td>
+</tr>
+<tr>
+<td>Ahead / Behind</td>
+<td>领先 / 落后</td>
+<td>Fork 页面提示</td>
+</tr>
+<tr>
+<td>All Activity</td>
+<td>所有动态</td>
+<td>Watch 下拉选项</td>
+</tr>
+<tr>
+<td>Announcements</td>
+<td>公告</td>
+<td>Discussions 分类</td>
+</tr>
+<tr>
+<td>Approve</td>
+<td>批准</td>
+<td>Code Review</td>
+</tr>
+<tr>
+<td>Asset</td>
+<td>附件/下载文件</td>
+<td>Releases 页面</td>
+</tr>
+<tr>
+<td>Assignee</td>
+<td>被指派人</td>
+<td>Issue / PR 右侧</td>
+</tr>
+<tr>
+<td>Backlog</td>
+<td>待办池</td>
+<td>Projects</td>
+</tr>
+<tr>
+<td>Badge</td>
+<td>状态徽章</td>
+<td>README 中的 CI 图标</td>
+</tr>
+<tr>
+<td>Base branch</td>
+<td>目标分支</td>
+<td>PR 创建页面</td>
+</tr>
+<tr>
+<td>Bio</td>
+<td>个人简介</td>
+<td>Settings → Profile</td>
+</tr>
+<tr>
+<td>Blame</td>
+<td>逐行追溯</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td>Board</td>
+<td>看板视图</td>
+<td>Projects</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td>分支</td>
+<td>仓库页左上</td>
+</tr>
+<tr>
+<td>Branch protection rule</td>
+<td>分支保护规则</td>
+<td>Settings → Branches</td>
+</tr>
+<tr>
+<td>Bug Report</td>
+<td>Bug 报告</td>
+<td>Issue 模板</td>
+</tr>
+<tr>
+<td>Cancel workflow</td>
+<td>取消运行</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>Categories</td>
+<td>分类</td>
+<td>Discussions</td>
+</tr>
+<tr>
+<td>Checks</td>
+<td>检查（CI 结果）</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>CI (Continuous Integration)</td>
+<td>持续集成</td>
+<td>贯穿课程</td>
+</tr>
+<tr>
+<td>Clone</td>
+<td>克隆/下载到本地</td>
+<td>Code 按钮</td>
+</tr>
+<tr>
+<td>Close issue / PR</td>
+<td>关闭</td>
+<td>Issue / PR 页面</td>
+</tr>
+<tr>
+<td>Closed</td>
+<td>已关闭</td>
+<td>Issue / PR 状态</td>
+</tr>
+<tr>
+<td>CODEOWNERS</td>
+<td>代码所有者</td>
+<td>.github/CODEOWNERS 文件</td>
+</tr>
+<tr>
+<td>Collaborator</td>
+<td>协作者</td>
+<td>Settings → Collaborators</td>
+</tr>
+<tr>
+<td>Comment</td>
+<td>评论（Review 结论）</td>
+<td>Code Review</td>
+</tr>
+<tr>
+<td>Commit</td>
+<td>提交</td>
+<td>Git 核心概念</td>
+</tr>
+<tr>
+<td>Commit message</td>
+<td>提交信息</td>
+<td>文件列表右侧</td>
+</tr>
+<tr>
+<td>Commits</td>
+<td>所有提交</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Compare branch</td>
+<td>来源分支</td>
+<td>PR 创建页面</td>
+</tr>
+<tr>
+<td>Compare &amp; pull request</td>
+<td>对比并发起 PR</td>
+<td>Push 后黄色提示条</td>
+</tr>
+<tr>
+<td>Contributors</td>
+<td>贡献者</td>
+<td>仓库右侧面板</td>
+</tr>
+<tr>
+<td>Conversation</td>
+<td>对话讨论</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Convert to discussion</td>
+<td>转为讨论</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Create fork</td>
+<td>创建复刻</td>
+<td>Fork 弹窗</td>
+</tr>
+<tr>
+<td>Create pull request</td>
+<td>创建 PR</td>
+<td>PR 提交按钮</td>
+</tr>
+<tr>
+<td>Critical / High / Medium / Low</td>
+<td>严重程度分级</td>
+<td>Dependabot 警报</td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td>仪表盘/控制台</td>
+<td>登录后首页</td>
+</tr>
+<tr>
+<td>Delete issue</td>
+<td>删除 Issue</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Dependabot</td>
+<td>依赖机器人</td>
+<td>Security 标签</td>
+</tr>
+<tr>
+<td>Development</td>
+<td>开发关联</td>
+<td>Issue 右侧</td>
+</tr>
+<tr>
+<td>Diff</td>
+<td>差异对比</td>
+<td>Commit / PR 页面</td>
+</tr>
+<tr>
+<td>Discussions</td>
+<td>讨论/论坛</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Dismiss review</td>
+<td>驳回审查</td>
+<td>Code Review</td>
+</tr>
+<tr>
+<td>Done</td>
+<td>已完成</td>
+<td>Projects 状态</td>
+</tr>
+<tr>
+<td>Download ZIP</td>
+<td>下载 ZIP 压缩包</td>
+<td>Code 按钮</td>
+</tr>
+<tr>
+<td>Draft pull request</td>
+<td>草稿 PR</td>
+<td>PR 创建下拉</td>
+</tr>
+<tr>
+<td>Duplicate</td>
+<td>重复的</td>
+<td>Issue Label 常见标签</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td>编辑</td>
+<td>Issue / PR 操作</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>功能改进</td>
+<td>Issue Label 常见标签</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>失败（CI）</td>
+<td>Actions 状态</td>
+</tr>
+<tr>
+<td>Feature Request</td>
+<td>功能请求</td>
+<td>Issue 模板</td>
+</tr>
+<tr>
+<td>Fetch upstream</td>
+<td>拉取上游</td>
+<td>Fork 页面</td>
+</tr>
+<tr>
+<td>Field</td>
+<td>字段</td>
+<td>Projects 自定义字段</td>
+</tr>
+<tr>
+<td>Files changed</td>
+<td>文件改动</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Fixes / Closes / Resolves</td>
+<td>自动关闭 Issue</td>
+<td>PR 正文关键词</td>
+</tr>
+<tr>
+<td>Fork</td>
+<td>复刻/分叉</td>
+<td>仓库右上角按钮</td>
+</tr>
+<tr>
+<td>Forked from</td>
+<td>复刻自</td>
+<td>Fork 页面标志</td>
+</tr>
+<tr>
+<td>Go to file</td>
+<td>快速跳转文件</td>
+<td>文件列表上方</td>
+</tr>
+<tr>
+<td>Good first issue</td>
+<td>适合新手的 Issue</td>
+<td>Issue Label</td>
+</tr>
+<tr>
+<td>Head repository</td>
+<td>来源仓库</td>
+<td>PR 分支选择</td>
+</tr>
+<tr>
+<td>Help wanted</td>
+<td>需要帮助</td>
+<td>Issue Label</td>
+</tr>
+<tr>
+<td>History</td>
+<td>历史记录</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td>HTTPS URL</td>
+<td>HTTPS 地址</td>
+<td>Code 按钮</td>
+</tr>
+<tr>
+<td>Ignore</td>
+<td>忽略（Watch 通知级别）</td>
+<td>Watch 下拉</td>
+</tr>
+<tr>
+<td>In Progress</td>
+<td>进行中</td>
+<td>Projects 状态</td>
+</tr>
+<tr>
+<td>Insights</td>
+<td>统计分析</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Issue</td>
+<td>议题</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Issue Template</td>
+<td>Issue 模板</td>
+<td>New issue 时选择</td>
+</tr>
+<tr>
+<td>Iteration</td>
+<td>迭代/冲刺</td>
+<td>Projects 字段</td>
+</tr>
+<tr>
+<td>Job</td>
+<td>任务（CI）</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>Keyboard shortcuts</td>
+<td>快捷键</td>
+<td>按 ? 查看</td>
+</tr>
+<tr>
+<td>Label / Labels</td>
+<td>标签</td>
+<td>Issue / PR</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>编程语言占比</td>
+<td>仓库右侧面板</td>
+</tr>
+<tr>
+<td>Lock conversation</td>
+<td>锁定讨论</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Logs</td>
+<td>日志（CI）</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>main / master</td>
+<td>主分支</td>
+<td>分支选择器</td>
+</tr>
+<tr>
+<td>Maintain</td>
+<td>维护者（权限级别）</td>
+<td>协作人员权限</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>市场（Actions）</td>
+<td>GitHub 市场</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>矩阵（多版本并行测试）</td>
+<td>CI Workflow 配置</td>
+</tr>
+<tr>
+<td>Mention (@)</td>
+<td>提及/艾特</td>
+<td>Issue / PR 正文</td>
+</tr>
+<tr>
+<td>Merge conflict</td>
+<td>合并冲突</td>
+<td>PR 页面红字</td>
+</tr>
+<tr>
+<td>Merge commit</td>
+<td>合并提交</td>
+<td>Merge 方式一</td>
+</tr>
+<tr>
+<td>Merge pull request</td>
+<td>合并 PR</td>
+<td>PR 底部按钮</td>
+</tr>
+<tr>
+<td>Milestone</td>
+<td>里程碑</td>
+<td>Issue / PR 右侧</td>
+</tr>
+<tr>
+<td>New issue</td>
+<td>新建 Issue</td>
+<td>仓库页绿色按钮</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>通知</td>
+<td>右上角铃铛</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>打开中</td>
+<td>Issue / PR 状态</td>
+</tr>
+<tr>
+<td>Origin</td>
+<td>远程源（你的 Fork）</td>
+<td>Git 概念</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>包托管</td>
+<td>仓库右侧面板</td>
+</tr>
+<tr>
+<td>Pages</td>
+<td>GitHub Pages 静态网站</td>
+<td>Wiki 关联功能</td>
+</tr>
+<tr>
+<td>Participating</td>
+<td>参与中（Watch 通知级别）</td>
+<td>Watch 下拉</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>通过（CI）</td>
+<td>Actions 状态</td>
+</tr>
+<tr>
+<td>Personal Access Token</td>
+<td>个人访问令牌</td>
+<td>Settings → Developer settings</td>
+</tr>
+<tr>
+<td>Pin issue</td>
+<td>置顶 Issue</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Pre-release</td>
+<td>预发布版</td>
+<td>Release 复选框</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>预览</td>
+<td>Markdown 编辑器标签</td>
+</tr>
+<tr>
+<td>Private</td>
+<td>私有（仓库可见性）</td>
+<td>仓库名旁标签</td>
+</tr>
+<tr>
+<td>Profile</td>
+<td>个人资料</td>
+<td>Settings 子页面</td>
+</tr>
+<tr>
+<td>Projects</td>
+<td>项目看板</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Public</td>
+<td>公开（仓库可见性）</td>
+<td>仓库名旁标签</td>
+</tr>
+<tr>
+<td>Pull Request (PR)</td>
+<td>拉取请求</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Q&amp;A</td>
+<td>问答</td>
+<td>Discussions 分类</td>
+</tr>
+<tr>
+<td>Quote reply</td>
+<td>引用回复</td>
+<td>评论 ... 菜单</td>
+</tr>
+<tr>
+<td>Raw</td>
+<td>原始代码</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td>Read</td>
+<td>只读（权限级别）</td>
+<td>协作人员权限</td>
+</tr>
+<tr>
+<td>README.md</td>
+<td>说明文档</td>
+<td>文件列表</td>
+</tr>
+<tr>
+<td>Ready for review</td>
+<td>准备好审查</td>
+<td>Draft PR 转正</td>
+</tr>
+<tr>
+<td>Rebase and merge</td>
+<td>变基合并</td>
+<td>Merge 方式三</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>发布版本</td>
+<td>仓库右侧面板</td>
+</tr>
+<tr>
+<td>Release Notes</td>
+<td>版本说明</td>
+<td>Release 正文</td>
+</tr>
+<tr>
+<td>Re-request review</td>
+<td>重新请求审查</td>
+<td>Reviewers 列表</td>
+</tr>
+<tr>
+<td>Re-run jobs</td>
+<td>重新运行</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>Repository (Repo)</td>
+<td>仓库</td>
+<td>GitHub 基本单位</td>
+</tr>
+<tr>
+<td>Request changes</td>
+<td>要求修改</td>
+<td>Code Review</td>
+</tr>
+<tr>
+<td>Require approvals</td>
+<td>需要审批</td>
+<td>分支保护规则</td>
+</tr>
+<tr>
+<td>Resolved / Unresolved</td>
+<td>已解决 / 未解决</td>
+<td>PR 评论状态</td>
+</tr>
+<tr>
+<td>Reviewer</td>
+<td>审查者</td>
+<td>PR 右侧配置</td>
+</tr>
+<tr>
+<td>Roadmap</td>
+<td>路线图视图</td>
+<td>Projects</td>
+</tr>
+<tr>
+<td>Run history</td>
+<td>运行历史</td>
+<td>Actions 页面</td>
+</tr>
+<tr>
+<td>runs-on</td>
+<td>运行环境</td>
+<td>CI 配置</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>搜索</td>
+<td>顶部搜索框</td>
+</tr>
+<tr>
+<td>Secret scanning</td>
+<td>密钥扫描</td>
+<td>Security 标签</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>安全</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>设置</td>
+<td>头像菜单 / 仓库标签</td>
+</tr>
+<tr>
+<td>SHA</td>
+<td>提交编号</td>
+<td>Commit 旁边</td>
+</tr>
+<tr>
+<td>Sign in</td>
+<td>登录</td>
+<td>首页右上</td>
+</tr>
+<tr>
+<td>Sign out</td>
+<td>退出登录</td>
+<td>头像菜单</td>
+</tr>
+<tr>
+<td>Sign up</td>
+<td>注册</td>
+<td>首页右上</td>
+</tr>
+<tr>
+<td>Split / Unified</td>
+<td>分屏/统一对比</td>
+<td>Files changed 视图</td>
+</tr>
+<tr>
+<td>Squash and merge</td>
+<td>压缩合并</td>
+<td>Merge 方式二</td>
+</tr>
+<tr>
+<td>SSH Key</td>
+<td>SSH 密钥</td>
+<td>Settings → SSH and GPG keys</td>
+</tr>
+<tr>
+<td>SSH URL</td>
+<td>SSH 地址</td>
+<td>Code 按钮</td>
+</tr>
+<tr>
+<td>Star / Unstar</td>
+<td>收藏/取消收藏</td>
+<td>仓库头部按钮</td>
+</tr>
+<tr>
+<td>Status checks</td>
+<td>状态检查</td>
+<td>分支保护规则</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>步骤（CI）</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>Subscribe / Unsubscribe</td>
+<td>订阅/取消订阅</td>
+<td>Issue 右侧</td>
+</tr>
+<tr>
+<td>Suggested change</td>
+<td>建议修改</td>
+<td>Code Review</td>
+</tr>
+<tr>
+<td>Sync Fork</td>
+<td>同步上游</td>
+<td>Fork 页面</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>表格视图</td>
+<td>Projects</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td>标签（版本标记）</td>
+<td>Release 关联</td>
+</tr>
+<tr>
+<td>Todo</td>
+<td>待办</td>
+<td>Projects 状态</td>
+</tr>
+<tr>
+<td>Transfer issue</td>
+<td>转移 Issue</td>
+<td>Issue ... 菜单</td>
+</tr>
+<tr>
+<td>Triage</td>
+<td>筛选（权限级别）</td>
+<td>协作人员权限</td>
+</tr>
+<tr>
+<td>Up to date</td>
+<td>已是最新</td>
+<td>Fork 页面提示</td>
+</tr>
+<tr>
+<td>Upstream</td>
+<td>上游仓库</td>
+<td>Git 概念</td>
+</tr>
+<tr>
+<td>Username</td>
+<td>用户名</td>
+<td>注册表单</td>
+</tr>
+<tr>
+<td>Verified</td>
+<td>已验证（签名/邮箱）</td>
+<td>Commit 详情</td>
+</tr>
+<tr>
+<td>Verify email</td>
+<td>验证邮箱</td>
+<td>注册邮件</td>
+</tr>
+<tr>
+<td>Vulnerability</td>
+<td>安全漏洞</td>
+<td>Dependabot 警报</td>
+</tr>
+<tr>
+<td>Watch</td>
+<td>关注/监视</td>
+<td>仓库头部按钮</td>
+</tr>
+<tr>
+<td>Wiki</td>
+<td>维基文档</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Wontfix</td>
+<td>不打算修</td>
+<td>Issue Label</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>工作流</td>
+<td>Actions</td>
+</tr>
+<tr>
+<td>workflow_dispatch</td>
+<td>手动触发</td>
+<td>CI 触发条件</td>
+</tr>
+<tr>
+<td>Write</td>
+<td>写入（权限级别）</td>
+<td>协作人员权限</td>
+</tr>
+<tr>
+<td>YAML</td>
+<td>YAML 格式</td>
+<td>CI 配置文件</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

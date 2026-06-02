@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>场景: 第一次贡献代码 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>场景教程：第一次给开源项目贡献代码</h1>
+<blockquote>
+<p>适用人群：想给开源项目提 PR 但不知道完整流程的人
+前置：完成第六、七、八课（PR 全流程）
+预计时间：30 分钟</p>
+</blockquote>
+<hr />
+<h2>场景描述</h2>
+<p>你发现 ant-design 的 Select 组件有一个小 Bug：多选模式下 placeholder 不显示。
+你花 5 分钟找到了问题并在本地修好了。现在你想把这个修复贡献给 ant-design。</p>
+<hr />
+<h2>完整流程（7 步）</h2>
+<h3>第 1 步：Fork（2 min）</h3>
+<ol>
+<li>打开 https://github.com/ant-design/ant-design</li>
+<li>点右上角 <strong>Fork</strong> 按钮</li>
+<li>弹出窗口 → Owner 选你自己 → 保持 "Copy the main branch only" 勾选</li>
+<li>点 <strong>Create fork</strong></li>
+<li>等几秒 → 自动跳转到 <code>github.com/你的用户名/ant-design</code></li>
+</ol>
+<blockquote>
+<p>现在你有了一份自己的 ant-design 代码副本。</p>
+</blockquote>
+<h3>第 2 步：Clone 到本地（2 min）</h3>
+<ol>
+<li>在你的 Fork 页面 → 点绿色 <strong>Code</strong> 按钮</li>
+<li>如果配了 SSH Key：选 SSH 标签，复制 URL</li>
+<li>如果没配：选 HTTPS 标签，复制 URL</li>
+<li>打开终端：
+   <code>bash
+   cd ~/projects      # 到你放代码的目录
+   git clone git@github.com:你的用户名/ant-design.git
+   cd ant-design</code></li>
+</ol>
+<blockquote>
+<p>现在代码在你电脑上了。</p>
+</blockquote>
+<h3>第 3 步：创建分支并修改代码（3 min）</h3>
+<ol>
+<li>创建新分支（不要在 main 上直接改）：
+   <code>bash
+   git checkout -b fix/select-placeholder-multiple</code></li>
+<li>用你的 IDE 打开代码，找到 Bug 位置，修改</li>
+<li>保存 → 提交：
+   <code>bash
+   git add .
+   git commit -m "fix(Select): placeholder not showing in multiple mode"</code></li>
+<li>推送到你的 Fork：
+   <code>bash
+   git push origin fix/select-placeholder-multiple</code></li>
+</ol>
+<blockquote>
+<p>Commit message 格式：<code>类型(范围): 描述</code>，如 <code>fix(Select): xxx</code>、<code>feat(Button): xxx</code></p>
+</blockquote>
+<h3>第 4 步：创建 PR（5 min）</h3>
+<ol>
+<li>Push 后回到 GitHub → 你的 Fork 页面</li>
+<li>顶部会出现<strong>黄色提示条</strong>："fix/select-placeholder-multiple had recent pushes"</li>
+<li>点击 <strong>Compare &amp; pull request</strong></li>
+<li>进入 PR 创建页面：</li>
+</ol>
+<p><strong>检查 Base 和 Compare：</strong>
+- Base repository: <code>ant-design/ant-design</code> ← 原仓库
+- Base branch: <code>master</code> ← 原仓库的主分支
+- Head repository: <code>你的用户名/ant-design</code> ← 你的 Fork
+- Compare branch: <code>fix/select-placeholder-multiple</code> ← 你改代码的分支</p>
+<p><strong>填写 PR 标题和正文：</strong></p>
+<p>标题：</p>
+<div class="codehilite"><pre><span></span><code>fix(Select): placeholder not showing in multiple mode (select)
+</code></pre></div>
+
+<p>正文：</p>
+<div class="codehilite"><pre><span></span><code><span class="gu">## 发生了什么</span>
+当 Select 的 mode 设为 multiple 时，placeholder 不显示。
+
+<span class="gu">## 原因</span>
+<span class="sb">`renderPlaceholder`</span> 方法中，当 value 是数组且长度为 0 时，走了错误的分支。
+
+<span class="gu">## 修复方案</span>
+在 <span class="sb">`renderPlaceholder`</span> 增加对空数组的检查。
+
+<span class="gu">## 截图</span>
+| Before | After |
+|--------|-------|
+| (拖入修复前的截图) | (拖入修复后的截图) |
+
+<span class="gu">## 关联 Issue</span>
+Fixes <span class="ni">#12345</span>
+</code></pre></div>
+
+<ol>
+<li>右侧可选的设置：</li>
+<li>Reviewers：不填（维护者会自己分派）</li>
+<li>Labels：不填（维护者会加）</li>
+<li>点绿色 <strong>Create pull request</strong></li>
+</ol>
+<blockquote>
+<p>🎉 你的第一个开源贡献 PR 创建成功！</p>
+</blockquote>
+<h3>第 5 步：等待 Review（时长不定）</h3>
+<p>PR 创建后：
+1. CI 会自动跑测试（你可以在 Checks 标签看结果）
+2. 维护者会收到通知
+3. 可能需要等几小时到几天（维护者都是志愿者，耐心等待）
+4. 不要催（除非过了一周完全没动静，可以礼貌地问一下）</p>
+<h3>第 6 步：回应 Review（10 min）</h3>
+<p>如果维护者提了修改意见：
+1. 认真看每条评论
+2. 在本地的同一个分支上修改代码
+3. Commit → Push（PR 会自动更新，不需要重新创建）
+4. 在 PR 页面的 Reviewers 列表里点 🔄 <strong>Re-request review</strong></p>
+<p>如果有人提了 <strong>Suggested change</strong>：
+1. 看 Suggested change 是否合理
+2. 如果合理，点 <strong>Commit suggestion</strong> 一键接受
+3. 如果不合理，回复解释原因</p>
+<h3>第 7 步：合并！</h3>
+<p>当 CI 通过 + 获得 Approve：
+- 维护者会点击 Merge
+- 你的代码正式进入 ant-design！
+- Issue #12345 自动关闭</p>
+<p><strong>后续：</strong>
+- 可以（但不必须）删除你的分支
+- 你的 Fork 会落后于原仓库，记得 Sync Fork</p>
+<hr />
+<h2>行为准则（非常重要）</h2>
+<ul>
+<li>✅ 一个 PR 只做一件事（不要混入多个不相关改动）</li>
+<li>✅ 阅读项目的 CONTRIBUTING.md（如果有）了解贡献规则</li>
+<li>✅ PR 正文写清楚"为什么"和"怎么修"</li>
+<li>❌ 不要 PR 超大改动（1000+ 行还没解释）</li>
+<li>❌ 不要催 Review（开源维护者都是无偿工作）</li>
+<li>❌ 不要改代码风格（格式化交给 Linter）</li>
+<li>❌ 不要在 PR 里对喷</li>
+</ul>
+<hr />
+<h2>流程图</h2>
+<div class="codehilite"><pre><span></span><code>发现Bug → 检查是否已有Issue
+                ↓
+          [没有] 提 Issue 说明Bug（可选但推荐）
+                ↓
+          Fork 原仓库
+                ↓
+          Clone 到本地
+                ↓
+          创建新分支
+                ↓
+          改代码 → commit → push
+                ↓
+          打开 GitHub → Compare &amp; PR
+                ↓
+          写清楚标题和正文 → 提交
+                ↓
+          等 CI 通过 + 等 Review
+                ↓
+        [有修改意见] 改代码 → push → Re-request
+                ↓
+          CI 通过 + 有人 Approve
+                ↓
+          维护者 Merge → 🎉完成！
+</code></pre></div>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>常见报错及解决 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>GitHub 常见报错及解决方案</h1>
+<blockquote>
+<p>收录 GitHub 网页端常见的报错提示，配中文解释和解决方案。
+最后更新：2026-06-02</p>
+</blockquote>
+<hr />
+<h2>网页端报错</h2>
+<h3>404 Page not found</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>页面不存在</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>1. 仓库被删了 2. 仓库改成私有(Pirvate)了 3. URL 拼写错误</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>确认仓库名和用户名拼写正确 → 问项目主人仓库还在吗</td>
+</tr>
+</tbody>
+</table>
+<h3>500 Internal Server Error</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>GitHub 服务器内部错误</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>GitHub 自己出问题了</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>等几分钟刷新。可以上 https://www.githubstatus.com 看 GitHub 服务状态</td>
+</tr>
+</tbody>
+</table>
+<h3>You have exceeded a secondary rate limit</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>你触发了频率限制（操作太快了）</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>短时间发送太多请求</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>等几分钟到一小时。不要用脚本刷 GitHub</td>
+</tr>
+</tbody>
+</table>
+<h3>This branch has conflicts that must be resolved</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>这个分支有冲突，必须先解决才能合并</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>你改的文件和目标分支上同一个文件也被人改了</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>1. 点 Resolve conflicts 在网页上解决 2. 或在本地 <code>git merge main</code> 解决冲突后 push</td>
+</tr>
+</tbody>
+</table>
+<h3>This branch is out-of-date with the base branch</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>你的分支落后于目标分支</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>PR 创建后，目标分支又有新提交</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>Sync Fork → 或者本地 merge main 到你的分支 → push</td>
+</tr>
+</tbody>
+</table>
+<h3>Can't automatically merge</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>无法自动合并</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>有冲突</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>同冲突解决</td>
+</tr>
+</tbody>
+</table>
+<h3>You don't have permission to push</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>你没有推送权限</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>1. 你在别人的仓库里不是 Collaborator 2. 用的 HTTPS 密码/Token 不对</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>确认你是 Collaborator → 确认 Token 没过期 → 或者换 SSH</td>
+</tr>
+</tbody>
+</table>
+<h3>Repository not found (SSH)</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>找不到仓库（SSH 方式）</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>1. SSH Key 没配 2. 仓库名拼错 3. 仓库是 Private 但你没权限</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>确认 SSH Key 已添加 → 确认 URL 拼写 → 确认有权限</td>
+</tr>
+</tbody>
+</table>
+<h3>Your account has been flagged</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>你的账号被标记了</td>
+</tr>
+<tr>
+<td>常见原因</td>
+<td>可能被 GitHub 误判为垃圾账号</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>联系 GitHub Support 申诉</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>邮件通知</h2>
+<h3>Action required: Verify your email address</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>需要操作：验证你的邮箱</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>点邮件里的 "Verify email address" 按钮</td>
+</tr>
+</tbody>
+</table>
+<h3>[username] mentioned you</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>有人在 Issue/PR 里 @ 了你</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>正常的通知，点进去看</td>
+</tr>
+</tbody>
+</table>
+<h3>[repo] A new pull request in [repo]</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>有人在你 Watch 的仓库提了 PR</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>如果你不想收这类通知，去那个仓库 → Unwatch</td>
+</tr>
+</tbody>
+</table>
+<h3>[repo] Run failed: CI (main)</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>你的 CI 运行失败了</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>点 View workflow run 看日志 → 修代码 → Push</td>
+</tr>
+</tbody>
+</table>
+<h3>We found a potential security vulnerability</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>Dependabot 发现了安全漏洞</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>进 Security 标签查看详情 → 更新依赖版本</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>CI / Actions 报错</h2>
+<h3>Process completed with exit code 1</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>某个 Step 执行失败（退出码 1）</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>看这个 Step 上面红色部分的报错信息</td>
+</tr>
+</tbody>
+</table>
+<h3>npm ERR! / Module not found</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>npm 安装依赖失败</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>可能是 package.json 里缺依赖 / package-lock.json 没更新 / 网络问题</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>1. 本地先 <code>npm install</code> 确认能通过 2. 确认 package-lock.json 提交了 3. CI 里用 <code>npm ci</code> 而不是 <code>npm install</code></td>
+</tr>
+</tbody>
+</table>
+<h3>command not found</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>命令找不到</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>CI 环境里没有装对应的工具</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>Workflow 里加对应的 setup Action（如 setup-node、setup-python）</td>
+</tr>
+</tbody>
+</table>
+<h3>The job was canceled</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>CI 任务被取消了</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>你手动取消 / 免费版并发限制 / 超时</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>Re-run 或者等一会儿</td>
+</tr>
+</tbody>
+</table>
+<h3>Error: Resource not accessible by integration</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文意思</td>
+<td>CI 没有权限访问资源</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>Token 权限不够（通常是 GITHUB_TOKEN）</td>
+</tr>
+<tr>
+<td>怎么办</td>
+<td>检查 Workflow 的 permissions 设置</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Quick Reference（速查）</h2>
+<table>
+<thead>
+<tr>
+<th>报错关键词</th>
+<th>可能原因</th>
+<th>快速解决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>404</td>
+<td>仓库不存在/没权限</td>
+<td>检查 URL 和权限</td>
+</tr>
+<tr>
+<td>Permission denied</td>
+<td>没推送权限</td>
+<td>检查 Collaborator 或 Token</td>
+</tr>
+<tr>
+<td>Conflict</td>
+<td>代码冲突</td>
+<td>解决冲突</td>
+</tr>
+<tr>
+<td>Rate limit</td>
+<td>操作太频繁</td>
+<td>等待</td>
+</tr>
+<tr>
+<td>Exit code 1</td>
+<td>CI 运行失败</td>
+<td>看日志红色部分</td>
+</tr>
+<tr>
+<td>command not found (CI)</td>
+<td>缺少工具</td>
+<td>加 setup Action</td>
+</tr>
+<tr>
+<td>Module not found (CI)</td>
+<td>依赖没装</td>
+<td>确认 package.json + npm ci</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

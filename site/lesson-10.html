@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第十课：Actions / CI（上）— 概念与配置 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="active">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第10课 · 25min · 15 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第十课：Actions / CI（上）— 概念与配置</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第八课 | P0 词条：15 个 | 覆盖 UI 元素：12 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 理解 CI（持续集成）是什么、解决什么问题<br />
+- 看懂 <code>.github/workflows/</code> 目录下的 YAML 文件<br />
+- 在 Actions 市场找到并引用现成的 Action<br />
+- 理解 Workflow、Job、Step 三个层级<br />
+- 看懂 Workflow YAML 的基本结构</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：展示一个 CI 运行过后出现绿勾的 PR</p>
+<p><img alt="01-actions-list-annotated" src="assets/10/01-actions-list-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"在第八课我们看到了 PR 的 Checks 标签，有绿勾有红叉。这些就是 CI——持续集成。</p>
+<p>CI 就是让机器自动帮你检查代码。每次有人 Push 代码或提 PR，GitHub 自动跑测试、检查格式、检查依赖安全。</p>
+<p>这节课，我们来看 CI 到底是什么、怎么配。"</p>
+<hr />
+<h2>1. CI 是什么（4 min）</h2>
+<h3>1.1 没有 CI 的痛</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>合并 PR 后才发现测试挂了</td>
+<td>太晚了，已经合进 main 了</td>
+</tr>
+<tr>
+<td>每个 PR 要手动跑测试</td>
+<td>容易忘、效率低</td>
+</tr>
+<tr>
+<td>代码风格不一致</td>
+<td>有人用空格有人用 Tab，PR 里全是格式改动</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 有了 CI 之后</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>CI 怎么帮你</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有人提 PR</td>
+<td>CI 自动跑测试，绿勾=通过，红叉=有问题</td>
+</tr>
+<tr>
+<td>有人 Push 代码</td>
+<td>CI 自动跑</td>
+</tr>
+<tr>
+<td>合并前</td>
+<td>CI 必须通过才能 Merge（配合分支保护规则）</td>
+</tr>
+<tr>
+<td>定时任务</td>
+<td>每天自动检查依赖安全漏洞</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 GitHub Actions 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Actions</td>
+<td>GitHub 自带的 CI 系统</td>
+</tr>
+<tr>
+<td>怎么配置</td>
+<td>在仓库里创建 <code>.github/workflows/</code> 目录，放 YAML 文件</td>
+</tr>
+<tr>
+<td>什么时候触发</td>
+<td>Push、PR、定时、手动</td>
+</tr>
+<tr>
+<td>在哪看结果</td>
+<td>仓库顶部 Actions 标签</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>简单理解</strong>：Actions = GitHub 提供的免费服务器，帮你运行你写的脚本。</p>
+</blockquote>
+<hr />
+<h2>2. Workflow 文件的结构（8 min）</h2>
+<p><strong>画面</strong>：打开 <code>.github/workflows/</code> 目录下的一个 YAML 文件</p>
+<p><img alt="02-marketplace" src="assets/10/02-marketplace.png" /></p>
+<h3>2.1 三层结构</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>英文</th>
+<th>中文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workflow</td>
+<td>Workflow</td>
+<td>工作流</td>
+<td>一个 YAML 文件就是一个 Workflow</td>
+</tr>
+<tr>
+<td>Job</td>
+<td>Job</td>
+<td>任务</td>
+<td>Workflow 里的一个独立任务，多个 Job 可并行</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>Step</td>
+<td>步骤</td>
+<td>Job 里的具体操作，Step 里可以运行命令或调用 Action</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 一个最简 CI 文件逐行讲解</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># name：这个 Workflow 叫什么名字（显示在 Actions 列表里）</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+
+<span class="c1"># on：什么时候触发</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">                    </span><span class="c1"># 每次 Push 代码时</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span><span class="w">       </span><span class="c1"># 只监听 main 分支的 Push</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">            </span><span class="c1"># 每当有人创建或更新 PR 时</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span><span class="w">       </span><span class="c1"># 只监听目标分支是 main 的 PR</span>
+
+<span class="c1"># jobs：具体做什么</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># 这个 Job 的名字（自定义）</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># 运行环境（操作系统）</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+
+<span class="w">    </span><span class="c1"># 步骤列表</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># Step 1：把代码克隆到 CI 服务器上</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+
+<span class="w">      </span><span class="c1"># Step 2：安装 Node.js</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+
+<span class="w">      </span><span class="c1"># Step 3：安装依赖</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+
+<span class="w">      </span><span class="c1"># Step 4：运行测试</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+</code></pre></div>
+
+<h3>2.3 逐字段解释</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Workflow 名称</td>
+</tr>
+<tr>
+<td><code>on: push</code></td>
+<td>触发条件：有人 Push 代码</td>
+</tr>
+<tr>
+<td><code>on: pull_request</code></td>
+<td>触发条件：有人创建/更新 PR</td>
+</tr>
+<tr>
+<td><code>branches: [main]</code></td>
+<td>限定只关注 main 分支</td>
+</tr>
+<tr>
+<td><code>jobs:</code></td>
+<td>定义任务</td>
+</tr>
+<tr>
+<td><code>test:</code></td>
+<td>任务名称（自定义）</td>
+</tr>
+<tr>
+<td><code>runs-on: ubuntu-latest</code></td>
+<td>运行在 Ubuntu 最新版</td>
+</tr>
+<tr>
+<td><code>steps:</code></td>
+<td>任务的步骤</td>
+</tr>
+<tr>
+<td><code>uses: actions/xxx@v4</code></td>
+<td>调用 GitHub 官方或社区的 Action</td>
+</tr>
+<tr>
+<td><code>run: npm test</code></td>
+<td>直接运行 shell 命令</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 触发条件（on）的常见写法</h3>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push</code></td>
+<td>任何分支 Push 都触发</td>
+</tr>
+<tr>
+<td><code>push: { branches: [main] }</code></td>
+<td>只 main 分支 Push 触发</td>
+</tr>
+<tr>
+<td><code>pull_request</code></td>
+<td>任何 PR 活动都触发</td>
+</tr>
+<tr>
+<td><code>schedule: [{ cron: "0 0 * * *" }]</code></td>
+<td>定时触发（每天 UTC 零点）</td>
+</tr>
+<tr>
+<td><code>workflow_dispatch</code></td>
+<td>允许手动触发</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Actions 市场（3 min）</h2>
+<p><strong>画面</strong>：在 GitHub 中搜索 Actions / 在仓库创建 workflow 时</p>
+<h3>3.1 什么是 Action</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Action</td>
+<td>别人写好的可复用的步骤</td>
+</tr>
+<tr>
+<td>类比</td>
+<td>npm 包 / Python 库 — 你不用重复造轮子</td>
+</tr>
+<tr>
+<td><code>uses: actions/checkout@v4</code></td>
+<td>就是引用 GitHub 官方 check out 代码的 Action</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 常用官方 Action</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>actions/checkout@v4</code></td>
+<td>把代码下载到 CI 环境</td>
+</tr>
+<tr>
+<td><code>actions/setup-node@v4</code></td>
+<td>安装 Node.js</td>
+</tr>
+<tr>
+<td><code>actions/setup-python@v5</code></td>
+<td>安装 Python</td>
+</tr>
+<tr>
+<td><code>actions/setup-go@v5</code></td>
+<td>安装 Go</td>
+</tr>
+<tr>
+<td><code>actions/cache@v4</code></td>
+<td>缓存依赖（加速 CI）</td>
+</tr>
+<tr>
+<td><code>actions/upload-artifact@v4</code></td>
+<td>上传产物（如测试报告）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 怎么找到 Action</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在 GitHub 搜索框搜 "actions setup java"</td>
+</tr>
+<tr>
+<td>2</td>
+<td>进入仓库的 Actions 标签 → New workflow → 搜索现成模板</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GitHub Marketplace → Actions 分类</td>
+</tr>
+<tr>
+<td>4</td>
+<td>点 <code>uses: xxx</code> 跳过去看文档</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. 看懂 Workflow 的 live 示例（5 min）</h2>
+<p><strong>画面</strong>：打开一个真实项目的 <code>.github/workflows/ci.yml</code></p>
+<h3>4.1 典型 Node.js 项目 CI</h3>
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">lint</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> node-version</span><span class="p">:</span><span class="w"> </span><span class="nv">20</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm run lint</span><span class="w">      </span><span class="c1"># ESLint 检查代码风格</span>
+
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> node-version</span><span class="p">:</span><span class="w"> </span><span class="nv">20</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span><span class="w">          </span><span class="c1"># 运行测试</span>
+
+<span class="w">  </span><span class="nt">type-check</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> node-version</span><span class="p">:</span><span class="w"> </span><span class="nv">20</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npx tsc --noEmit</span><span class="w">  </span><span class="c1"># TypeScript 类型检查</span>
+</code></pre></div>
+
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】逐行解释这个 CI 文件 → 指出 lint / test / type-check 三个 Job 是并行的</p>
+</blockquote>
+<h3>4.2 为什么拆成多个 Job</h3>
+<table>
+<thead>
+<tr>
+<th>好处</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>并行运行</td>
+<td>三个 Job 同时跑，快</td>
+</tr>
+<tr>
+<td>分开排查</td>
+<td>test 失败不会影响 lint 的结果</td>
+</tr>
+<tr>
+<td>分开要求</td>
+<td>可以只要求 test 在 Merge 前必须通过，lint 只是参考</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 创建一个简单 CI（4 min）</h2>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】全程操作，不剪接</p>
+</blockquote>
+<ol>
+<li>进入仓库 → 确保有简单的测试脚本</li>
+<li>点击 Actions 标签 → New workflow → set up a workflow yourself</li>
+<li>编辑 YAML → 写一个简单 CI（跑一个 echo 命令）</li>
+<li>文件名用 <code>ci.yml</code> → Commit → 回到 Actions 标签</li>
+<li>看到 Workflow 正在运行 → 点进去 → 看到 Step 的输出</li>
+<li>"这就是你的第一个 CI Workflow！"</li>
+</ol>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>在你自己的仓库里创建 <code>.github/workflows/ci.yml</code></li>
+<li>写一个最简单的 Workflow：只跑一个 <code>echo "Hello CI"</code> 的 step</li>
+<li>Push → 去 Actions 标签看运行结果</li>
+<li>如果项目有测试命令（如 <code>npm test</code> 或 <code>pytest</code>），加入 step</li>
+<li>去 Actions 市场找一个你技术栈相关的 Action（如 setup-java、setup-dotnet）</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI (Continuous Integration)</td>
+<td>持续集成</td>
+<td>整个课程</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>GitHub Actions 自动化</td>
+<td>顶部标签 / Workflow</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>工作流</td>
+<td><code>.github/workflows/</code> 目录</td>
+</tr>
+<tr>
+<td>Job</td>
+<td>任务</td>
+<td>Workflow 内的 jobs 字段</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>步骤</td>
+<td>Job 内的 steps 字段</td>
+</tr>
+<tr>
+<td>runs-on</td>
+<td>运行环境</td>
+<td>Job 的 runs-on 字段</td>
+</tr>
+<tr>
+<td>ubuntu-latest</td>
+<td>最新版 Ubuntu</td>
+<td>运行环境常见值</td>
+</tr>
+<tr>
+<td>uses</td>
+<td>引用 Action</td>
+<td>steps 内 uses 字段</td>
+</tr>
+<tr>
+<td>actions/checkout</td>
+<td>签出代码 Action</td>
+<td>几乎所有 CI 第一步</td>
+</tr>
+<tr>
+<td>on: push</td>
+<td>Push 触发</td>
+<td>Workflow 触发条件</td>
+</tr>
+<tr>
+<td>on: pull_request</td>
+<td>PR 触发</td>
+<td>Workflow 触发条件</td>
+</tr>
+<tr>
+<td>schedule</td>
+<td>定时触发</td>
+<td>Workflow 触发条件</td>
+</tr>
+<tr>
+<td>workflow_dispatch</td>
+<td>手动触发</td>
+<td>Workflow 触发条件</td>
+</tr>
+<tr>
+<td>YAML</td>
+<td>YAML 格式</td>
+<td>配置文件格式</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>市场</td>
+<td>GitHub 市场</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-09.html">第09课 Code Review</a>
+    
+    
+    <a class="next" href="lesson-11.html">第11课 Actions/CI（下）— 日志</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

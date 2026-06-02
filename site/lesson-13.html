@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第十三课：项目管理（下）— Wiki、Discussions、Releases、Packages — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="active">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第13课 · 20min · 12 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第十三课：项目管理（下）— Wiki、Discussions、Releases、Packages</h1>
+<blockquote>
+<p>时长：20 分钟 | 前置：无（独立内容）| P0 词条：12 个 | 覆盖 UI 元素：14 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 创建和管理 Wiki 页面作为项目文档<br />
+- 理解 Discussions（论坛）的作用和使用方法<br />
+- 创建 Release 并写 Release Notes<br />
+- 理解 Packages 是什么（不深入）</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：仓库顶部标签栏</p>
+<p><img alt="01-releases-annotated" src="assets/13/01-releases-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"一个完整的开源项目，不只有代码和 Issue。还有文档（Wiki）、讨论区（Discussions）、发布版本（Releases）、以及分发包（Packages）。</p>
+<p>这四个功能都藏在仓库的顶部标签栏里。用好了，你的项目会更专业。"</p>
+<hr />
+<h2>1. Wiki（8 min）</h2>
+<p><strong>画面</strong>：点击仓库顶部 Wiki 标签</p>
+<p><img alt="02-wiki" src="assets/13/02-wiki.png" /></p>
+<h3>1.1 Wiki 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wiki</td>
+<td>项目的小型文档系统</td>
+</tr>
+<tr>
+<td>和 README 的区别</td>
+<td>README 是首页简介，Wiki 是长篇详细文档</td>
+</tr>
+<tr>
+<td>典型内容</td>
+<td>API 文档、安装指南、贡献指南、FAQ、架构图</td>
+</tr>
+<tr>
+<td>谁可以编辑</td>
+<td>有仓库写权限的人（默认公开可读）</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Wiki 页面布局</h3>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧侧边栏</td>
+<td>所有 Wiki 页面的目录</td>
+</tr>
+<tr>
+<td>主区域</td>
+<td>当前页面的内容（Markdown 渲染）</td>
+</tr>
+<tr>
+<td>页面底部</td>
+<td>最后一次编辑时间和编辑者</td>
+</tr>
+<tr>
+<td>右上角</td>
+<td>Edit / New Page / Page History</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 创建和编辑 Wiki 页面</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New Page</td>
+<td>创建新页面</td>
+</tr>
+<tr>
+<td>输入页面标题</td>
+<td>建议用英文（URL 会更友好）</td>
+</tr>
+<tr>
+<td>写内容</td>
+<td>Markdown 编辑器，支持图片、代码块、表格</td>
+</tr>
+<tr>
+<td>底部 Edit message</td>
+<td>描述这次改了什么（可选）</td>
+</tr>
+<tr>
+<td>Save</td>
+<td>保存页面</td>
+</tr>
+</tbody>
+</table>
+<h3>1.4 Wiki 侧边栏管理</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认按字母排序</td>
+<td>可以用自定义侧边栏覆盖</td>
+</tr>
+<tr>
+<td>创建 <code>_Sidebar.md</code></td>
+<td>在 Wiki 里创建同名页面，写列表控制侧边栏</td>
+</tr>
+<tr>
+<td>创建 <code>_Footer.md</code></td>
+<td>控制 Wiki 底部文字</td>
+</tr>
+</tbody>
+</table>
+<h3>1.5 Wiki 和 Pages 的区别</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Wiki</th>
+<th>GitHub Pages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>形式</td>
+<td>简单的 Markdown 页面</td>
+<td>完整的静态网站（Jekyll）</td>
+</tr>
+<tr>
+<td>门槛</td>
+<td>很低，直接写 Markdown</td>
+<td>中等，需要一点网页基础</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>项目文档</td>
+<td>项目官网、博客</td>
+</tr>
+<tr>
+<td>URL</td>
+<td><code>github.com/user/repo/wiki</code></td>
+<td><code>user.github.io/repo</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】点 Wiki 标签 → New Page → 写一点内容 → Save → 演示侧边栏 → 页脚</p>
+</blockquote>
+<hr />
+<h2>2. Discussions（论坛）（4 min）</h2>
+<p><strong>画面</strong>：点击 Discussions 标签</p>
+<h3>2.1 Discussions 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>项目内置的论坛/讨论区</td>
+</tr>
+<tr>
+<td>和 Issue 的区别</td>
+<td>Issue 用于具体任务（Bug/Feature），Discussions 用于开放式讨论</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>问问题、讨论设计方案、分享经验、社区通知</td>
+</tr>
+<tr>
+<td>启用条件</td>
+<td>需要在 Settings → General → Features 里手动开启</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Discussions 页面结构</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧 Categories</td>
+<td>分类：Announcements / Ideas / Q&amp;A / General 等</td>
+</tr>
+<tr>
+<td>主区域</td>
+<td>讨论帖列表</td>
+</tr>
+<tr>
+<td>右侧 New discussion</td>
+<td>发起新讨论</td>
+</tr>
+<tr>
+<td>搜索框</td>
+<td>搜索讨论内容</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 讨论帖的功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发布</td>
+<td>Markdown 编辑器，和 Issue 一样</td>
+</tr>
+<tr>
+<td>回复</td>
+<td>支持嵌套回复，比 Issue 的平铺评论更结构化</td>
+</tr>
+<tr>
+<td>答案标记</td>
+<td>Q&amp;A 类型的讨论，可以标记某个回复为"答案"</td>
+</tr>
+<tr>
+<td>Upvote 投票</td>
+<td>给回复点赞投票</td>
+</tr>
+<tr>
+<td>Pin</td>
+<td>置顶重要讨论</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>锁定过时讨论</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 什么时候用 Discussions 而不是 Issue</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用 Issue</th>
+<th>用 Discussions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>确认是 Bug</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>不确定是不是 Bug</td>
+<td>❌</td>
+<td>✅（Q&amp;A 分类先问）</td>
+</tr>
+<tr>
+<td>提一个具体的功能改进</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>讨论一个大的设计方向</td>
+<td>❌</td>
+<td>✅（Ideas 分类）</td>
+</tr>
+<tr>
+<td>问"为什么这个 API 这样设计"</td>
+<td>❌</td>
+<td>✅（Q&amp;A 分类）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Releases（4 min）</h2>
+<p><strong>画面</strong>：右侧面板或 <code>/releases</code> 页面</p>
+<h3>3.1 Release 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Release</td>
+<td>正式发布的版本</td>
+</tr>
+<tr>
+<td>和 Tag 的关系</td>
+<td>每个 Release 对应一个 Git Tag</td>
+</tr>
+<tr>
+<td>包含什么</td>
+<td>版本号、Release Notes（更新说明）、下载文件</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 创建 Release</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进仓库 → 右侧 Releases → Create a new release</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Choose a tag → 输入版本号如 <code>v1.0.0</code> → Create new tag</td>
+</tr>
+<tr>
+<td>3</td>
+<td>选 Target（通常是 main 分支）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>写 Release title（版本号或名称）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>写 Release Notes（这个版本改了什么）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>如果需要，拖入文件（编译好的 .exe / .dmg / .jar 等）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>如果是预发布版，勾选 "Set as a pre-release"</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点 Publish release</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 Release Notes 怎么写</h3>
+<div class="codehilite"><pre><span></span><code><span class="gu">## What&#39;s Changed</span>
+<span class="k">-</span><span class="w"> </span>新增了深色模式（#1234 by <span class="ni">@username</span>）
+<span class="k">-</span><span class="w"> </span>修复了登录页面在 Safari 上的渲染问题（#5678 by <span class="ni">@username</span>）
+
+<span class="gu">## Breaking Changes</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`Button`</span> 组件的 <span class="sb">`type`</span> 属性改名为 <span class="sb">`variant`</span>
+
+<span class="gu">## New Contributors</span>
+<span class="k">-</span><span class="w"> </span><span class="ni">@new</span>-contributor 提了他的第一个 PR！🎉
+
+<span class="gs">**Full Changelog**</span>: https://github.com/.../compare/v0.9.0...v1.0.0
+</code></pre></div>
+
+<blockquote>
+<p>GitHub 可以自动生成一部分 Release Notes，基于合并的 PR 列表。</p>
+</blockquote>
+<h3>3.4 下载 Asset</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source code (zip)</td>
+<td>GitHub 自动打包的源码 zip</td>
+</tr>
+<tr>
+<td>Source code (tar.gz)</td>
+<td>同上，tar.gz 格式</td>
+</tr>
+<tr>
+<td>你上传的文件</td>
+<td>编译好的二进制文件 / 安装包等</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】Create a new release → 输入 v1.0.0 → 写 Release Notes → Publish → 展示发布后的页面</p>
+</blockquote>
+<hr />
+<h2>4. Packages（2 min）</h2>
+<p><strong>画面</strong>：右侧面板或仓库主页面底部的 Packages</p>
+<h3>4.1 Packages 是什么（仅介绍，不深入）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Packages</td>
+<td>GitHub 的包托管服务</td>
+</tr>
+<tr>
+<td>支持什么</td>
+<td>npm、Docker、Maven、NuGet、RubyGems 等</td>
+</tr>
+<tr>
+<td>有什么用</td>
+<td>把你的库打包发布，别人可以 <code>npm install</code> 你的包</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 和 Releases 的区别</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Releases</th>
+<th>Packages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>版本发布公告</td>
+<td>可安装的软件包</td>
+</tr>
+<tr>
+<td>面向</td>
+<td>所有人（公告+下载链接）</td>
+<td>开发者（包管理工具下载）</td>
+</tr>
+<tr>
+<td>举例</td>
+<td>发布 v1.0.0，写更新日志</td>
+<td>发布 npm 包，别人 <code>npm install your-package</code></td>
+</tr>
+<tr>
+<td>两者关系</td>
+<td>通常一个 Release 会伴有对应的 Package</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Packages 是进阶功能，不展开。有兴趣的学完这门课后自行搜索 "GitHub Packages 教程"。</strong></p>
+</blockquote>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>在你自己仓库的 Wiki 里创建至少 2 个页面，练习侧边栏</li>
+<li>开启 Discussions（如果还没开），发起一个 Q&amp;A 类型的讨论</li>
+<li>创建一个 Release（版本号随意，如 v0.1.0），写 3 条 Release Notes</li>
+<li>在 Releases 页面找几个大项目的 Release Notes（如 VS Code、React），学习格式</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wiki</td>
+<td>维基文档</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Pages</td>
+<td>页面（或 Pages 静态网站）</td>
+<td>Wiki 侧边栏</td>
+</tr>
+<tr>
+<td>Sidebar</td>
+<td>侧边栏</td>
+<td>Wiki 自定义</td>
+</tr>
+<tr>
+<td>Footer</td>
+<td>页脚</td>
+<td>Wiki 自定义</td>
+</tr>
+<tr>
+<td>Discussions</td>
+<td>讨论/论坛</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>Categories</td>
+<td>分类</td>
+<td>Discussions 左侧</td>
+</tr>
+<tr>
+<td>Q&amp;A</td>
+<td>问答</td>
+<td>Discussions 分类</td>
+</tr>
+<tr>
+<td>Announcements</td>
+<td>公告</td>
+<td>Discussions 分类</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>发布版本</td>
+<td>右侧面板</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td>标签</td>
+<td>创建 Release 时需要选</td>
+</tr>
+<tr>
+<td>Release Notes</td>
+<td>版本说明</td>
+<td>Release 正文</td>
+</tr>
+<tr>
+<td>Pre-release</td>
+<td>预发布版</td>
+<td>Release 复选框</td>
+</tr>
+<tr>
+<td>Asset</td>
+<td>附件/下载文件</td>
+<td>Release 页底部</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>包托管</td>
+<td>右侧面板 / 顶部标签</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-12.html">第12课 项目管理（上）— Projects</a>
+    
+    
+    <a class="next" href="lesson-14.html">第14课 安全与权限</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

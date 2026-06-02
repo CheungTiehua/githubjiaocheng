@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推荐设置清单 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>推荐设置清单</h1>
+<blockquote>
+<p>从零到专业。按"个人 → 仓库 → 组织"三个层级列出所有推荐配置。</p>
+</blockquote>
+<hr />
+<h2>一、个人账号设置</h2>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>路径</th>
+<th>推荐</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>头像</td>
+<td>点右上角头像 → Your profile → 点头像编辑</td>
+<td>上传一张照片</td>
+<td>让你的 GitHub 看起来像活人</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Settings → Public profile</td>
+<td>填你的名字</td>
+<td>别人能知道你是谁</td>
+</tr>
+<tr>
+<td>Bio</td>
+<td>Settings → Public profile</td>
+<td>一句话介绍</td>
+<td>让人知道你的技术方向</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Settings → Public profile</td>
+<td>城市, 国家</td>
+<td>比如 "Beijing, China"</td>
+</tr>
+<tr>
+<td>主题</td>
+<td>Settings → Appearance</td>
+<td>Dark mode</td>
+<td>保护眼睛</td>
+</tr>
+<tr>
+<td>SSH Key</td>
+<td>Settings → SSH and GPG keys</td>
+<td>添加至少一个</td>
+<td>免密推送代码</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>Settings → Developer settings → PAT</td>
+<td>生成一个，过期一年</td>
+<td>用 Token 代替密码</td>
+</tr>
+<tr>
+<td>2FA</td>
+<td>Settings → Password and authentication</td>
+<td><strong>开启！必须！</strong></td>
+<td>防止账号被盗</td>
+</tr>
+<tr>
+<td>备份邮箱</td>
+<td>Settings → Emails</td>
+<td>添加一个备用的</td>
+<td>主邮箱被封时还能恢复</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>二、单仓库设置（所有仓库都推荐配置）</h2>
+<h3>2.1 基础设置（Settings → General）</h3>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>推荐</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default branch</td>
+<td><code>main</code></td>
+<td>不用 <code>master</code>（有历史负担的命名）</td>
+</tr>
+<tr>
+<td>Features: Issues</td>
+<td>✅ 开启</td>
+<td>默认开启</td>
+</tr>
+<tr>
+<td>Features: Wiki</td>
+<td>✅ 按需</td>
+<td>需要文档就开</td>
+</tr>
+<tr>
+<td>Features: Discussions</td>
+<td>✅ 开启</td>
+<td>方便社区交流</td>
+</tr>
+<tr>
+<td>Merge button: Squash and merge</td>
+<td>✅ 开启</td>
+<td>保持历史干净</td>
+</tr>
+<tr>
+<td>Merge button: Rebase and merge</td>
+<td>⬜ 按需</td>
+<td>追求线性历史</td>
+</tr>
+<tr>
+<td>Automatically delete head branches</td>
+<td>✅ 开启</td>
+<td>PR 合并后自动清理分支</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 分支保护（Settings → Branches → Add rule）</h3>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>推荐值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Branch name pattern</td>
+<td><code>main</code></td>
+</tr>
+<tr>
+<td>Require a pull request before merging</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Require approvals</td>
+<td>✅ 至少 1 人</td>
+</tr>
+<tr>
+<td>Dismiss stale reviews when new commits are pushed</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Require status checks to pass before merging</td>
+<td>✅（如果有 CI）</td>
+</tr>
+<tr>
+<td>Require conversation resolution before merging</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Do not allow bypassing the above settings</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Allow force pushes</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Allow deletions</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 模板文件</h3>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>优先级</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.github/ISSUE_TEMPLATE/bug_report.md</code></td>
+<td>高</td>
+<td>Bug 报告用模板</td>
+</tr>
+<tr>
+<td><code>.github/ISSUE_TEMPLATE/feature_request.md</code></td>
+<td>中</td>
+<td>功能请求模板</td>
+</tr>
+<tr>
+<td><code>.github/PULL_REQUEST_TEMPLATE.md</code></td>
+<td>高</td>
+<td>PR 模板</td>
+</tr>
+<tr>
+<td><code>.github/CODEOWNERS</code></td>
+<td>中</td>
+<td>代码责任人</td>
+</tr>
+<tr>
+<td><code>CONTRIBUTING.md</code></td>
+<td>中</td>
+<td>贡献指南</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、CI 配置（.github/workflows/ci.yml）</h2>
+<h3>最小 CI（任何语言都适用）</h3>
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># 你的语言 setup</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;你的测试命令&gt;</span>
+</code></pre></div>
+
+<h3>推荐扩展到</h3>
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">lint</span><span class="p">:</span><span class="w">     </span><span class="c1"># 代码风格检查</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span><span class="w">     </span><span class="c1"># 单元测试</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w">    </span><span class="c1"># 编译检查（如果适用）</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</code></pre></div>
+
+<hr />
+<h2>四、组织（Organization）设置</h2>
+<blockquote>
+<p>如果有多个仓库和成员，建议创建 Organization</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成员权限：Base permissions</td>
+<td>Read（最小权限）</td>
+</tr>
+<tr>
+<td>Repository: Default branch name</td>
+<td><code>main</code></td>
+</tr>
+<tr>
+<td>团队管理</td>
+<td>按功能建 Team（前端、后端、DevOps）</td>
+</tr>
+<tr>
+<td>分支保护</td>
+<td>对所有仓库的 main 要求 PR + Review</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、安全清单（定期检查）</h2>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dependabot 警报</td>
+<td>每周看一次</td>
+</tr>
+<tr>
+<td>Secret scanning 警报</td>
+<td>实时（有就立刻处理）</td>
+</tr>
+<tr>
+<td>协作者权限</td>
+<td>每月检查（离职的人移除）</td>
+</tr>
+<tr>
+<td>Token 过期日期</td>
+<td>每月检查（快过期的重新生成）</td>
+</tr>
+<tr>
+<td>2FA 状态</td>
+<td>一次（开着就行）</td>
+</tr>
+<tr>
+<td>Security log</td>
+<td>每月扫一眼</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>六、浏览器插件推荐</h2>
+<table>
+<thead>
+<tr>
+<th>插件</th>
+<th>作用</th>
+<th>适用浏览器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google 翻译</td>
+<td>右键 → "翻译此页面"</td>
+<td>Chrome</td>
+</tr>
+<tr>
+<td>Octotree</td>
+<td>侧边栏文件树（方便浏览代码）</td>
+<td>Chrome / Firefox</td>
+</tr>
+<tr>
+<td>Refined GitHub</td>
+<td>增强 GitHub 界面功能</td>
+<td>Chrome / Firefox</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>七、一言概之</h2>
+<div class="codehilite"><pre><span></span><code>个人：头像 + SSH Key + 2FA + Token
+仓库：README + 分支保护 + CI + PR 模板
+组织：最小权限 + Team 管理
+安全：Dependabot + Secret scanning + 权限审计
+</code></pre></div>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

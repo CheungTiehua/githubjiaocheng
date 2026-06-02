@@ -1,0 +1,15 @@
+# 构建产物
+__pycache__/
+*.pyc
+*.pyo
+
+# TIEHUA
+.tiehua/
+
+# IDE
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+.DS_Store

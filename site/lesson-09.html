@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第九课：Code Review — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="active">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第09课 · 25min · 14 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第九课：Code Review</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第八课 | P0 词条：14 个 | 覆盖 UI 元素：18 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 在 Files changed 标签中逐行审查代码<br />
+- 在具体代码行上添加评论<br />
+- 使用 Suggested change（建议修改）功能<br />
+- 提交 Review 时正确选择 Comment / Approve / Request changes<br />
+- 理解 Re-request review 和 Dismiss review 的流程</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：打开一个 PR 的 Files changed 标签</p>
+<p><img alt="01-review-files" src="assets/09/01-review-files.png" /></p>
+<p><strong>旁白</strong>：<br />
+"Code Review 是团队协作的质量底线。通过 Review，你可以在代码合并前发现问题、提出建议。</p>
+<p>这节课讲两件事：1) 怎么 Review 别人的代码；2) 别人 Review 你的代码时，你怎么回应。"</p>
+<hr />
+<h2>1. Files changed 页面详解（5 min）</h2>
+<p><strong>画面</strong>：PR → Files changed 标签</p>
+<h3>1.1 页面顶部工具栏</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧</td>
+<td>文件列表（N changed files）</td>
+<td>点击文件名跳转</td>
+</tr>
+<tr>
+<td>文件旁数字</td>
+<td>+N / -N</td>
+<td>新增/删除行数</td>
+</tr>
+<tr>
+<td>Search files</td>
+<td>搜索文件名</td>
+<td>文件多时快速定位</td>
+</tr>
+<tr>
+<td>Split / Unified</td>
+<td>Split / Unified</td>
+<td>分屏对比 / 统一对比</td>
+</tr>
+<tr>
+<td>右侧齿轮 ⚙</td>
+<td>Diff settings</td>
+<td>更多显示选项</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Split vs Unified 视图</h3>
+<table>
+<thead>
+<tr>
+<th>视图</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split（分屏）</td>
+<td>左旧右新，并排对比</td>
+</tr>
+<tr>
+<td>Unified（统一）</td>
+<td>上下对比，左边是旧的，右边是新的</td>
+</tr>
+<tr>
+<td>怎么选</td>
+<td>Split 更直观，Unified 更紧凑。个人习惯</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 文件折叠与展开</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点文件名</td>
+<td>展开/折叠这个文件的 diff</td>
+</tr>
+<tr>
+<td>文件头部的 Viewed 复选框</td>
+<td>标记为已查看</td>
+</tr>
+<tr>
+<td>所有文件标记完</td>
+<td>PR 页面的文件计数变为已查看状态</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】打开 Files changed → 切换 Split/Unified → 展开/折叠文件 → 勾选 Viewed</p>
+</blockquote>
+<hr />
+<h2>2. 在代码行上添加评论（5 min）</h2>
+<p><strong>画面</strong>：鼠标悬停在某一行代码上</p>
+<h3>2.1 单行评论</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>鼠标悬停在行号上 → 出现蓝色 ➕ 按钮</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点 ➕ → 评论输入框弹出</td>
+</tr>
+<tr>
+<td>3</td>
+<td>输入评论 → 支持 Markdown</td>
+</tr>
+<tr>
+<td>4</td>
+<td>点 Add single comment</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 多行评论</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点第一行的 ➕</td>
+</tr>
+<tr>
+<td>2</td>
+<td>按住 Shift → 拖到最后一行 → 选中一个范围</td>
+</tr>
+<tr>
+<td>3</td>
+<td>输入评论 → 点 Add single comment 或 Start a review</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Suggested change（建议修改）</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在多行评论模式下</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点工具栏里的 ± 图标（Insert a suggestion）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>编辑器里出现原始代码块</td>
+</tr>
+<tr>
+<td>4</td>
+<td>直接编辑代码块里的代码</td>
+</tr>
+<tr>
+<td>5</td>
+<td>发表 → 代码作者可以点 Commit suggestion 一键接受</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】选中多行 → 点 ± 图标 → 改代码 → 发表 → PR 作者视角看 Commit suggestion 按钮</p>
+</blockquote>
+<hr />
+<h2>3. 三种 Review 结论（4 min）</h2>
+<p><strong>画面</strong>：PR 页面右上角绿色 Review changes 按钮</p>
+<h3>3.1 点击 Review changes</h3>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>英文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绿色按钮</td>
+<td>Review changes</td>
+<td>提交 Review</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 三个选项</h3>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>英文</th>
+<th>含义</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comment</td>
+<td>Comment</td>
+<td>纯评论，不表态</td>
+<td>你只是提个问题或小建议，不涉及是否批准</td>
+</tr>
+<tr>
+<td>Approve</td>
+<td>Approve</td>
+<td>批准</td>
+<td>代码没问题，同意合并</td>
+</tr>
+<tr>
+<td>Request changes</td>
+<td>Request changes</td>
+<td>要求修改</td>
+<td>代码有问题，必须先改才能合并</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 三个选项的影响</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>对 PR 的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comment</td>
+<td>不改变 PR 的 Review 状态</td>
+</tr>
+<tr>
+<td>Approve</td>
+<td>PR 获得一个 ✅，满足 "Require N approvals" 的条件</td>
+</tr>
+<tr>
+<td>Request changes</td>
+<td>PR 被标记为 ❌，阻止合并（除非有分支保护规则）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.4 提交 Review 时的文本框</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Review summary 文本框</td>
+<td>总结你的 Review 意见，会显眼地展示在 Conversation 标签里</td>
+</tr>
+<tr>
+<td>Submit review 按钮</td>
+<td>提交 Review</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>如果有分支保护规则</strong>：必须获得 N 个 Approve 且没有 Request changes 才能 Merge。</p>
+</blockquote>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】点 Review changes → 选 Comment → 写 Summary → Submit → 在 Conversation 标签看到 Review 总结</p>
+</blockquote>
+<hr />
+<h2>4. Review 之后（4 min）</h2>
+<h3>4.1 作为 PR 作者：收到 Review 后</h3>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>你应该做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reviewer 提了 Comment</td>
+<td>回复讨论，如需修改就改代码</td>
+</tr>
+<tr>
+<td>Reviewer 提了 Request changes</td>
+<td>必须先改代码解决对方的问题</td>
+</tr>
+<tr>
+<td>Reviewer 给了 Approve</td>
+<td>🎉 等所有 Approve 齐了就能合并</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 改完代码后：Re-request review</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在本地修改代码 → commit → push</td>
+</tr>
+<tr>
+<td>2</td>
+<td>回到 PR 页面</td>
+</tr>
+<tr>
+<td>3</td>
+<td>右侧 Reviewers 列表 → 找到给过 Request changes 的人</td>
+</tr>
+<tr>
+<td>4</td>
+<td>点 🔄 刷新图标 → Re-request review</td>
+</tr>
+<tr>
+<td>5</td>
+<td>对方收到通知，重新审查</td>
+</tr>
+</tbody>
+</table>
+<h3>4.3 Dismiss review（驳回 Review）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>什么时候发生</td>
+<td>你 Push 了新代码 → 之前的 Review 可能过时了</td>
+</tr>
+<tr>
+<td>自动 Dismiss</td>
+<td>如果分支保护规则开了 "Dismiss stale reviews"</td>
+</tr>
+<tr>
+<td>手动 Dismiss</td>
+<td>Reviewer 自己可以点 Dismiss review 撤回自己的结论</td>
+</tr>
+<tr>
+<td>结果</td>
+<td>之前的 Approve 或 Request changes 失效</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 评论管理（3 min）</h2>
+<h3>5.1 评论的三种状态</h3>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active</td>
+<td>活跃中的评论（还没解决）</td>
+</tr>
+<tr>
+<td>Resolved</td>
+<td>已解决的评论（讨论结束，点 Resolve 标记）</td>
+</tr>
+<tr>
+<td>Outdated</td>
+<td>过时的评论（代码那几行被改了，不再相关）</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 解决评论</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点 Resolve conversation</td>
+<td>将讨论标记为已解决</td>
+</tr>
+<tr>
+<td>Unresolve</td>
+<td>重新打开讨论</td>
+</tr>
+<tr>
+<td>分支保护规则</td>
+<td>可以要求所有讨论必须 Resolved 才能 Merge</td>
+</tr>
+</tbody>
+</table>
+<h3>5.3 查看所有评论</h3>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversation 标签</td>
+<td>显示 Review 总结 + 一些行评论</td>
+</tr>
+<tr>
+<td>Files changed 标签</td>
+<td>显示每行代码上的评论</td>
+</tr>
+<tr>
+<td>PR 页面顶部 Review 计数器</td>
+<td>显示总共有多少条 Review 评论</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. Code Review 礼仪（3 min）</h2>
+<h3>6.1 作为 Reviewer 的礼仪</h3>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对事不对人</td>
+<td>评论代码，不评论人："这个变量名不够清晰" 而非 "你命名真烂"</td>
+</tr>
+<tr>
+<td>提建议而非命令</td>
+<td>用 "建议用 X" 而非 "你必须改"</td>
+</tr>
+<tr>
+<td>给具体方案</td>
+<td>不只说 "这有问题"，要说 "因为 XX 原因建议改成 YY"</td>
+</tr>
+<tr>
+<td>善用 Suggested change</td>
+<td>小改动直接用 Suggested change，省得对方再手动改</td>
+</tr>
+<tr>
+<td>区分必须改和可选</td>
+<td>"必须改" 用 Request changes，"可以优化" 用 Comment</td>
+</tr>
+<tr>
+<td>不要 Review 太细</td>
+<td>代码风格让 Linter 管，人工 Review 关注逻辑和设计</td>
+</tr>
+</tbody>
+</table>
+<h3>6.2 作为 PR 作者的礼仪</h3>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不要玻璃心</td>
+<td>Review 意见 ≠ 否定你这个人</td>
+</tr>
+<tr>
+<td>逐条回复</td>
+<td>每条评论要么改代码，要么解释为什么不改</td>
+</tr>
+<tr>
+<td>主动 Re-request</td>
+<td>改完代码立刻 Re-request review，不要让对方猜</td>
+</tr>
+<tr>
+<td>小 PR</td>
+<td>PR 越小 Review 越快，1000 行的 PR 没人想 Review</td>
+</tr>
+<tr>
+<td>感谢</td>
+<td>Reviewer 是在用自己时间帮你提高代码质量</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>找一个朋友（或自己的另一个账号），一个人创建 PR，另一个人 Review：</li>
+<li>在代码行上加评论</li>
+<li>使用 Suggested change（± 图标）</li>
+<li>提交 Approve 或 Request changes</li>
+<li>PR 作者改完代码后，Re-request review</li>
+<li>把所有讨论标记为 Resolved</li>
+<li>在 Files changed 尝试 Split 和 Unified 两种视图</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code Review</td>
+<td>代码审查</td>
+<td>PR 的核心环节</td>
+</tr>
+<tr>
+<td>Files changed</td>
+<td>文件改动</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Split / Unified</td>
+<td>分屏 / 统一视图</td>
+<td>Files changed 右上角</td>
+</tr>
+<tr>
+<td>Add single comment</td>
+<td>添加单条评论</td>
+<td>行评论按钮</td>
+</tr>
+<tr>
+<td>Start a review</td>
+<td>开始审查</td>
+<td>多行评论后按钮</td>
+</tr>
+<tr>
+<td>Suggested change</td>
+<td>建议修改</td>
+<td>评论工具栏 ± 图标</td>
+</tr>
+<tr>
+<td>Commit suggestion</td>
+<td>一键接受建议</td>
+<td>Suggested change 后作者可见</td>
+</tr>
+<tr>
+<td>Review changes</td>
+<td>提交审查</td>
+<td>右上角绿色按钮</td>
+</tr>
+<tr>
+<td>Comment</td>
+<td>评论（Review 结论）</td>
+<td>Review 提交选项</td>
+</tr>
+<tr>
+<td>Approve</td>
+<td>批准</td>
+<td>Review 提交选项</td>
+</tr>
+<tr>
+<td>Request changes</td>
+<td>要求修改</td>
+<td>Review 提交选项</td>
+</tr>
+<tr>
+<td>Re-request review</td>
+<td>重新请求审查</td>
+<td>Reviewers 列表 🔄</td>
+</tr>
+<tr>
+<td>Dismiss review</td>
+<td>驳回审查</td>
+<td>过时的 Review</td>
+</tr>
+<tr>
+<td>Resolved / Unresolved</td>
+<td>已解决 / 未解决</td>
+<td>评论状态</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-08.html">第08课 PR：生命周期与合并</a>
+    
+    
+    <a class="next" href="lesson-10.html">第10课 Actions/CI（上）— 概念</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

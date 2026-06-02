@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第八课：Pull Request（三）— 生命周期与合并 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="active">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第08课 · 30min · 18 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第八课：Pull Request（三）— 生命周期与合并</h1>
+<blockquote>
+<p>时长：30 分钟 | 前置：第七课 | P0 词条：18 个 | 覆盖 UI 元素：22 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 看懂 PR 页面的四个子标签（Conversation / Commits / Checks / Files changed）<br />
+- 理解 CI（持续集成）在 PR 中的状态含义<br />
+- 处理 Merge Conflict（合并冲突）的基本思路<br />
+- 区分三种 Merge 方式并选择正确的一种<br />
+- 理解 Sync Fork（同步上游）的操作</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：打开一个已创建的 PR</p>
+<p><img alt="01-pr-page-annotated" src="assets/08/01-pr-page-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"PR 创建之后，它还有自己的生命周期：有人 Review、CI 跑测试、可能会有冲突、最后合并。</p>
+<p>这节课我们走完 PR 从创建到合并的全过程，同时学会怎么看懂 PR 页面上的四个子标签。"</p>
+<hr />
+<h2>1. PR 页面四大子标签（5 min）</h2>
+<p><strong>画面</strong>：PR 页面顶部子标签，逐一讲解</p>
+<p><img alt="02-pr-files-annotated" src="assets/08/02-pr-files-annotated.png" /></p>
+<h3>1.1 标签概览</h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversation</td>
+<td>Conversation</td>
+<td>对话 / 讨论区（默认显示的标签）</td>
+</tr>
+<tr>
+<td>Commits</td>
+<td>Commits</td>
+<td>这个 PR 包含的所有独立提交</td>
+</tr>
+<tr>
+<td>Checks</td>
+<td>Checks</td>
+<td>CI（持续集成）的运行结果</td>
+</tr>
+<tr>
+<td>Files changed</td>
+<td>Files changed</td>
+<td>改动了哪些文件，逐行对比</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Conversation 标签</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR 标题 + 正文</td>
+<td>你创建 PR 时写的内容</td>
+</tr>
+<tr>
+<td>评论区</td>
+<td>所有人的讨论、Review 反馈</td>
+</tr>
+<tr>
+<td>Merge / Close 按钮</td>
+<td>页面底部</td>
+</tr>
+<tr>
+<td>右侧面板</td>
+<td>Reviewers / Assignees / Labels / Projects / Milestone</td>
+</tr>
+<tr>
+<td>CI 状态摘要</td>
+<td>黄色圆点=运行中，绿色对勾=通过，红色叉=失败</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 Commits 标签</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>提交列表</td>
+<td>这个 PR 里所有独立的 commit</td>
+</tr>
+<tr>
+<td>每个 commit</td>
+<td>SHA、message、头像、时间</td>
+</tr>
+<tr>
+<td>点进去</td>
+<td>看这个 commit 的详细 diff</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>检查 PR 里是否混入了无关的 commit</td>
+</tr>
+</tbody>
+</table>
+<h3>1.4 Checks 标签</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI 运行列表</td>
+<td>每个 Workflow 的运行状态</td>
+</tr>
+<tr>
+<td>状态图标</td>
+<td>🟡黄色=运行中 / ✅绿色=通过 / ❌红色=失败</td>
+</tr>
+<tr>
+<td>点进具体检查</td>
+<td>查看运行日志（Actions 课详讲）</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>确认代码是否通过了自动化测试</td>
+</tr>
+</tbody>
+</table>
+<h3>1.5 Files changed 标签（重要！）</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有改动的文件列表</td>
+<td>只显示有修改的文件</td>
+</tr>
+<tr>
+<td>绿色行</td>
+<td>新增的代码</td>
+</tr>
+<tr>
+<td>红色行</td>
+<td>删除的代码</td>
+</tr>
+<tr>
+<td>文件后数字</td>
+<td>绿色+N = 新增 N 行 / 红色-N = 删除 N 行</td>
+</tr>
+<tr>
+<td>Viewed 复选框</td>
+<td>标记为已查看</td>
+</tr>
+<tr>
+<td>顶部右上</td>
+<td>Split（分屏）/ Unified（统一） 切换视图</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Code Review 的详细操作在第九课讲。</strong></p>
+</blockquote>
+<p><strong>操作演示</strong>：</p>
+<p><img alt="03-pr-commits" src="assets/08/03-pr-commits.png" /></p>
+<blockquote>
+<p>【录屏】逐个切换四个子标签 → 在 Commits 标签展开看 → 在 Files changed 标签说明绿色/红色含义</p>
+</blockquote>
+<hr />
+<h2>2. CI 状态解读（4 min）</h2>
+<p><strong>画面</strong>：PR Conversation 标签底部或 Checks 标签</p>
+<h3>2.1 CI 是什么</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>简单理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI（Continuous Integration）</td>
+<td>持续集成：自动化测试 + 检查</td>
+</tr>
+<tr>
+<td>在 PR 中体现</td>
+<td>每次 Push 新代码，GitHub 自动跑测试</td>
+</tr>
+<tr>
+<td>结果</td>
+<td>通过（绿勾 ✅）或 失败（红叉 ❌）</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 CI 状态图标含义</h3>
+<table>
+<thead>
+<tr>
+<th>图标</th>
+<th>状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🟡 黄色圆点</td>
+<td>Pending / In progress</td>
+<td>正在运行，等一会儿</td>
+</tr>
+<tr>
+<td>✅ 绿色对勾</td>
+<td>Success / Passed</td>
+<td>所有测试通过</td>
+</tr>
+<tr>
+<td>❌ 红色叉</td>
+<td>Failure / Failed</td>
+<td>有测试没通过，需要修代码</td>
+</tr>
+<tr>
+<td>⬜ 灰色横线</td>
+<td>Neutral</td>
+<td>有些检查没有结果（不关心）</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 CI 失败怎么办</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点红叉旁边的 Details 链接</td>
+</tr>
+<tr>
+<td>2</td>
+<td>跳转到 Actions 页面看运行日志</td>
+</tr>
+<tr>
+<td>3</td>
+<td>找到失败的步骤，看报错信息</td>
+</tr>
+<tr>
+<td>4</td>
+<td>在本地修代码 → commit → push</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Push 后 CI 自动重新运行</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>CI 详细操作在第十课和第十一课讲。</strong></p>
+</blockquote>
+<hr />
+<h2>3. Merge Conflict（合并冲突）（5 min）</h2>
+<p><strong>画面</strong>：展示一个冲突场景</p>
+<h3>3.1 什么是 Merge Conflict</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>什么情况下冲突</td>
+<td>两个人同时改了同一个文件的同一行</td>
+</tr>
+<tr>
+<td>怎么知道冲突了</td>
+<td>PR 页面显示 "This branch has conflicts that must be resolved"</td>
+</tr>
+<tr>
+<td>会阻止合并吗</td>
+<td>是的，有冲突就不能 Merge</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 解决冲突的三种方式</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>难度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 在 GitHub 网页上解决</td>
+<td>简单</td>
+<td>冲突很小（一两行）</td>
+</tr>
+<tr>
+<td>2. 用命令行解决</td>
+<td>中等</td>
+<td>复杂冲突</td>
+</tr>
+<tr>
+<td>3. 用 VS Code 解决</td>
+<td>中等</td>
+<td>有 VS Code 的话最直观</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 在 GitHub 网页上解决冲突</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在 PR 页面看到 "Resolve conflicts" 按钮，点击</td>
+</tr>
+<tr>
+<td>2</td>
+<td>进入在线编辑器，标记冲突的代码</td>
+</tr>
+<tr>
+<td>3</td>
+<td>手动编辑：选择保留哪边的代码（或两边都保留）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>点 Mark as resolved</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点 Commit merge</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>：网页解决只适合简单冲突。复杂的还是用命令行或 IDE。</p>
+</blockquote>
+<h3>3.4 避免冲突的最佳实践</h3>
+<ol>
+<li><strong>改之前先 Sync Fork</strong>（下面讲）</li>
+<li><strong>一个 PR 只做一件事</strong>，PR 越小越快合并，越不容易冲突</li>
+<li><strong>经常 Pull 最新的 Upstream 代码</strong>到本地</li>
+</ol>
+<hr />
+<h2>4. 三种 Merge 方式（5 min）</h2>
+<p><strong>画面</strong>：PR 页面底部 Merge 按钮旁边的下拉箭头</p>
+<h3>4.1 三种方式对比</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>英文</th>
+<th>Git 操作</th>
+<th>产生的 Commit</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge commit</td>
+<td>Create a merge commit</td>
+<td><code>git merge</code></td>
+<td>多一个 Merge Commit</td>
+<td>大团队，需要保留完整历史</td>
+</tr>
+<tr>
+<td>Squash and merge</td>
+<td>Squash and merge</td>
+<td><code>git merge --squash</code></td>
+<td>所有 commit 压成 1 个</td>
+<td>PR 里 commit 很碎（fix typo / fix again）</td>
+</tr>
+<tr>
+<td>Rebase and merge</td>
+<td>Rebase and merge</td>
+<td><code>git rebase</code></td>
+<td>不增加 commit，但历史是线性的</td>
+<td>追求干净历史的项目</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 详细对比</h3>
+<p><strong>Merge Commit（创建合并提交）：</strong></p>
+<div class="codehilite"><pre><span></span><code>Before:  A---B---C (main)
+              \
+               D---E (PR分支)
+
+After:   A---B---C-------M (main)
+              \         /
+               D---E---/
+</code></pre></div>
+
+<ul>
+<li>PR 里的所有 commit 都保留</li>
+<li>增加一个 M（Merge commit）</li>
+<li>历史图有分叉</li>
+</ul>
+<p><strong>Squash and Merge（压缩合并）：</strong></p>
+<div class="codehilite"><pre><span></span><code>Before:  A---B---C (main)
+              \
+               D---E (PR分支)
+
+After:   A---B---C---S (main)
+</code></pre></div>
+
+<ul>
+<li>PR 里的 D、E 被压缩成一个 S</li>
+<li>历史是线性的</li>
+<li>PR 里乱七八糟的 commit 被压缩干净</li>
+</ul>
+<p><strong>Rebase and Merge（变基合并）：</strong></p>
+<div class="codehilite"><pre><span></span><code>Before:  A---B---C (main)
+              \
+               D---E (PR分支)
+
+After:   A---B---C---D&#39;---E&#39; (main)
+</code></pre></div>
+
+<ul>
+<li>PR 的 commit 被"接"到 main 后面</li>
+<li>历史完全线性</li>
+<li>没有额外的 Merge Commit</li>
+</ul>
+<h3>4.3 怎么选</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>你 Fork 别人的仓库，提了一个小 PR</td>
+<td>Squash and merge（通常项目维护者会选这个）</td>
+</tr>
+<tr>
+<td>团队内 Feature 分支开发</td>
+<td>Squash and merge 或 Merge commit</td>
+</tr>
+<tr>
+<td>追求完全线性的 Git 历史</td>
+<td>Rebase and merge</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>GitHub 默认选 Create a merge commit。如果不确定，让项目维护者决定。</strong></p>
+</blockquote>
+<hr />
+<h2>5. Close PR（关闭 PR）（2 min）</h2>
+<h3>5.1 Close vs Merge</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge pull request</td>
+<td>合并代码，PR 完成使命</td>
+</tr>
+<tr>
+<td>Close pull request</td>
+<td>关闭但不合并。放弃这个 PR 的改动</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Close = 不合并也不删除</strong>。被关闭的 PR 仍然保留，只是不再打算合并。</p>
+</blockquote>
+<h3>5.2 什么时候 Close 而不 Merge</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发现方案不可行，有更好的做法</td>
+</tr>
+<tr>
+<td>重复了另一个 PR</td>
+</tr>
+<tr>
+<td>实验性改动，证实行不通</td>
+</tr>
+<tr>
+<td>维护者明确表示不会接受这个改动</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. Sync Fork（同步上游）（4 min）</h2>
+<p><strong>画面</strong>：回到你的 Fork 仓库页</p>
+<h3>6.1 为什么要同步</h3>
+<p><strong>旁白</strong>：<br />
+"你 Fork 之后，原仓库还在继续更新。你的 Fork 不会自动同步。过几天你的 main 就落后了，如果不跟上，下次你的 PR 会基于旧代码，容易冲突。"</p>
+<h3>6.2 Sync Fork 操作</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入你的 Fork 仓库页</td>
+</tr>
+<tr>
+<td>2</td>
+<td>看中间提示条：<code>This branch is X commits behind ant-design:main</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>点 Fetch upstream 按钮</td>
+</tr>
+<tr>
+<td>4</td>
+<td>在弹出的小菜单点 Fetch and merge</td>
+</tr>
+<tr>
+<td>5</td>
+<td>等几秒 → 提示变成 "This branch is up to date with ant-design:main"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>本地也需要 Pull：<code>git pull origin main</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】Fork 页面 → 看到 "X commits behind" → 点 Fetch and merge → 提示更新成功 → 到终端 <code>git pull</code></p>
+</blockquote>
+<hr />
+<h2>7. 完整 PR 生命周期回顾（2 min）</h2>
+<div class="codehilite"><pre><span></span><code>你看到项目 → Fork（云端复制）→ Clone（下载到本地）
+    → 创建分支 → 改代码 → Commit → Push 到你的 Fork
+    → 在 GitHub 上创建 PR → CI 自动跑测试
+    → Reviewer 审查 → 你可能需要改代码（重复改→Push）
+    → CI 再跑 → Reviewer Approve → 合并！
+    → 你的代码进入原仓库 → 🎉
+</code></pre></div>
+
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>基于之前的 PR，在本地再做一次修改 → Push → 观察 PR 自动更新</li>
+<li>点击 Checks 标签，查看 CI 运行日志（如果项目有 CI 的话）</li>
+<li>点击 Files changed 标签，在 Split 和 Unified 两种视图之间切换</li>
+<li>在你的 Fork 仓库里操作 Sync Fork</li>
+<li>把之前的 PR 用 Close 关掉（别 Merge，因为那是假改动）</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversation</td>
+<td>对话讨论</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Commits</td>
+<td>所有提交</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Checks</td>
+<td>检查（CI）</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>Files changed</td>
+<td>文件改动</td>
+<td>PR 子标签</td>
+</tr>
+<tr>
+<td>CI (Continuous Integration)</td>
+<td>持续集成</td>
+<td>Checks 标签</td>
+</tr>
+<tr>
+<td>Merge Conflict</td>
+<td>合并冲突</td>
+<td>PR 页面红色提示</td>
+</tr>
+<tr>
+<td>Resolve conflicts</td>
+<td>解决冲突</td>
+<td>冲突提示按钮</td>
+</tr>
+<tr>
+<td>Merge pull request</td>
+<td>合并 PR</td>
+<td>PR 底部绿色按钮</td>
+</tr>
+<tr>
+<td>Close pull request</td>
+<td>关闭 PR</td>
+<td>Merge 按钮旁边的选项</td>
+</tr>
+<tr>
+<td>Merge commit</td>
+<td>合并提交</td>
+<td>Merge 方式一下拉</td>
+</tr>
+<tr>
+<td>Squash and merge</td>
+<td>压缩合并</td>
+<td>Merge 方式一下拉</td>
+</tr>
+<tr>
+<td>Rebase and merge</td>
+<td>变基合并</td>
+<td>Merge 方式一下拉</td>
+</tr>
+<tr>
+<td>Sync Fork</td>
+<td>同步上游</td>
+<td>Fork 页面提示条</td>
+</tr>
+<tr>
+<td>Fetch upstream</td>
+<td>拉取上游</td>
+<td>Fork 页面按钮</td>
+</tr>
+<tr>
+<td>Fetch and merge</td>
+<td>拉取并合并</td>
+<td>Fetch upstream 子选项</td>
+</tr>
+<tr>
+<td>Behind / Ahead</td>
+<td>落后 / 领先</td>
+<td>Fork 页面提示</td>
+</tr>
+<tr>
+<td>Up to date</td>
+<td>已是最新</td>
+<td>Fork 页面提示</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-07.html">第07课 PR：创建 Pull Request</a>
+    
+    
+    <a class="next" href="lesson-09.html">第09课 Code Review</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+/* ── GitHub 中文手把手教程 — GitHub 风格样式 ── */
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-link: #0969da;
+  --border-color: #d0d7de;
+  --code-bg: #f6f8fa;
+  --table-stripe: #f6f8fa;
+  --table-header: #eaeef2;
+  --sidebar-bg: #f6f8fa;
+  --sidebar-active: #eaeef2;
+  --accent: #0969da;
+  --accent-green: #1a7f37;
+  --accent-red: #cf222e;
+  --accent-yellow: #9a6700;
+  --shadow: 0 1px 3px rgba(0,0,0,0.12);
+  --radius: 6px;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-link: #58a6ff;
+  --border-color: #30363d;
+  --code-bg: #161b22;
+  --table-stripe: #161b22;
+  --table-header: #21262d;
+  --sidebar-bg: #161b22;
+  --sidebar-active: #21262d;
+  --accent: #58a6ff;
+  --accent-green: #3fb950;
+  --accent-red: #f85149;
+  --accent-yellow: #d29922;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── 侧边栏 ── */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  padding: 24px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+}
+.sidebar-header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.sidebar-header .subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.sidebar-section {
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-nav { list-style: none; }
+.sidebar-nav li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 14px;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.sidebar-nav li a:hover { background: var(--sidebar-active); }
+.sidebar-nav li a.active { background: var(--sidebar-active); font-weight: 600; color: var(--accent); }
+.sidebar-nav li a .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.sidebar-nav li a.active .num { background: var(--accent); color: #fff; }
+
+/* ── 主内容区 ── */
+.main {
+  margin-left: 260px;
+  flex: 1;
+  max-width: 900px;
+  padding: 32px 48px 64px;
+}
+
+/* 顶部工具栏 */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.topbar .lesson-meta {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.theme-toggle {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+.theme-toggle:hover { background: var(--border-color); }
+
+/* 移动端汉堡菜单 */
+.menu-btn {
+  display: none;
+  position: fixed; top: 12px; left: 12px;
+  z-index: 200;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+/* ── 内容样式 ── */
+h1 { font-size: 2em; margin: 0 0 0.3em; font-weight: 700; }
+h2 { font-size: 1.5em; margin: 1.5em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); font-weight: 600; }
+h3 { font-size: 1.2em; margin: 1.2em 0 0.4em; font-weight: 600; }
+h4 { font-size: 1em; margin: 1em 0 0.3em; font-weight: 600; }
+p { margin: 0.6em 0; }
+
+/* 课时元信息 */
+.lesson-header {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.lesson-header blockquote { margin: 0; padding: 0; border: none; }
+.lesson-header blockquote p { margin: 0; }
+.lesson-header strong { color: var(--accent); }
+
+/* 学习目标 */
+.learning-goals {
+  background: var(--bg-secondary);
+  border-left: 4px solid var(--accent-green);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 12px 20px;
+  margin: 20px 0;
+}
+.learning-goals ul { margin: 4px 0 0 20px; }
+.learning-goals li { margin: 4px 0; }
+
+/* 链接 */
+a { color: var(--text-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 代码 */
+code {
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: "Cascadia Code", "Fira Code", "SF Mono", Consolas, monospace;
+  font-size: 0.9em;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+pre code { border: none; padding: 0; background: none; }
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding: 8px 16px;
+  margin: 12px 0;
+  background: var(--bg-secondary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--text-secondary);
+}
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+
+/* 表格 (中英对照、术语表) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+thead { background: var(--table-header); }
+th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+tr:nth-child(even) td { background: var(--table-stripe); }
+/* 术语表特殊样式 */
+table.glossary td:first-child {
+  font-family: "Cascadia Code", "Fira Code", "SF Mono", Consolas, monospace;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* 术语增强 */
+.term {
+  border-bottom: 1px dashed var(--text-secondary);
+  cursor: help;
+}
+
+/* 图片 */
+img {
+  max-width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 8px 0;
+  display: block;
+}
+
+/* 页脚导航 */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+}
+.page-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+.page-nav a:hover { background: var(--bg-secondary); text-decoration: none; }
+.page-nav .prev::before { content: "← "; }
+.page-nav .next::after { content: " →"; }
+
+/* ── 首页样式 ── */
+.home-hero {
+  text-align: center;
+  padding: 60px 0 40px;
+}
+.home-hero h1 { font-size: 2.5em; margin-bottom: 12px; }
+.home-hero .tagline { font-size: 1.1em; color: var(--text-secondary); }
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.lesson-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: box-shadow 0.2s;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+.lesson-card:hover {
+  box-shadow: var(--shadow);
+  text-decoration: none;
+}
+.lesson-card .num {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.lesson-card .title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.lesson-card .desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ── 响应式 ── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; padding: 24px 16px; }
+  .menu-btn { display: block; }
+  .lesson-grid { grid-template-columns: 1fr; }
+}

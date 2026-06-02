@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第四课：Issue（上）— 创建与管理 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="active">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第04课 · 25min · 18 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第四课：Issue（上）— 创建与管理</h1>
+<blockquote>
+<p>时长：25 分钟 | 前置：第二课 | P0 词条：18 个 | 覆盖 UI 元素：24 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 理解 Issue 是什么、什么时候用<br />
+- 创建一个格式规范的 Issue<br />
+- 使用 Markdown 编辑器让 Issue 更清晰（代码块、列表、图片）<br />
+- 使用 Label 给 Issue 打标签分类<br />
+- 理解 Milestone 和 Assignee 的用途</p>
+<hr />
+<h2>0. 开场（2 min）</h2>
+<p><strong>画面</strong>：打开一个活跃仓库的 Issues 页面（推荐 ant-design 或 kubernetes）</p>
+<p><img alt="01-issues-list-annotated" src="assets/04/01-issues-list-annotated.png" /></p>
+<p><strong>旁白</strong>：<br />
+"Issue 可能是 GitHub 上除了代码以外最重要的功能。它有以下几个面：<br />
+- 给开源项目报 Bug<br />
+- 提功能请求<br />
+- 问问题（虽然不是最佳方式）<br />
+- 讨论设计方案</p>
+<p>Issues 就是一个项目的'事务中心'。今天这节课，我们来学会它的方方面面。"</p>
+<hr />
+<h2>1. Issue 列表页（5 min）</h2>
+<p><strong>画面</strong>：打开 Issues 标签页</p>
+<p><img alt="02-issue-detail" src="assets/04/02-issue-detail.png" /></p>
+<h3>1.1 列表页布局</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>中文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部搜索框</td>
+<td>Search all issues</td>
+<td>搜索 Issue</td>
+<td>在当前项目 Issue 里搜索</td>
+</tr>
+<tr>
+<td>过滤器按钮</td>
+<td>Filters</td>
+<td>过滤器</td>
+<td>按 Label / Milestone / Assignee 等过滤</td>
+</tr>
+<tr>
+<td>绿色按钮</td>
+<td>New issue</td>
+<td>新建 Issue</td>
+<td>创建新 Issue</td>
+</tr>
+<tr>
+<td>标签切换</td>
+<td>Open / Closed</td>
+<td>打开中 / 已关闭</td>
+<td>看还没解决的，还是已经关掉的</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 每个 Issue 条目的信息</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绿色圆圈 ⬤</td>
+<td>Open（打开的 Issue）</td>
+</tr>
+<tr>
+<td>红色圆圈 ⭕</td>
+<td>Closed（已关闭的 Issue）</td>
+</tr>
+<tr>
+<td>紫色对勾 ✅</td>
+<td>Closed as completed（作为已完成关闭，Projects 功能中常见）</td>
+</tr>
+<tr>
+<td>Issue 标题</td>
+<td>点击进入该 Issue 详情页</td>
+</tr>
+<tr>
+<td>Label 彩色标签</td>
+<td>贴在标题后面的彩色小方块，表示分类</td>
+</tr>
+<tr>
+<td>#数字</td>
+<td>Issue 编号，比如 #1234</td>
+</tr>
+<tr>
+<td>下方灰色文字</td>
+<td>谁在什么时间打开的（opened by XX on YY）</td>
+</tr>
+<tr>
+<td>💬 数字</td>
+<td>有几条评论</td>
+</tr>
+<tr>
+<td>右边头像</td>
+<td>Assignee（被指派解决这个问题的人）</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 Label 彩色标签解读</h3>
+<p><strong>画面</strong>：鼠标指向各种彩色标签</p>
+<table>
+<thead>
+<tr>
+<th>常见 Label</th>
+<th>颜色</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bug 🟥</td>
+<td>红色</td>
+<td>程序出错了</td>
+</tr>
+<tr>
+<td>enhancement 🟦</td>
+<td>蓝色</td>
+<td>功能改进请求</td>
+</tr>
+<tr>
+<td>documentation 🟧</td>
+<td>橙色</td>
+<td>文档相关问题</td>
+</tr>
+<tr>
+<td>good first issue 🟩</td>
+<td>绿色</td>
+<td>适合新手贡献者</td>
+</tr>
+<tr>
+<td>help wanted 🟨</td>
+<td>黄色</td>
+<td>需要人帮忙</td>
+</tr>
+<tr>
+<td>duplicate 🟪</td>
+<td>紫色</td>
+<td>和已有 Issue 重复，会关闭</td>
+</tr>
+<tr>
+<td>wontfix 🟫</td>
+<td>灰色</td>
+<td>不打算修</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>每个项目的 Label 都不同</strong>。上面这些是社区常用的约定，但具体项目可以自定义。</p>
+</blockquote>
+<h3>1.4 过滤和搜索</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点 Label 彩色标签</td>
+<td>只看有该标签的 Issue</td>
+</tr>
+<tr>
+<td>搜索框输入</td>
+<td>搜索标题和正文</td>
+</tr>
+<tr>
+<td>点 Filters</td>
+<td>展开过滤器：按 Author / Label / Milestone / Assignee / Sort 过滤</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. 创建 Issue（8 min）</h2>
+<p><strong>画面</strong>：点击绿色 New issue 按钮</p>
+<h3>2.1 创建流程</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>填写 Title（标题）</td>
+<td>用一句话说清楚是什么问题</td>
+</tr>
+<tr>
+<td>2</td>
+<td>填写正文（Write）</td>
+<td>详细描述，用 Markdown 格式（下节详讲）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点 Preview 标签</td>
+<td>预览正文的渲染效果</td>
+</tr>
+<tr>
+<td>4</td>
+<td>右侧配置</td>
+<td>Assignee / Labels / Projects / Milestone（看需要）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点绿色 Submit new issue</td>
+<td>发布</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 标题怎么写</h3>
+<table>
+<thead>
+<tr>
+<th>好标题</th>
+<th>差标题</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Select dropdown does not close after choosing an option</code></td>
+<td><code>Bug</code></td>
+<td>太模糊</td>
+</tr>
+<tr>
+<td><code>Add dark mode support to login page</code></td>
+<td><code>Feature request</code></td>
+<td>没说是要什么功能</td>
+</tr>
+<tr>
+<td><code>Documentation for API</code>/users<code>is missing error codes</code></td>
+<td><code>Doc</code></td>
+<td>没说哪有问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>公式</strong>：「什么东西」+「出了什么问题」（Bug）/「什么东西」+「希望变成什么样」（Feature）</p>
+</blockquote>
+<h3>2.3 Markdown 编辑器（重点！）</h3>
+<p><strong>画面</strong>：鼠标逐个指向编辑工具栏按钮</p>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>图标</th>
+<th>Markdown 语法</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bold</td>
+<td><strong>B</strong></td>
+<td><code>**粗体**</code></td>
+<td><strong>粗体</strong></td>
+</tr>
+<tr>
+<td>Italic</td>
+<td><em>I</em></td>
+<td><code>*斜体*</code></td>
+<td><em>斜体</em></td>
+</tr>
+<tr>
+<td>Heading</td>
+<td>H</td>
+<td><code>## 标题</code></td>
+<td>不同级别标题</td>
+</tr>
+<tr>
+<td>Link</td>
+<td>🔗</td>
+<td><code>[文字](网址)</code></td>
+<td>链接</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>🖼</td>
+<td>拖拽或粘贴图片</td>
+<td>嵌入图片</td>
+</tr>
+<tr>
+<td>Numbered list</td>
+<td>1.</td>
+<td><code>1. 第一项</code></td>
+<td>有序列表</td>
+</tr>
+<tr>
+<td>Bullet list</td>
+<td>•</td>
+<td><code>- 项目</code></td>
+<td>无序列表</td>
+</tr>
+<tr>
+<td>Task list</td>
+<td>☑</td>
+<td><code>- [ ] 待办</code></td>
+<td>可勾选的任务列表</td>
+</tr>
+<tr>
+<td>Quote</td>
+<td>"</td>
+<td><code>&gt; 引用</code></td>
+<td>引用文字</td>
+</tr>
+<tr>
+<td>Code</td>
+<td>&lt;&gt;</td>
+<td><code>`代码`</code></td>
+<td>行内代码</td>
+</tr>
+<tr>
+<td>Code block</td>
+<td>矩形</td>
+<td><code>```</code>...<code>```</code></td>
+<td>代码块（支持语言高亮）</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 两个重要技巧</h3>
+<p><strong>技巧 1：粘贴图片自动上传</strong></p>
+<blockquote>
+<p>截图后 Ctrl+V 直接粘贴到正文，GitHub 自动上传。比手动上传方便 100 倍。</p>
+</blockquote>
+<p><strong>技巧 2：Markdown 任务列表</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">- [ ]</span> 第一步要做的事
+<span class="k">- [x]</span> 已经做完的事
+</code></pre></div>
+
+<blockquote>
+<p>在正文中可以创建可点击的待办清单。勾选会更新进度。</p>
+</blockquote>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】创建 Issue：填标题 → 写正文（演示代码块、图片粘贴、任务列表）→ 点 Preview 看效果 → 点 Labels 选择 <code>bug</code> → 点 Submit new issue</p>
+</blockquote>
+<hr />
+<h2>3. 右侧配置项（5 min）</h2>
+<h3>3.1 Assignees（指派）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>指定谁来处理这个 Issue</td>
+</tr>
+<tr>
+<td>能指派谁</td>
+<td>仓库里有权限的人</td>
+</tr>
+<tr>
+<td>能不能指派自己</td>
+<td>可以（给自己领任务）</td>
+</tr>
+<tr>
+<td>不指派行不行</td>
+<td>可以，不是必须的</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 Labels（标签）</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点击 Labels</td>
+<td>展开当前仓库所有标签</td>
+</tr>
+<tr>
+<td>搜索标签名</td>
+<td>快速定位</td>
+</tr>
+<tr>
+<td>点击一个标签</td>
+<td>选中/取消</td>
+</tr>
+<tr>
+<td>谁可以创建标签</td>
+<td>有仓库写权限的人</td>
+</tr>
+<tr>
+<td>在哪里管理标签</td>
+<td>Issues 列表页 → 右上角 Labels 按钮</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 Milestone（里程碑）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>把一批 Issue 归到同一个目标下面</td>
+</tr>
+<tr>
+<td>典型命名</td>
+<td><code>v1.0</code>、<code>Q3 Sprint</code>、<code>Beta Release</code></td>
+</tr>
+<tr>
+<td>有什么用</td>
+<td>看进度："v1.0 里 80% 的 Issue 已经关了，快了"</td>
+</tr>
+<tr>
+<td>在哪里创建</td>
+<td>Issues 列表页 → 右上角 Milestones 按钮 → New milestone</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Milestone 包含信息：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Title</td>
+<td>里程碑名称</td>
+</tr>
+<tr>
+<td>Due date</td>
+<td>截止日期（可选）</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>描述这个里程碑的目标</td>
+</tr>
+</tbody>
+</table>
+<h3>3.4 Projects（项目看板）</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>把 Issue 放到看板里，做任务管理</td>
+</tr>
+<tr>
+<td>什么时候用</td>
+<td>当 Issue 多了需要可视化管理时</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这个在后面的项目管理课里详细讲。</p>
+</blockquote>
+<hr />
+<h2>4. 单个 Issue 页面（5 min）</h2>
+<p><strong>画面</strong>：点进一个已创建的 Issue</p>
+<h3>4.1 页面结构</h3>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部标题</td>
+<td>Issue 标题 + #编号 + Open/Closed 标志</td>
+</tr>
+<tr>
+<td>正文区</td>
+<td>Issue 的第一条内容</td>
+</tr>
+<tr>
+<td>右侧面板</td>
+<td>Assignees / Labels / Projects / Milestone / Notifications</td>
+</tr>
+<tr>
+<td>评论区</td>
+<td>所有讨论回复</td>
+</tr>
+<tr>
+<td>底部输入框</td>
+<td>发表评论（Write / Preview 两个标签）</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Issue 操作按钮（标题右边）</h3>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit</td>
+<td>Edit</td>
+<td>编辑 Issue 标题或正文</td>
+</tr>
+<tr>
+<td>Close issue</td>
+<td>Close issue</td>
+<td>关闭 Issue（已解决或不再做）</td>
+</tr>
+<tr>
+<td>... 菜单</td>
+<td>—</td>
+<td>更多：Delete issue / Pin issue / Transfer issue / Lock conversation / Convert to discussion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Close vs Delete：</strong><br />
+- Close：关闭但不删除。是最常用的。被关闭的 Issue 还能搜索到、能引用。<br />
+- Delete：彻底删除。极少用。只有管理员能删。</p>
+<h3>4.3 评论功能</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>底部写评论</td>
+<td>和创建 Issue 同样的 Markdown 编辑器</td>
+</tr>
+<tr>
+<td>@提及</td>
+<td>输入 <code>@用户名</code> 通知某人来看</td>
+</tr>
+<tr>
+<td>#引用</td>
+<td>输入 <code>#123</code> 链接到本仓库的第 123 号 Issue</td>
+</tr>
+<tr>
+<td>引用回复</td>
+<td>点某条评论的 ... → Quote reply 引用原文</td>
+</tr>
+<tr>
+<td>表情反应</td>
+<td>每条评论下面可以点 ❤️👍👎😄🎉😕🚀</td>
+</tr>
+<tr>
+<td>编辑评论</td>
+<td>自己发的评论右上角 ... → Edit</td>
+</tr>
+<tr>
+<td>删除评论</td>
+<td>自己发的评论右上角 ... → Delete</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>在自己创建的仓库里（或 fork 一个练习用仓库），创建一个 Issue：</li>
+<li>标题描述一个假想的 Bug</li>
+<li>正文用到：代码块、图片、列表</li>
+<li>打上一个 Label，指派给自己</li>
+<li>创建另一个 Issue，正文里 <code>#引用</code> 第一个 Issue 的编号</li>
+<li>在别人的开源仓库里找 3 个 Issue，观察标题和标签的使用</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Issue</td>
+<td>议题</td>
+<td>顶部标签栏</td>
+</tr>
+<tr>
+<td>New issue</td>
+<td>新建 Issue</td>
+<td>绿色按钮</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>打开中</td>
+<td>Issue 状态</td>
+</tr>
+<tr>
+<td>Closed</td>
+<td>已关闭</td>
+<td>Issue 状态</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>标题</td>
+<td>Issue 创建页</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>预览</td>
+<td>Markdown 编辑器标签</td>
+</tr>
+<tr>
+<td>Assignee / Assignees</td>
+<td>被指派人</td>
+<td>右侧面板</td>
+</tr>
+<tr>
+<td>Label / Labels</td>
+<td>标签</td>
+<td>右侧面板</td>
+</tr>
+<tr>
+<td>Milestone</td>
+<td>里程碑</td>
+<td>右侧面板</td>
+</tr>
+<tr>
+<td>Submit new issue</td>
+<td>提交新 Issue</td>
+<td>绿色提交按钮</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td>编辑</td>
+<td>Issue 操作按钮</td>
+</tr>
+<tr>
+<td>Close issue</td>
+<td>关闭 Issue</td>
+<td>Issue 操作按钮</td>
+</tr>
+<tr>
+<td>Delete issue</td>
+<td>删除 Issue</td>
+<td>... 菜单中</td>
+</tr>
+<tr>
+<td>Pin issue</td>
+<td>置顶 Issue</td>
+<td>... 菜单中</td>
+</tr>
+<tr>
+<td>Quote reply</td>
+<td>引用回复</td>
+<td>评论 ... 菜单</td>
+</tr>
+<tr>
+<td>Good first issue</td>
+<td>适合新手的 Issue</td>
+<td>Label 常见标签</td>
+</tr>
+<tr>
+<td>Duplicate</td>
+<td>重复（的 Issue）</td>
+<td>Label 常见标签</td>
+</tr>
+<tr>
+<td>Mention / @</td>
+<td>提及/艾特某人</td>
+<td>评论中 @用户名</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-03.html">第03课 读代码（下）— 文件与历史</a>
+    
+    
+    <a class="next" href="lesson-05.html">第05课 Issue（下）— 高级功能</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

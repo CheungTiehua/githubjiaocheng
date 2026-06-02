@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    {% for lesson in lessons %}
+    <li><a href="lesson-{{ '%02d'|format(lesson.num) }}.html">
+      <span class="num">{{ '%02d'|format(lesson.num) }}</span>
+      {{ lesson.short_title }}
+    </a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">15 课 · 零英文门槛 · GitHub 界面全覆盖</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">☀ / ☾</button>
+  </div>
+
+  <div class="home-hero">
+    <h1>GitHub 中文手把手教程</h1>
+    <p class="tagline">不讲 Git 命令行，不讲编程。只讲一件事——GitHub 网页上每一个按钮都是干什么的。</p>
+  </div>
+
+  <p style="text-align:center;color:var(--text-secondary);margin-bottom:32px">
+    适合：英文吃力的中国工程师 · 想参与开源但被英文界面劝退的程序员 · 需要用 GitHub 协作但没人带的职场新人
+  </p>
+
+  <h2 style="border-bottom:1px solid var(--border-color);padding-bottom:8px">全部课程</h2>
+  <div class="lesson-grid">
+    {% for lesson in lessons %}
+    <a class="lesson-card" href="lesson-{{ '%02d'|format(lesson.num) }}.html">
+      <div class="num">第 {{ '%02d'|format(lesson.num) }} 课</div>
+      <div class="title">{{ lesson.short_title }}</div>
+      <div class="desc">{{ lesson.duration }} · {{ lesson.p0_count }} 个核心词条</div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <h2 style="margin-top:48px;border-bottom:1px solid var(--border-color);padding-bottom:8px">参考文档</h2>
+  <div class="lesson-grid">
+    <a class="lesson-card" href="glossary.html">
+      <div class="title">术语中英对照</div>
+      <div class="desc">170+ GitHub 英文术语中文翻译</div>
+    </a>
+    <a class="lesson-card" href="faq.html">
+      <div class="title">常见问题 FAQ</div>
+      <div class="desc">40+ 高频问题解答</div>
+    </a>
+    <a class="lesson-card" href="scenario-first-contribution.html">
+      <div class="title">场景: 第一次贡献</div>
+      <div class="desc">从 Fork 到 PR 合并的完整实战</div>
+    </a>
+    <a class="lesson-card" href="scenario-team-workflow.html">
+      <div class="title">场景: 团队协作</div>
+      <div class="desc">6 步日常循环</div>
+    </a>
+    <a class="lesson-card" href="scenario-maintainer.html">
+      <div class="title">场景: 项目维护</div>
+      <div class="desc">管理 Issue、Review PR、发布版本</div>
+    </a>
+    <a class="lesson-card" href="common-errors.html">
+      <div class="title">常见报错</div>
+      <div class="desc">中英对照 + 解决方案</div>
+    </a>
+    <a class="lesson-card" href="keyboard-shortcuts.html">
+      <div class="title">快捷键大全</div>
+      <div class="desc">GitHub 高效操作速查</div>
+    </a>
+    <a class="lesson-card" href="recommended-settings.html">
+      <div class="title">推荐设置</div>
+      <div class="desc">从零到专业的配置清单</div>
+    </a>
+  </div>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

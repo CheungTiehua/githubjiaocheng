@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第十二课：项目管理（上）— Projects — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="active">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">第12课 · 20min · 11 词条</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>第十二课：项目管理（上）— Projects</h1>
+<blockquote>
+<p>时长：20 分钟 | 前置：第四课（Issue） | P0 词条：11 个 | 覆盖 UI 元素：14 个</p>
+</blockquote>
+<h2>学习目标</h2>
+<p>学完这节课，你能：<br />
+- 理解 GitHub Projects 是什么、解决什么问题<br />
+- 创建 Project 并切换 Board / Table / Roadmap 三种视图<br />
+- 在 Project 中添加 Issue 和 PR<br />
+- 使用自定义字段（Status、Priority 等）<br />
+- 设置自动化工作流</p>
+<hr />
+<h2>0. 开场（1 min）</h2>
+<p><strong>画面</strong>：展示一个活跃的 GitHub Project 看板</p>
+<p><img alt="01-projects" src="assets/12/01-projects.png" /></p>
+<p><strong>旁白</strong>：<br />
+"Issue 多了就会乱。100 个 Issue，哪些在做、哪些已做完、哪些等着分派——光靠 Label 和 Milestone 不够直观。</p>
+<p>Projects 就是 GitHub 内置的任务管理工具，类似 Trello / Jira。你可以把 Issue 拖来拖去，一眼看清项目进度。"</p>
+<hr />
+<h2>1. 什么是 Projects（2 min）</h2>
+<h3>1.1 Projects 的三层结构</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>一个项目，有独立的 URL</td>
+</tr>
+<tr>
+<td>Views</td>
+<td>同一个 Project 可以有多个视图（Board / Table / Roadmap）</td>
+</tr>
+<tr>
+<td>Items</td>
+<td>每个 Item 可以是一个 Issue、一个 PR、或者纯文本卡片</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Projects 能做什么</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>把 Issue/PR 变成卡片</td>
+<td>拖拽卡片改状态</td>
+</tr>
+<tr>
+<td>自定义字段</td>
+<td>Status、Priority、Effort、Date 等你自定义的字段</td>
+</tr>
+<tr>
+<td>多视图</td>
+<td>同一批数据，用看板、表格、路线图三种方式看</td>
+</tr>
+<tr>
+<td>自动化</td>
+<td>比如 "PR 合并后自动把卡片移到 Done"</td>
+</tr>
+<tr>
+<td>跨仓库</td>
+<td>同一个 Project 可以关联多个仓库的 Issue</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. 创建 Project（3 min）</h2>
+<p><strong>画面</strong>：从仓库主页或组织页面进入</p>
+<h3>2.1 创建步骤</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点仓库顶部 Projects 标签（或个人头像菜单 → Your projects）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点绿色 New project 按钮</td>
+</tr>
+<tr>
+<td>3</td>
+<td>选择模板：Board（看板）/ Table（表格）/ Roadmap（路线图）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>输入 Project name</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点 Create project</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Board 视图（看板）</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列</td>
+<td>默认三列：Todo / In Progress / Done</td>
+</tr>
+<tr>
+<td>卡片</td>
+<td>每个 Issue 或 PR 显示为一张卡片</td>
+</tr>
+<tr>
+<td>拖拽</td>
+<td>拖动卡片换列（改变状态）</td>
+</tr>
+<tr>
+<td>点击卡片</td>
+<td>打开 Issue/PR 详情页</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】新建 Project → 选 Board → 展示默认三列</p>
+</blockquote>
+<hr />
+<h2>3. 添加 Items 到 Project（3 min）</h2>
+<h3>3.1 多种添加方式</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Project 内添加</td>
+<td>点列底部的 + Add item → 输入标题创建新卡片</td>
+</tr>
+<tr>
+<td>2. 粘贴 Issue/PR 链接</td>
+<td>在 Add item 输入框粘贴链接</td>
+</tr>
+<tr>
+<td>3. 搜索添加</td>
+<td>输入 <code>#</code> 搜索已有 Issue → 选择</td>
+</tr>
+<tr>
+<td>4. 从 Issue 页面添加</td>
+<td>打开 Issue → 右侧 Projects → 搜索并选择 Project</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 卡片信息</h3>
+<table>
+<thead>
+<tr>
+<th>卡片上显示</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>Issue/PR 的标题</td>
+</tr>
+<tr>
+<td>下方 Assignees 头像</td>
+<td>指派给谁</td>
+</tr>
+<tr>
+<td>Labels 彩色标签</td>
+<td>复制 Issue 的标签</td>
+</tr>
+<tr>
+<td>#编号</td>
+<td>Issue/PR 编号</td>
+</tr>
+<tr>
+<td>右下角 ...</td>
+<td>更多操作</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. 自定义字段（4 min）</h2>
+<h3>4.1 添加自定义字段</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在 Project 右上角点 + New field</td>
+</tr>
+<tr>
+<td>2</td>
+<td>选择字段类型</td>
+</tr>
+<tr>
+<td>3</td>
+<td>设置字段名和选项</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 字段类型</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>英文</th>
+<th>适合什么</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text</td>
+<td>Text</td>
+<td>短文本</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>Number</td>
+<td>数字</td>
+<td>预估工时</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>Date</td>
+<td>日期</td>
+<td>截止日期</td>
+</tr>
+<tr>
+<td>Single select</td>
+<td>Single select</td>
+<td>单选下拉</td>
+<td>Priority: P0 / P1 / P2</td>
+</tr>
+<tr>
+<td>Iteration</td>
+<td>Iteration</td>
+<td>迭代/冲刺</td>
+<td>Sprint 1, Sprint 2</td>
+</tr>
+</tbody>
+</table>
+<h3>4.3 自定义 Status 字段</h3>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>你可以改成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Todo</td>
+<td>待处理 / Backlog</td>
+</tr>
+<tr>
+<td>In Progress</td>
+<td>开发中 / Coding</td>
+</tr>
+<tr>
+<td>Done</td>
+<td>已上线 / Released</td>
+</tr>
+<tr>
+<td>—</td>
+<td>你可以加更多：Review / Testing / Blocked</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作演示</strong>：</p>
+<blockquote>
+<p>【录屏】+ New field → Single select → 创建 Priority → 设选项 P0/P1/P2 → 在卡片上选择 Priority</p>
+</blockquote>
+<hr />
+<h2>5. Table 视图（2 min）</h2>
+<p><strong>画面</strong>：切换到 Table 视图</p>
+<h3>5.1 和 Board 的区别</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Board</th>
+<th>Table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>显示方式</td>
+<td>列（按 Status 分组）</td>
+<td>表格（像 Excel）</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>看状态流转</td>
+<td>看详细数据 / 批量操作</td>
+</tr>
+<tr>
+<td>优势</td>
+<td>直观、可拖拽</td>
+<td>可以按任意字段排序和筛选</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 Table 视图操作</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列头点击</td>
+<td>排序（按 Priority、Assignee、Date 等）</td>
+</tr>
+<tr>
+<td>列头右侧箭头</td>
+<td>筛选（只显示 P0 的条目）</td>
+</tr>
+<tr>
+<td>拖拽列</td>
+<td>调整列顺序</td>
+</tr>
+<tr>
+<td>按 Tab 分组</td>
+<td>按某个字段分组（如按 Assignee 分组）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. Roadmap 视图（1 min）</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>时间线视图，类似甘特图</td>
+</tr>
+<tr>
+<td>需要什么字段</td>
+<td>你的 Items 需要 Date 类型的字段（如 Start date、End date）</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>版本规划、多版本并行开发</td>
+</tr>
+<tr>
+<td>怎么切换</td>
+<td>Project 顶部标签切换</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. 自动化（Workflows）（3 min）</h2>
+<p><strong>画面</strong>：Project 右上角 ... → Workflows</p>
+<h3>7.1 内置自动化规则</h3>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Item added to project → Set Status to Todo</td>
+<td>新卡片自动设为 Todo</td>
+</tr>
+<tr>
+<td>Pull request merged → Set Status to Done</td>
+<td>PR 合并后卡片自动移到 Done</td>
+</tr>
+<tr>
+<td>Item closed → Set Status to Done</td>
+<td>Issue 关闭后卡片自动移到 Done</td>
+</tr>
+<tr>
+<td>Item reopened → Set Status to In Progress</td>
+<td>Issue 重开后卡片回到开发中</td>
+</tr>
+<tr>
+<td>Auto-add to project</td>
+<td>当 Issue/PR 被添加特定 Label 时自动加入 Project</td>
+</tr>
+</tbody>
+</table>
+<h3>7.2 怎么配置</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点右上角 ... → Workflows</td>
+</tr>
+<tr>
+<td>2</td>
+<td>看到内置规则列表</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点规则旁的开关 → 开启</td>
+</tr>
+<tr>
+<td>4</td>
+<td>可以自定义触发条件和动作</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>课后作业</h2>
+<ol>
+<li>在你的仓库里创建一个 Project（Board 视图）</li>
+<li>添加 3 个 Issue 卡片到不同列，拖拽移动</li>
+<li>创建自定义 Priority 字段（P0/P1/P2），给卡片选优先级</li>
+<li>切换到 Table 视图 → 按 Status 分组</li>
+<li>开启一个自动化规则："Issue closed → Status → Done"</li>
+</ol>
+<hr />
+<h2>本课术语速查</h2>
+<p>{.glossary-table}</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>出现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Projects</td>
+<td>项目看板</td>
+<td>顶部标签</td>
+</tr>
+<tr>
+<td>New project</td>
+<td>新建项目</td>
+<td>绿色按钮</td>
+</tr>
+<tr>
+<td>Board</td>
+<td>看板视图</td>
+<td>Project 三种视图</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>表格视图</td>
+<td>Project 三种视图</td>
+</tr>
+<tr>
+<td>Roadmap</td>
+<td>路线图视图</td>
+<td>Project 三种视图</td>
+</tr>
+<tr>
+<td>Item</td>
+<td>条目</td>
+<td>Project 中的每个卡片</td>
+</tr>
+<tr>
+<td>Field</td>
+<td>字段</td>
+<td>自定义字段（Status/Priority等）</td>
+</tr>
+<tr>
+<td>Todo / In Progress / Done</td>
+<td>待办/进行中/已完成</td>
+<td>默认 Status</td>
+</tr>
+<tr>
+<td>Iteration</td>
+<td>迭代/冲刺</td>
+<td>字段类型之一</td>
+</tr>
+<tr>
+<td>Workflows (Automation)</td>
+<td>自动化</td>
+<td>Project ... 菜单</td>
+</tr>
+<tr>
+<td>Backlog</td>
+<td>待办池</td>
+<td>常见 Status 自定义</td>
+</tr>
+</tbody>
+</table>
+
+  <nav class="page-nav">
+    
+    <a class="prev" href="lesson-11.html">第11课 Actions/CI（下）— 日志</a>
+    
+    
+    <a class="next" href="lesson-13.html">第13课 项目管理（下）— Wiki等</a>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>

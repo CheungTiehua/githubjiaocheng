@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快捷键大全 — GitHub 中文手把手教程</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" onclick="document.querySelector('.sidebar').classList.remove('open')">
+  <div class="sidebar-header">
+    <h1>GitHub 中文教程</h1>
+    <div class="subtitle">手把手·纯界面·零英文</div>
+  </div>
+
+  <div class="sidebar-section">课程</div>
+  <ul class="sidebar-nav">
+    
+    <li><a href="lesson-01.html"
+           class="">
+      <span class="num">01</span>
+      注册与基础设置
+    </a></li>
+    
+    <li><a href="lesson-02.html"
+           class="">
+      <span class="num">02</span>
+      读代码（上）— 仓库主页
+    </a></li>
+    
+    <li><a href="lesson-03.html"
+           class="">
+      <span class="num">03</span>
+      读代码（下）— 文件与历史
+    </a></li>
+    
+    <li><a href="lesson-04.html"
+           class="">
+      <span class="num">04</span>
+      Issue（上）— 创建与管理
+    </a></li>
+    
+    <li><a href="lesson-05.html"
+           class="">
+      <span class="num">05</span>
+      Issue（下）— 高级功能
+    </a></li>
+    
+    <li><a href="lesson-06.html"
+           class="">
+      <span class="num">06</span>
+      PR：Fork 与 Clone
+    </a></li>
+    
+    <li><a href="lesson-07.html"
+           class="">
+      <span class="num">07</span>
+      PR：创建 Pull Request
+    </a></li>
+    
+    <li><a href="lesson-08.html"
+           class="">
+      <span class="num">08</span>
+      PR：生命周期与合并
+    </a></li>
+    
+    <li><a href="lesson-09.html"
+           class="">
+      <span class="num">09</span>
+      Code Review
+    </a></li>
+    
+    <li><a href="lesson-10.html"
+           class="">
+      <span class="num">10</span>
+      Actions/CI（上）— 概念
+    </a></li>
+    
+    <li><a href="lesson-11.html"
+           class="">
+      <span class="num">11</span>
+      Actions/CI（下）— 日志
+    </a></li>
+    
+    <li><a href="lesson-12.html"
+           class="">
+      <span class="num">12</span>
+      项目管理（上）— Projects
+    </a></li>
+    
+    <li><a href="lesson-13.html"
+           class="">
+      <span class="num">13</span>
+      项目管理（下）— Wiki等
+    </a></li>
+    
+    <li><a href="lesson-14.html"
+           class="">
+      <span class="num">14</span>
+      安全与权限
+    </a></li>
+    
+    <li><a href="lesson-15.html"
+           class="">
+      <span class="num">15</span>
+      附录：速查手册
+    </a></li>
+    
+  </ul>
+
+  <div class="sidebar-section">参考</div>
+  <ul class="sidebar-nav">
+    <li><a href="glossary.html">术语中英对照</a></li>
+    <li><a href="faq.html">常见问题 FAQ</a></li>
+    <li><a href="scenario-first-contribution.html">场景: 首次贡献</a></li>
+    <li><a href="scenario-team-workflow.html">场景: 团队协作</a></li>
+    <li><a href="scenario-maintainer.html">场景: 项目维护</a></li>
+    <li><a href="common-errors.html">常见报错</a></li>
+    <li><a href="keyboard-shortcuts.html">快捷键</a></li>
+    <li><a href="recommended-settings.html">推荐设置</a></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main">
+  <div class="topbar">
+    <div class="lesson-meta">参考文档</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式">
+      <span class="light-icon">☀</span><span class="dark-icon">☾</span>
+    </button>
+  </div>
+
+  <h1>GitHub 快捷键大全</h1>
+<blockquote>
+<p>在 GitHub 任意页面按 <code>?</code> 可查看官方快捷键列表。
+以下为最常用快捷键，按场景分类。</p>
+</blockquote>
+<hr />
+<h2>仓库页面</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.</code></td>
+<td>打开 VS Code 网页版在线编辑器</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>快速跳转文件（激活文件搜索）</td>
+</tr>
+<tr>
+<td><code>s</code> 或 <code>/</code></td>
+<td>聚焦搜索框</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>切换分支/标签选择器</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>跳转到指定行（在文件查看页）</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>打开 Blame 视图（在文件查看页）</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>将 URL 转换为永久链接（固定到当前 commit）</td>
+</tr>
+</tbody>
+</table>
+<h3>页面跳转（g + 字母）</h3>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>跳转到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g c</code></td>
+<td>Code 标签</td>
+</tr>
+<tr>
+<td><code>g i</code></td>
+<td>Issues 标签</td>
+</tr>
+<tr>
+<td><code>g p</code></td>
+<td>Pull requests 标签</td>
+</tr>
+<tr>
+<td><code>g a</code></td>
+<td>Actions 标签</td>
+</tr>
+<tr>
+<td><code>g b</code></td>
+<td>仓库主页</td>
+</tr>
+<tr>
+<td><code>g w</code></td>
+<td>Wiki 标签</td>
+</tr>
+<tr>
+<td><code>g s</code></td>
+<td>Settings 标签</td>
+</tr>
+<tr>
+<td><code>g d</code></td>
+<td>Discussions 标签</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Issue / PR 页面</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code></td>
+<td>创建新 Issue / 新 PR</td>
+<td>Issue/PR 列表页</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>引用回复（光标在评论框时）</td>
+<td>Issue/PR 详情页</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td>编辑当前 Issue/PR 标题或正文</td>
+<td>Issue/PR 详情页</td>
+</tr>
+<tr>
+<td><code>Ctrl + Enter</code></td>
+<td>提交评论</td>
+<td>评论框</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + Enter</code></td>
+<td>提交评论并关闭 Issue</td>
+<td>Issue 评论框</td>
+</tr>
+<tr>
+<td><code>⌘ + B</code>（Mac）/ <code>Ctrl + B</code></td>
+<td>Markdown 加粗</td>
+<td>编辑器</td>
+</tr>
+<tr>
+<td><code>⌘ + I</code>（Mac）/ <code>Ctrl + I</code></td>
+<td>Markdown 斜体</td>
+<td>编辑器</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>通知页面</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>e</code></td>
+<td>标记当前通知为已读</td>
+</tr>
+<tr>
+<td><code>Shift + e</code></td>
+<td>标记所有通知为已读</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>下一条通知</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>上一条通知</td>
+</tr>
+<tr>
+<td><code>o</code> 或 <code>Enter</code></td>
+<td>打开当前通知</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>代码浏览</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td>文件查找</td>
+<td>仓库页</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>跳转到行</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>切换分支</td>
+<td>仓库页</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>Blame 视图</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>永久链接</td>
+<td>文件查看页</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>VS Code 编辑器</td>
+<td>仓库任意页</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>切换编辑和查看模式</td>
+<td>文件查看页（可选）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>全站通用</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?</code></td>
+<td>显示所有快捷键</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>关闭当前弹窗 / 取消聚焦 / 取消选中</td>
+</tr>
+<tr>
+<td><code>Ctrl + K</code>（Mac: <code>⌘ + K</code>）</td>
+<td>打开命令面板</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>快捷键速查卡（打印版）</h2>
+<div class="codehilite"><pre><span></span><code>仓库页:
+  t = 搜索文件    w = 切换分支
+  . = VS Code打开 g c = Code
+  g i = Issues    g p = PR
+  g a = Actions   s = 搜索框
+
+文件页:
+  l = 跳行        b = Blame
+  y = 永久链接
+
+通知:
+  j/k = 下/上     o = 打开
+  e = 标已读
+
+全站:
+  ? = 全部快捷键  Esc = 关闭
+</code></pre></div>
+
+  <nav class="page-nav">
+    
+    <span></span>
+    
+    
+    <span></span>
+    
+  </nav>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+// 点击侧边栏外部关闭
+document.querySelector('.main').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.remove('open');
+});
+</script>
+
+</body>
+</html>
