@@ -157,7 +157,8 @@ def main():
     shutil.copy(TEMPLATE / "style.css", SITE / "style.css")
     shutil.copy(TEMPLATE / "chatbox.css", SITE / "chatbox.css")
     shutil.copy(TEMPLATE / "chatbox.js", SITE / "chatbox.js")
-    print("  ✓ style.css + chatbox")
+    (SITE / ".nojekyll").touch()
+    print("  ✓ style.css + chatbox + .nojekyll")
 
     # 复制截图目录
     if ASSETS.exists():
