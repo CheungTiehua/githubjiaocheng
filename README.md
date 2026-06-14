@@ -10,7 +10,7 @@
 
 打开 `docs/index.html` 即可浏览完整网站。
 
-或在线访问：[cheungtiehua.github.io/wangzhan](https://cheungtiehua.github.io/wangzhan)
+或在线访问：[cheungtiehua.github.io/githubjiaocheng](https://cheungtiehua.github.io/githubjiaocheng)
 
 ## 课程结构
 
